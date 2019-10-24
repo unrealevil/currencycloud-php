@@ -1,17 +1,15 @@
 [![Build Status](https://travis-ci.org/CurrencyCloud/currencycloud-php.png?branch=master)](https://travis-ci.org/CurrencyCloud/currencycloud-php)
 
 # Currencycloud API v2 PHP client
-
-## Version: 0.14.0
+## Version: 1.5.2
 
 This is the official PHP SDK for the Currencycloud API. Additional documentation 
 for each API endpoint can be found at [developer.currencycloud.com](https://developer.currencycloud.com/documentation/getting-started/introduction/). 
 
-If you have any queries or you require support, please contact our sales team at sales@currencycloud.com.  Please quote your login id in any correspondence as this makes
+If you have any queries or you require support, please contact our development team at development@currencycloud.com.  Please quote your login id in any correspondence as this makes
 it simpler for us to locate your account and give you the support you need.
 
 ## Prerequisites
-
 ### Composer (optional, but highly recommended)
 
 CurrencyCloud-PHP is a Composer project. While using Composer is not strictly required, 
@@ -19,11 +17,9 @@ it will be far easier to simply make use of Composer to do the dependency manage
 
 
 ### Supported PHP version
-
-This library aims to support and is tested against PHP 5.5 and greater.
+This library aims to support and is tested against PHP 7.1 and greater.
 
 ## Installation
-
 The recommended way to install Currencycloud SDK is through
 [Composer](http://getcomposer.org).
 
@@ -42,10 +38,9 @@ require 'vendor/autoload.php';
 ```
 
 # Usage
-
 You can register for demo API key at [developer.currencycloud.com](https://developer.currencycloud.com/api-register/). 
 
-An example in PHP 5.5:
+An example in PHP 7:
 
 ```php
 use CurrencyCloud\CurrencyCloud;
@@ -70,7 +65,7 @@ $currencies =
     $client->reference()
         ->availableCurrencies();
 
-echo "Supproted currencies:\n";
+echo "Supported currencies:\n";
 
 foreach ($currencies as $currency) {
     printf(
@@ -104,13 +99,11 @@ $client->authenticate()->close();
 For a slightly longer example, see [cook-book.php](/examples/cook-book.php), which is an implementation of the [Cookbook](https://developer.currencycloud.com/documentation/getting-started/cookbook/) from the documentation.
 
 ## Common Patterns
-
 ### Reusing client for multiple requests
 
-Authentication tokens are long-livedand are meant to be reused for multiple requests. This will improve performance of calls through the api. 
+Authentication tokens are long-lived and are meant to be reused for multiple requests. This will improve performance of calls through the api. 
 
 ## On Behalf Of
-
 If you want to make calls on behalf of another user (e.g. someone who is your end-client), you 
 can execute certain commands 'on behalf of' the user's contact id. Here is an example:
 
@@ -142,14 +135,14 @@ When the exception converted to string, it will provide information such as the 
 ```yaml
 BadRequestException
 ---
-platform: 'PHP 5.6.14-1+deb.sury.org~trusty+1'
+platform: 'PHP 7.1.11-1+deb.sury.org~trusty+1'
 request:
     parameters: {  }
     verb: get
     url: 'https://devapi.currencycloud.com/v2/rates/detailed?buy_currency=EUR&sell_currency=GBP&fixed_side=buy&amount=10000.00'
 response:
     status_code: 400
-    date: 'Sun, 06 Nov 2015 18:22:47 GMT'
+    date: 'Tue, 13 Nov 2018 13:40:00 GMT'
     request_id: '2915002181730358306'
 errors:
     -
@@ -178,24 +171,42 @@ When troubleshooting API calls with Currencycloud support, including the full
 error in any correspondence can be very helpful.
 
 # Development
-
 ## Testing
-
 Test cases can be run with `vendor/bin/phpunit`. 
 
 ## Dependencies
-
 * [Guzzle](https://github.com/guzzle/guzzle)
 * [Symfony YAML](https://github.com/symfony/yaml)
 * [Symfony event dispatcher](https://github.com/symfony/event-dispatcher)
 
+# Contributing
+**We welcome pull requests from everyone!** Please see [CONTRIBUTING][contr]. Our sincere thanks for [helping us][hof] create the best API for moving money anywhere around the world!
 
 # Versioning
-
 This project uses [semantic versioning](http://semver.org/). You can safely
-express a dependency on a major version and expect all minor and patch versions
-to be backwards compatible.
+express a dependency on a major version and expect all minor and patch versions to be backwards compatible.
+
+## Deprecation Policy
+Technology evolves quickly and we are always looking for better ways to serve our customers. From time to time we need to make room for innovation by removing sections of code that are no longer necessary. We understand this can be disruptive and consequently we have designed a Deprecation Policy that protects our customers' investment and that allows us to take advantage of modern tools, frameworks and practices in developing software.
+
+Deprecation means that we discourage the use of a feature, design or practice because it has been superseded or is no longer considered efficient or safe but instead of removing it immediately, we mark it as **@deprecated** to provide backwards compatibility and time for you to update your projects. While the deprecated feature remains in the SDK for a period of time, we advise that you replace it with the recommended alternative which is explained in the relevant section of the code.
+
+We remove deprecated features after **three months** from the time of announcement.
+
+The security of our customers' assets is of paramount importance to us and sometimes we have to deprecate features because they may pose a security threat or because new, more secure, ways are available. On such occasions we reserve the right to set a different deprecation period which may range from **immediate removal** to the standard **three months**. 
+
+Once a feature has been marked as deprecated, we no longer develop the code or implement bug fixes. We only do security fixes.
+
+### List of features being deprecated
+```
+(No features are currently being deprecated)
+```
+# Support
+We actively support the latest version of the SDK. We support the immediate previous version on best-efforts basis. All other versions are no longer supported nor maintained.
 
 # Copyright
+Copyright (c) 2015-2019 Currencycloud. See [LICENSE][license] for details.
 
-Copyright (c) 2018 Currencycloud. See [LICENSE](/LICENSE.md) for details.
+[license]:   LICENSE.md
+[contr]:     CONTRIBUTING.md
+[hof]:       HALL_OF_FAME.md

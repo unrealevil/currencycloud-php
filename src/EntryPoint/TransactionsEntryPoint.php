@@ -5,11 +5,13 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Model\Transactions;
+use CurrencyCloud\Model\TransactionSender;
 use DateTime;
 use stdClass;
 
 class TransactionsEntryPoint extends AbstractEntryPoint
 {
+    const DATE_FORMAT = 'Y-m-d';
 
     /**
      * @param string $id
@@ -43,6 +45,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
      * @param Pagination|null $pagination
      * @param DateTime|null $completedAtFrom
      * @param DateTime|null $completedAtTo
+     * @param String|null $scope
      *
      * @return Transactions
      */
@@ -59,7 +62,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         $onBehalfOf = null,
         Pagination $pagination = null,
         DateTime $completedAtFrom = null,
-        DateTime $completedAtTo = null
+        DateTime $completedAtTo = null,
+        $scope = null
     ) {
         if (null === $transaction) {
             $transaction = new Transaction();
@@ -67,21 +71,23 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
+
         $response = $this->request(
             'GET',
             'transactions/find',
             $this->convertTransactionToRequest($transaction) + $this->convertPaginationToRequest($pagination) + [
                 'amount_from' => $amountFrom,
                 'amount_to' => $amountTo,
-                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(DateTime::ISO8601),
-                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(DateTime::ISO8601),
-                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(DateTime::ISO8601),
-                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(DateTime::ISO8601),
-                'on_behalf_of' => $onBehalfOf
+                'settles_at_from' => (null === $settlesAtFrom) ? null : $settlesAtFrom->format(self::DATE_FORMAT),
+                'settles_at_to' => (null === $settlesAtTo) ? null : $settlesAtTo->format(self::DATE_FORMAT),
+                'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(self::DATE_FORMAT),
+                'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(self::DATE_FORMAT),
+                'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(self::DATE_FORMAT),
+                'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(self::DATE_FORMAT),
+                'completed_at_from' => (null === $completedAtFrom) ? null : $completedAtFrom->format(self::DATE_FORMAT),
+                'completed_at_to' => (null === $completedAtTo) ? null : $completedAtTo->format(self::DATE_FORMAT),
+                'on_behalf_of' => $onBehalfOf,
+                'scope' => $scope
             ]
         );
         $accounts = [];
@@ -138,5 +144,41 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         $this->setIdProperty($transaction, $response->id);
 
         return $transaction;
+    }
+
+    /**
+     * @param string $id
+     * @param string $onBehalfOf
+     * @return TransactionSender
+     */
+    public function retrieveSender($id, $onBehalfOf = null){
+        $response = $this->request(
+            'GET',
+            sprintf('transactions/sender/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf
+            ]
+        );
+
+        return $this->createTransactionSenderFromResponse($response);
+    }
+
+    /**
+     * @param stdClass
+     * @return TransactionSender
+     */
+    protected function createTransactionSenderFromResponse($response){
+        return new TransactionSender(
+            $response->id,
+            $response->amount,
+            $response->currency,
+            $response->additional_information,
+            !empty($response->value_date) ? new DateTime($response->value_date) : null,
+            $response->sender,
+            $response->receiving_account_number,
+            $response->receiving_account_iban,
+            !empty($response->created_at) ? new DateTime($response->created_at) : null,
+            !empty($response->updated_at) ? new DateTime($response->updated_at) : null
+        );
     }
 }

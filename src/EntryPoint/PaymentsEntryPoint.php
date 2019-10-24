@@ -3,10 +3,15 @@
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\FindPaymentsCriteria;
+use CurrencyCloud\Model\Authorisation;
+use CurrencyCloud\Model\Authorisations;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
+use CurrencyCloud\Model\PaymentConfirmation;
+use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
+use CurrencyCloud\Model\PaymentSubmission;
 use DateTime;
 use stdClass;
 
@@ -49,7 +54,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_id' => $payment->getBeneficiaryId(),
             'conversion_id' => $payment->getConversionId(),
             'unique_request_id' => $payment->getUniqueRequestId(),
-            'purpose_code' => $payment->getPurposeCode()
+            'purpose_code' => $payment->getPurposeCode(),
+            'charge_type' => $payment->getChargeType()
         ];
         if ($convertForFind) {
             return $common + [
@@ -120,7 +126,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setUpdatedAt(new DateTime($response->updated_at))
             ->setUniqueRequestId($response->unique_request_id)
             ->setFailureReturnedAmount($response->failure_returned_amount)
-            ->setPurposeCode($response->purpose_code);
+            ->setPurposeCode($response->purpose_code)
+            ->setChargeType($response->charge_type);
 
         $this->setIdProperty($payment, $response->id);
         return $payment;
@@ -142,14 +149,23 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     /**
      * @param string $id
      * @param null|string $onBehalfOf
+     * @param null|string $withDeleted
+     * @param null|string $purposeCode
      *
      * @return Payment
      */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve($id, $onBehalfOf = null, $withDeleted = null, $purposeCode = null)
     {
-        return $this->doRetrieve(sprintf('payments/%s', $id), function (stdClass $response) {
-            return $this->createPaymentFromResponse($response);
-        }, $onBehalfOf);
+        $response = $this->request(
+            'GET',
+            sprintf('payments/%s', $id),
+            [
+                'on_behalf_of' => $onBehalfOf,
+                'with_deleted' => $withDeleted,
+                'purpose_code' => $purposeCode
+            ]);
+
+        return $this->createPaymentFromResponse($response);
     }
 
     /**
@@ -236,4 +252,129 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'amount_to' => $criteria->getAmountTo()
         ];
     }
+
+    /**
+     * @param string[] $paymentIds
+     * @return Authorisations
+     */
+    public function authorise($paymentIds){
+        $response = $this->request(
+            'POST',
+            'payments/authorise',
+            [],
+            [
+                'payment_ids' => $paymentIds
+            ]
+        );
+
+        return $this->createAuthorisationsFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $object
+     * @return Authorisation
+     */
+    protected function createAuthorisationFromObject($object){
+        return new Authorisation(
+            $object->payment_id,
+            $object->payment_status,
+            $object->updated,
+            $object->error,
+            $object->auth_steps_taken,
+            $object->auth_steps_required,
+            $object->short_reference
+        );
+    }
+
+    /**
+     * @param stdClass $response
+     * @return Authorisations
+     */
+    protected function createAuthorisationsFromResponse($response){
+        $authorisations = [];
+        foreach($response->authorisations as $key => $value){
+            array_push($authorisations, $this->createAuthorisationFromObject($value));
+        }
+
+        return new Authorisations($authorisations);
+    }
+
+    /**
+     * @param string $id
+     * @param string|null $onBehalfOf
+     * @return PaymentSubmission
+     */
+    public function retrieveSubmission($id, $onBehalfOf = null){
+        $response = $this->request('GET', sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
+
+        return $this->createPaymentSubmissionFromResponse($response);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return PaymentSubmission
+     */
+    protected function createPaymentSubmissionFromResponse($response){
+        $paymentSubmission = new PaymentSubmission(
+            $response->status,
+            $response->mt103,
+            $response->submission_ref
+        );
+
+        return $paymentSubmission;
+    }
+
+    /**
+     * @param string $id
+     * @param null|string $onBehalfOf
+     *
+     * @return PaymentConfirmation
+     */
+    public function retrieveConfirmation($id, $onBehalfOf = null)
+    {
+        return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function (stdClass $response) {
+            return $this->createPaymentConfirmationFromResponse($response);
+        }, $onBehalfOf);
+    }
+
+    /**
+     * @param stdClass $response
+     * @return PaymentConfirmation
+     */
+    protected function createPaymentConfirmationFromResponse($response){
+        $paymentConfirmation = new PaymentConfirmation(
+            $response->id,
+            $response->payment_id,
+            $response->account_id,
+            $response->short_reference,
+            $response->status,
+            $response->confirmation_url,
+            !empty($response->created_at) ? new DateTime($response->created_at) : null,
+            !empty($response->updatet_at) ? new DateTime($response->updated_at) : null,
+            !empty($response->expires_at) ? new DateTime($response->expires_at) : null
+        );
+        return $paymentConfirmation;
+    }
+
+
+    /**
+     * @param DateTime $paymentDate
+     * @param string $paymentType
+     * @param string $currency
+     * @param string $bankCountry
+     *
+     * @return PaymentDeliveryDate
+     */
+    public function paymentDeliveryDate($paymentDate, $paymentType, $currency, $bankCountry){
+        $response = $this->request('GET',
+            'payments/payment_delivery_date',
+            ['payment_date' => $paymentDate->format('Y-m-d'),
+                'payment_type' => $paymentType,
+                'currency' => $currency,
+                'bank_country' => $bankCountry]);
+
+        return new PaymentDeliveryDate(new DateTime($response->payment_date),new DateTime($response->payment_delivery_date),
+            new DateTime($response->payment_cutoff_time),$response->payment_type,$response->currency,$response->bank_country);
+    }
+
 }
