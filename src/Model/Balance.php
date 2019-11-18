@@ -2,50 +2,49 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Balance
 {
-
     /**
      * @var string
      */
     private $id;
+
     /**
      * @var string
      */
     private $accountId;
+
     /**
      * @var string
      */
     private $currency;
+
     /**
      * @var string
      */
     private $amount;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $createdAt;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $updatedAt;
 
     /**
-     * @param string $accountId
-     * @param string $currency
-     * @param string $amount
-     * @param DateTime $createdAt
-     * @param DateTime $updatedAt
+     * @param string            $accountId
+     * @param string            $currency
+     * @param string            $amount
+     * @param DateTimeInterface $createdAt
+     * @param DateTimeInterface $updatedAt
      */
-    public function __construct(
-        $accountId,
-        $currency,
-        $amount,
-        DateTime $createdAt,
-        DateTime $updatedAt
-    ) {
+    public function __construct($accountId, $currency, $amount, DateTimeInterface $createdAt, DateTimeInterface $updatedAt)
+    {
         $this->accountId = (string) $accountId;
         $this->currency = (string) $currency;
         $this->amount = (string) $amount;
@@ -86,7 +85,7 @@ class Balance
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -94,7 +93,7 @@ class Balance
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getUpdatedAt()
     {

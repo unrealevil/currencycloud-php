@@ -2,87 +2,100 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Payer
 {
-
     /**
      * @var string|null
      */
     private $id;
+
     /**
      * @var null|string
      */
     private $legalEntityType;
+
     /**
      * @var null|string
      */
     private $companyName;
+
     /**
      * @var null|string
      */
     private $firstName;
+
     /**
      * @var null|string
      */
     private $lastName;
+
     /**
      * @var array|null
      */
     private $address;
+
     /**
      * @var null|string
      */
     private $city;
+
     /**
      * @var null|string
      */
     private $stateOrProvince;
+
     /**
      * @var null|string
      */
     private $country;
+
     /**
      * @var null|string
      */
     private $identificationType;
+
     /**
      * @var null|string
      */
     private $identificationValue;
+
     /**
      * @var null|string
      */
     private $postcode;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $dateOfBirth;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $createdAt;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $updatedAt;
 
     /**
-     * @param string|null $legalEntityType
-     * @param string|null $companyName
-     * @param string|null $firstName
-     * @param string|null $lastName
-     * @param array|null $address
-     * @param string|null $city
-     * @param string|null $stateOrProvince
-     * @param string|null $country
-     * @param string|null $identificationType
-     * @param string|null $identificationValue
-     * @param string|null $postcode
-     * @param DateTime|null $dateOfBirth
-     * @param DateTime|null $createdAt
-     * @param DateTime|null $updatedAt
+     * @param string|null            $legalEntityType
+     * @param string|null            $companyName
+     * @param string|null            $firstName
+     * @param string|null            $lastName
+     * @param array|null             $address
+     * @param string|null            $city
+     * @param string|null            $stateOrProvince
+     * @param string|null            $country
+     * @param string|null            $identificationType
+     * @param string|null            $identificationValue
+     * @param string|null            $postcode
+     * @param DateTimeInterface|null $dateOfBirth
+     * @param DateTimeInterface|null $createdAt
+     * @param DateTimeInterface|null $updatedAt
      */
     public function __construct(
         $legalEntityType = null,
@@ -96,10 +109,11 @@ class Payer
         $identificationType = null,
         $identificationValue = null,
         $postcode = null,
-        DateTime $dateOfBirth = null,
-        DateTime $createdAt = null,
-        DateTime $updatedAt = null
-    ) {
+        DateTimeInterface $dateOfBirth = null,
+        DateTimeInterface $createdAt = null,
+        DateTimeInterface $updatedAt = null
+    )
+    {
         $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
         $this->companyName = (null === $companyName) ? null : (string) $companyName;
         $this->firstName = (null === $firstName) ? null : (string) $firstName;
@@ -213,7 +227,7 @@ class Payer
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getDateOfBirth()
     {
@@ -221,7 +235,7 @@ class Payer
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getCreatedAt()
     {
@@ -229,7 +243,7 @@ class Payer
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getUpdatedAt()
     {
@@ -244,6 +258,7 @@ class Payer
     public function setLegalEntityType($legalEntityType)
     {
         $this->legalEntityType = $legalEntityType;
+
         return $this;
     }
 
@@ -255,6 +270,7 @@ class Payer
     public function setCompanyName($companyName)
     {
         $this->companyName = $companyName;
+
         return $this;
     }
 
@@ -266,6 +282,7 @@ class Payer
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
@@ -277,6 +294,7 @@ class Payer
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+
         return $this;
     }
 
@@ -288,6 +306,7 @@ class Payer
     public function setAddress($address)
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -299,6 +318,7 @@ class Payer
     public function setCity($city)
     {
         $this->city = $city;
+
         return $this;
     }
 
@@ -310,6 +330,7 @@ class Payer
     public function setStateOrProvince($stateOrProvince)
     {
         $this->stateOrProvince = $stateOrProvince;
+
         return $this;
     }
 
@@ -321,6 +342,7 @@ class Payer
     public function setCountry($country)
     {
         $this->country = $country;
+
         return $this;
     }
 
@@ -332,6 +354,7 @@ class Payer
     public function setIdentificationType($identificationType)
     {
         $this->identificationType = $identificationType;
+
         return $this;
     }
 
@@ -343,6 +366,7 @@ class Payer
     public function setIdentificationValue($identificationValue)
     {
         $this->identificationValue = $identificationValue;
+
         return $this;
     }
 
@@ -354,39 +378,43 @@ class Payer
     public function setPostcode($postcode)
     {
         $this->postcode = $postcode;
+
         return $this;
     }
 
     /**
-     * @param DateTime|null $dateOfBirth
+     * @param DateTimeInterface|null $dateOfBirth
      *
      * @return $this
      */
     public function setDateOfBirth($dateOfBirth)
     {
         $this->dateOfBirth = $dateOfBirth;
+
         return $this;
     }
 
     /**
-     * @param DateTime|null $createdAt
+     * @param DateTimeInterface|null $createdAt
      *
      * @return $this
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * @param DateTime|null $updatedAt
+     * @param DateTimeInterface|null $updatedAt
      *
      * @return $this
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }

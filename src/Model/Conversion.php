@@ -2,34 +2,37 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Conversion
 {
-
     /**
      * @var string
      */
     private $id;
+
     /**
      * @var string
      */
     private $accountId;
+
     /**
      * @var string
      */
     private $creatorContactId;
+
     /**
      * @var string
      */
     private $shortReference;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $settlementDate;
 
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $conversionDate;
 
@@ -37,92 +40,114 @@ class Conversion
      * @var string
      */
     private $status;
+
     /**
      * @var string
      */
     private $partnerStatus;
+
     /**
      * @var string
      */
     private $currencyPair;
+
     /**
      * @var string
      */
     private $buyCurrency;
+
     /**
      * @var string
      */
     private $sellCurrency;
+
     /**
      * @var string
      */
     private $fixedSide;
+
     /**
      * @var string
      */
     private $partnerBuyAmount;
+
     /**
      * @var string
      */
     private $partnerSellAmount;
+
     /**
      * @var string
      */
     private $clientBuyAmount;
+
     /**
      * @var string
      */
     private $clientSellAmount;
+
     /**
      * @var string
      */
     private $midMarketRate;
+
     /**
      * @var string
      */
     private $coreRate;
+
     /**
      * @var string
      */
     private $partnerRate;
+
     /**
      * @var string
      */
     private $clientRate;
+
     /**
      * @var string
      */
     private $depositRequired;
+
     /**
      * @var string
      */
     private $depositAmount;
+
     /**
      * @var string
      */
     private $depositCurrency;
+
     /**
      * @var string
      */
     private $depositStatus;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $depositRequiredAt;
+
     /**
      * @var array
      */
     private $paymentIds;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $createdAt;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $updatedAt;
+
     /**
-     * @var String
+     * @var string
      */
     private $uniqueRequestId;
 
@@ -155,8 +180,10 @@ class Conversion
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
+
     /**
      * @return string
      */
@@ -173,6 +200,7 @@ class Conversion
     public function setAccountId($accountId)
     {
         $this->accountId = $accountId;
+
         return $this;
     }
 
@@ -192,6 +220,7 @@ class Conversion
     public function setCreatorContactId($creatorContactId)
     {
         $this->creatorContactId = $creatorContactId;
+
         return $this;
     }
 
@@ -211,11 +240,12 @@ class Conversion
     public function setShortReference($shortReference)
     {
         $this->shortReference = $shortReference;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getSettlementDate()
     {
@@ -223,18 +253,19 @@ class Conversion
     }
 
     /**
-     * @param DateTime $settlementDate
+     * @param DateTimeInterface $settlementDate
      *
      * @return $this
      */
     public function setSettlementDate($settlementDate)
     {
         $this->settlementDate = $settlementDate;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getConversionDate()
     {
@@ -242,13 +273,14 @@ class Conversion
     }
 
     /**
-     * @param DateTime $conversionDate
+     * @param DateTimeInterface $conversionDate
      *
      * @return $this
      */
     public function setConversionDate($conversionDate)
     {
         $this->conversionDate = $conversionDate;
+
         return $this;
     }
 
@@ -268,6 +300,7 @@ class Conversion
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -287,6 +320,7 @@ class Conversion
     public function setPartnerStatus($partnerStatus)
     {
         $this->partnerStatus = $partnerStatus;
+
         return $this;
     }
 
@@ -306,6 +340,7 @@ class Conversion
     public function setCurrencyPair($currencyPair)
     {
         $this->currencyPair = $currencyPair;
+
         return $this;
     }
 
@@ -325,6 +360,7 @@ class Conversion
     public function setBuyCurrency($buyCurrency)
     {
         $this->buyCurrency = $buyCurrency;
+
         return $this;
     }
 
@@ -344,6 +380,7 @@ class Conversion
     public function setSellCurrency($sellCurrency)
     {
         $this->sellCurrency = $sellCurrency;
+
         return $this;
     }
 
@@ -363,6 +400,7 @@ class Conversion
     public function setFixedSide($fixedSide)
     {
         $this->fixedSide = $fixedSide;
+
         return $this;
     }
 
@@ -382,6 +420,7 @@ class Conversion
     public function setPartnerBuyAmount($partnerBuyAmount)
     {
         $this->partnerBuyAmount = $partnerBuyAmount;
+
         return $this;
     }
 
@@ -401,6 +440,7 @@ class Conversion
     public function setPartnerSellAmount($partnerSellAmount)
     {
         $this->partnerSellAmount = $partnerSellAmount;
+
         return $this;
     }
 
@@ -420,6 +460,7 @@ class Conversion
     public function setClientBuyAmount($clientBuyAmount)
     {
         $this->clientBuyAmount = $clientBuyAmount;
+
         return $this;
     }
 
@@ -439,6 +480,7 @@ class Conversion
     public function setClientSellAmount($clientSellAmount)
     {
         $this->clientSellAmount = $clientSellAmount;
+
         return $this;
     }
 
@@ -458,6 +500,7 @@ class Conversion
     public function setMidMarketRate($midMarketRate)
     {
         $this->midMarketRate = $midMarketRate;
+
         return $this;
     }
 
@@ -477,6 +520,7 @@ class Conversion
     public function setPartnerRate($partnerRate)
     {
         $this->partnerRate = $partnerRate;
+
         return $this;
     }
 
@@ -496,6 +540,7 @@ class Conversion
     public function setClientRate($clientRate)
     {
         $this->clientRate = $clientRate;
+
         return $this;
     }
 
@@ -515,6 +560,7 @@ class Conversion
     public function setDepositRequired($depositRequired)
     {
         $this->depositRequired = $depositRequired;
+
         return $this;
     }
 
@@ -534,6 +580,7 @@ class Conversion
     public function setDepositAmount($depositAmount)
     {
         $this->depositAmount = $depositAmount;
+
         return $this;
     }
 
@@ -553,6 +600,7 @@ class Conversion
     public function setDepositCurrency($depositCurrency)
     {
         $this->depositCurrency = $depositCurrency;
+
         return $this;
     }
 
@@ -572,11 +620,12 @@ class Conversion
     public function setDepositStatus($depositStatus)
     {
         $this->depositStatus = $depositStatus;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getDepositRequiredAt()
     {
@@ -584,13 +633,14 @@ class Conversion
     }
 
     /**
-     * @param DateTime $depositRequiredAt
+     * @param DateTimeInterface $depositRequiredAt
      *
      * @return $this
      */
     public function setDepositRequiredAt($depositRequiredAt)
     {
         $this->depositRequiredAt = $depositRequiredAt;
+
         return $this;
     }
 
@@ -610,11 +660,12 @@ class Conversion
     public function setPaymentIds($paymentIds)
     {
         $this->paymentIds = $paymentIds;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -622,18 +673,19 @@ class Conversion
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTimeInterface $createdAt
      *
      * @return $this
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getUpdatedAt()
     {
@@ -641,13 +693,14 @@ class Conversion
     }
 
     /**
-     * @param DateTime $updatedAt
+     * @param DateTimeInterface $updatedAt
      *
      * @return $this
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -667,6 +720,7 @@ class Conversion
     public function setCoreRate($coreRate)
     {
         $this->coreRate = $coreRate;
+
         return $this;
     }
 
@@ -686,6 +740,7 @@ class Conversion
     public function setUniqueRequestId($uniqueRequestId)
     {
         $this->uniqueRequestId = $uniqueRequestId;
+
         return $this;
     }
 }

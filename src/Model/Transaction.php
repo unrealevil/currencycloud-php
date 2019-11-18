@@ -2,7 +2,7 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Transaction
 {
@@ -10,68 +10,84 @@ class Transaction
      * @var string
      */
     private $id;
+
     /**
      * @var null|string
      */
     private $balanceId;
+
     /**
      * @var null|string
      */
     private $accountId;
+
     /**
      * @var null|string
      */
     private $currency;
+
     /**
      * @var null|string
      */
     private $amount;
+
     /**
      * @var null|string
      */
     private $balanceAmount;
+
     /**
      * @var null|string
      */
     private $type;
+
     /**
      * @var null|string
      */
     private $action;
+
     /**
      * @var null|string
      */
     private $relatedEntityType;
+
     /**
      * @var null|string
      */
     private $relatedEntityId;
+
     /**
      * @var null|string
      */
     private $relatedEntityShortReference;
+
     /**
      * @var null|string
      */
     private $status;
+
     /**
      * @var null|string
      */
     private $reason;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $settlesAt;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $createdAt;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $updatedAt;
+
     /**
-     * @var DateTime|null
+     * @var DateTimeInterface|null
      */
     private $completedAt;
 
@@ -99,6 +115,7 @@ class Transaction
     public function setBalanceId($balanceId)
     {
         $this->balanceId = (null === $balanceId) ? null : (string) $balanceId;
+
         return $this;
     }
 
@@ -118,6 +135,7 @@ class Transaction
     public function setAccountId($accountId)
     {
         $this->accountId = (null === $accountId) ? null : (string) $accountId;
+
         return $this;
     }
 
@@ -137,6 +155,7 @@ class Transaction
     public function setCurrency($currency)
     {
         $this->currency = (null === $currency) ? null : (string) $currency;
+
         return $this;
     }
 
@@ -156,6 +175,7 @@ class Transaction
     public function setAmount($amount)
     {
         $this->amount = (null === $amount) ? null : (string) $amount;
+
         return $this;
     }
 
@@ -175,6 +195,7 @@ class Transaction
     public function setBalanceAmount($balanceAmount)
     {
         $this->balanceAmount = (null === $balanceAmount) ? null : (string) $balanceAmount;
+
         return $this;
     }
 
@@ -194,6 +215,7 @@ class Transaction
     public function setType($type)
     {
         $this->type = (null === $type) ? null : (string) $type;
+
         return $this;
     }
 
@@ -213,6 +235,7 @@ class Transaction
     public function setAction($action)
     {
         $this->action = (null === $action) ? null : (string) $action;
+
         return $this;
     }
 
@@ -232,6 +255,7 @@ class Transaction
     public function setRelatedEntityType($relatedEntityType)
     {
         $this->relatedEntityType = (null === $relatedEntityType) ? null : (string) $relatedEntityType;
+
         return $this;
     }
 
@@ -251,6 +275,7 @@ class Transaction
     public function setRelatedEntityId($relatedEntityId)
     {
         $this->relatedEntityId = (null === $relatedEntityId) ? null : (string) $relatedEntityId;
+
         return $this;
     }
 
@@ -271,6 +296,7 @@ class Transaction
     {
         $this->relatedEntityShortReference =
             (null === $relatedEntityShortReference) ? null : (string) $relatedEntityShortReference;
+
         return $this;
     }
 
@@ -290,6 +316,7 @@ class Transaction
     public function setStatus($status)
     {
         $this->status = (null === $status) ? null : (string) $status;
+
         return $this;
     }
 
@@ -309,11 +336,12 @@ class Transaction
     public function setReason($reason)
     {
         $this->reason = (null === $reason) ? null : (string) $reason;
+
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getSettlesAt()
     {
@@ -321,18 +349,19 @@ class Transaction
     }
 
     /**
-     * @param DateTime|null $settlesAt
+     * @param DateTimeInterface|null $settlesAt
      *
      * @return $this
      */
-    public function setSettlesAt(DateTime $settlesAt = null)
+    public function setSettlesAt(DateTimeInterface $settlesAt = null)
     {
         $this->settlesAt = $settlesAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getCreatedAt()
     {
@@ -340,18 +369,19 @@ class Transaction
     }
 
     /**
-     * @param DateTime|null $createdAt
+     * @param DateTimeInterface|null $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(DateTime $createdAt = null)
+    public function setCreatedAt(DateTimeInterface $createdAt = null)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getUpdatedAt()
     {
@@ -359,18 +389,19 @@ class Transaction
     }
 
     /**
-     * @param DateTime|null $updatedAt
+     * @param DateTimeInterface|null $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(DateTime $updatedAt = null)
+    public function setUpdatedAt(DateTimeInterface $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
     public function getCompletedAt()
     {
@@ -378,13 +409,14 @@ class Transaction
     }
 
     /**
-     * @param DateTime|null $completedAt
+     * @param DateTimeInterface|null $completedAt
      *
      * @return $this
      */
     public function setCompletedAt($completedAt)
     {
         $this->completedAt = $completedAt;
+
         return $this;
     }
 }

@@ -22,7 +22,6 @@ use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
 use CurrencyCloud\EventDispatcher\Listener\ClientHttpErrorListener;
 use CurrencyCloud\EventDispatcher\Listener\SessionTimeoutListener;
-use CurrencyCloud\Model\Transfer;
 use CurrencyCloud\EntryPoint\VansEntryPoint;
 use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
@@ -33,7 +32,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CurrencyCloud
 {
-
     /**
      * @var ReferenceEntryPoint
      */
