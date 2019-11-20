@@ -2,103 +2,125 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Payment implements EntityInterface
 {
-
     /**
      * @var string
      */
     private $id;
+
     /**
      * @var string
      */
     private $shortReference;
+
     /**
      * @var string
      */
     private $beneficiaryId;
+
     /**
      * @var string
      */
     private $conversionId;
+
     /**
      * @var string
      */
     private $amount;
+
     /**
      * @var string
      */
     private $currency;
+
     /**
      * @var string
      */
     private $status;
+
     /**
      * @var string
      */
     private $paymentType;
+
     /**
      * @var string
      */
     private $reference;
+
     /**
      * @var string
      */
     private $reason;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $paymentDate;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $transferredAt;
+
     /**
      * @var string
      */
     private $authorisationStepsRequired;
+
     /**
      * @var string
      */
     private $creatorContactId;
+
     /**
      * @var string
      */
     private $lastUpdaterContactId;
+
     /**
      * @var string
      */
     private $failureReason;
+
     /**
      * @var string
      */
     private $payerDetailsSource;
+
     /**
      * @var string
      */
     private $payerId;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $createdAt;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $updatedAt;
+
     /**
      * @var String
      */
     private $uniqueRequestId;
+
     /**
      * @var string
      */
     private $failureReturnedAmount;
+
     /**
      * @var string|null
      */
     private $purposeCode;
+
     /**
      * @var string|null
      */
@@ -147,6 +169,7 @@ class Payment implements EntityInterface
     public function setShortReference($shortReference)
     {
         $this->shortReference = $shortReference;
+
         return $this;
     }
 
@@ -166,6 +189,7 @@ class Payment implements EntityInterface
     public function setBeneficiaryId($beneficiaryId)
     {
         $this->beneficiaryId = $beneficiaryId;
+
         return $this;
     }
 
@@ -185,6 +209,7 @@ class Payment implements EntityInterface
     public function setConversionId($conversionId)
     {
         $this->conversionId = $conversionId;
+
         return $this;
     }
 
@@ -204,6 +229,7 @@ class Payment implements EntityInterface
     public function setAmount($amount)
     {
         $this->amount = $amount;
+
         return $this;
     }
 
@@ -223,6 +249,7 @@ class Payment implements EntityInterface
     public function setCurrency($currency)
     {
         $this->currency = $currency;
+
         return $this;
     }
 
@@ -242,6 +269,7 @@ class Payment implements EntityInterface
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -261,6 +289,7 @@ class Payment implements EntityInterface
     public function setPaymentType($paymentType)
     {
         $this->paymentType = $paymentType;
+
         return $this;
     }
 
@@ -280,6 +309,7 @@ class Payment implements EntityInterface
     public function setReference($reference)
     {
         $this->reference = $reference;
+
         return $this;
     }
 
@@ -299,11 +329,12 @@ class Payment implements EntityInterface
     public function setReason($reason)
     {
         $this->reason = $reason;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getPaymentDate()
     {
@@ -311,18 +342,19 @@ class Payment implements EntityInterface
     }
 
     /**
-     * @param DateTime $paymentDate
+     * @param DateTimeInterface $paymentDate
      *
      * @return $this
      */
-    public function setPaymentDate(DateTime $paymentDate)
+    public function setPaymentDate(DateTimeInterface $paymentDate)
     {
         $this->paymentDate = $paymentDate;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getTransferredAt()
     {
@@ -330,13 +362,14 @@ class Payment implements EntityInterface
     }
 
     /**
-     * @param DateTime $transferredAt
+     * @param DateTimeInterface $transferredAt
      *
      * @return $this
      */
-    public function setTransferredAt(DateTime $transferredAt)
+    public function setTransferredAt(DateTimeInterface $transferredAt)
     {
         $this->transferredAt = $transferredAt;
+
         return $this;
     }
 
@@ -356,6 +389,7 @@ class Payment implements EntityInterface
     public function setAuthorisationStepsRequired($authorisationStepsRequired)
     {
         $this->authorisationStepsRequired = $authorisationStepsRequired;
+
         return $this;
     }
 
@@ -375,6 +409,7 @@ class Payment implements EntityInterface
     public function setCreatorContactId($creatorContactId)
     {
         $this->creatorContactId = $creatorContactId;
+
         return $this;
     }
 
@@ -394,6 +429,7 @@ class Payment implements EntityInterface
     public function setLastUpdaterContactId($lastUpdaterContactId)
     {
         $this->lastUpdaterContactId = $lastUpdaterContactId;
+
         return $this;
     }
 
@@ -413,6 +449,7 @@ class Payment implements EntityInterface
     public function setFailureReason($failureReason)
     {
         $this->failureReason = $failureReason;
+
         return $this;
     }
 
@@ -432,11 +469,12 @@ class Payment implements EntityInterface
     public function setPayerId($payerId)
     {
         $this->payerId = $payerId;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -444,18 +482,19 @@ class Payment implements EntityInterface
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTimeInterface $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getUpdatedAt()
     {
@@ -463,13 +502,14 @@ class Payment implements EntityInterface
     }
 
     /**
-     * @param DateTime $updatedAt
+     * @param DateTimeInterface $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(DateTime $updatedAt)
+    public function setUpdatedAt(DateTimeInterface $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -489,6 +529,7 @@ class Payment implements EntityInterface
     public function setUniqueRequestId($uniqueRequestId)
     {
         $this->uniqueRequestId = $uniqueRequestId;
+
         return $this;
     }
 
@@ -508,6 +549,7 @@ class Payment implements EntityInterface
     public function setPayerDetailsSource($payerDetailsSource)
     {
         $this->payerDetailsSource = $payerDetailsSource;
+
         return $this;
     }
 
@@ -527,6 +569,7 @@ class Payment implements EntityInterface
     public function setFailureReturnedAmount($failureReturnedAmount)
     {
         $this->failureReturnedAmount = $failureReturnedAmount;
+
         return $this;
     }
 
@@ -546,6 +589,7 @@ class Payment implements EntityInterface
     public function setPurposeCode($purposeCode)
     {
         $this->purposeCode = $purposeCode;
+
         return $this;
     }
 
@@ -565,6 +609,7 @@ class Payment implements EntityInterface
     public function setChargeType($chargeType)
     {
         $this->chargeType = $chargeType;
+
         return $this;
     }
 }

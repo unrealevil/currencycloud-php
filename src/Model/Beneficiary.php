@@ -2,145 +2,177 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
+use DateTimeInterface;
 
 class Beneficiary implements EntityInterface
 {
-
     /**
      * @var string
      */
     private $id;
+
     /**
      * @var array
      */
     private $paymentTypes;
+
     /**
      * @var string
      */
     private $bankCountry;
+
     /**
      * @var string
      */
     private $bankName;
+
     /**
      * @var string
      */
     private $currency;
+
     /**
      * @var string
      */
     private $accountNumber;
+
     /**
      * @var string
      */
     private $iban;
+
     /**
      * @var array
      */
     private $bankAddress;
+
     /**
      * @var string
      */
     private $bicSwift;
+
     /**
      * @var string
      */
     private $creatorContactId;
+
     /**
      * @var string
      */
     private $bankAccountType;
+
     /**
      * @var string
      */
     private $beneficiaryCountry;
+
     /**
      * @var string
      */
     private $beneficiaryEntityType;
+
     /**
      * @var string
      */
     private $beneficiaryCompanyName;
+
     /**
      * @var string
      */
     private $beneficiaryFirstName;
+
     /**
      * @var string
      */
     private $beneficiaryLastName;
+
     /**
      * @var string
      */
     private $beneficiaryCity;
+
     /**
      * @var string
      */
     private $beneficiaryPostCode;
+
     /**
      * @var string
      */
     private $beneficiaryStateOrProvince;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $beneficiaryDateOfBirth;
+
     /**
      * @var string
      */
     private $beneficiaryIdentificationType;
+
     /**
      * @var string
      */
     private $beneficiaryIdentificationValue;
+
     /**
      * @var string
      */
     private $beneficiaryExternalReference;
+
     /**
      * @var boolean
      */
     private $isDefaultBeneficiary;
+
     /**
      * @var string
      */
     private $routingCodeType1;
+
     /**
      * @var string
      */
     private $routingCodeValue1;
+
     /**
      * @var string
      */
     private $routingCodeType2;
+
     /**
      * @var string
      */
     private $routingCodeValue2;
+
     /**
      * @var string
      */
     private $beneficiaryAddress;
+
     /**
      * @var string
      */
     private $bankAccountHolderName;
+
     /**
      * @var string
      */
     private $name;
+
     /**
      * @var string
      */
     private $email;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $createdAt;
+
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $updatedAt;
 
@@ -192,6 +224,7 @@ class Beneficiary implements EntityInterface
     public function setPaymentTypes(array $paymentTypes)
     {
         $this->paymentTypes = $paymentTypes;
+
         return $this;
     }
 
@@ -211,6 +244,7 @@ class Beneficiary implements EntityInterface
     public function setBankCountry($bankCountry)
     {
         $this->bankCountry = (string) $bankCountry;
+
         return $this;
     }
 
@@ -230,6 +264,7 @@ class Beneficiary implements EntityInterface
     public function setBankName($bankName)
     {
         $this->bankName = (string) $bankName;
+
         return $this;
     }
 
@@ -249,6 +284,7 @@ class Beneficiary implements EntityInterface
     public function setCurrency($currency)
     {
         $this->currency = (string) $currency;
+
         return $this;
     }
 
@@ -268,6 +304,7 @@ class Beneficiary implements EntityInterface
     public function setAccountNumber($accountNumber)
     {
         $this->accountNumber = (string) $accountNumber;
+
         return $this;
     }
 
@@ -287,6 +324,7 @@ class Beneficiary implements EntityInterface
     public function setIban($iban)
     {
         $this->iban = (string) $iban;
+
         return $this;
     }
 
@@ -306,6 +344,7 @@ class Beneficiary implements EntityInterface
     public function setBankAddress(array $bankAddress = null)
     {
         $this->bankAddress = $bankAddress;
+
         return $this;
     }
 
@@ -325,6 +364,7 @@ class Beneficiary implements EntityInterface
     public function setBicSwift($bicSwift)
     {
         $this->bicSwift = (string) $bicSwift;
+
         return $this;
     }
 
@@ -344,6 +384,7 @@ class Beneficiary implements EntityInterface
     public function setBankAccountType($bankAccountType)
     {
         $this->bankAccountType = (string) $bankAccountType;
+
         return $this;
     }
 
@@ -363,6 +404,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryCountry($beneficiaryCountry)
     {
         $this->beneficiaryCountry = (string) $beneficiaryCountry;
+
         return $this;
     }
 
@@ -382,6 +424,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryEntityType($beneficiaryEntityType)
     {
         $this->beneficiaryEntityType = (string) $beneficiaryEntityType;
+
         return $this;
     }
 
@@ -401,6 +444,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryCompanyName($beneficiaryCompanyName)
     {
         $this->beneficiaryCompanyName = (string) $beneficiaryCompanyName;
+
         return $this;
     }
 
@@ -420,6 +464,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryFirstName($beneficiaryFirstName)
     {
         $this->beneficiaryFirstName = (string) $beneficiaryFirstName;
+
         return $this;
     }
 
@@ -439,6 +484,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryLastName($beneficiaryLastName)
     {
         $this->beneficiaryLastName = (string) $beneficiaryLastName;
+
         return $this;
     }
 
@@ -458,6 +504,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryCity($beneficiaryCity)
     {
         $this->beneficiaryCity = (string) $beneficiaryCity;
+
         return $this;
     }
 
@@ -477,6 +524,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryPostCode($beneficiaryPostCode)
     {
         $this->beneficiaryPostCode = (string) $beneficiaryPostCode;
+
         return $this;
     }
 
@@ -496,11 +544,12 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryStateOrProvince($beneficiaryStateOrProvince)
     {
         $this->beneficiaryStateOrProvince = (string) $beneficiaryStateOrProvince;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getBeneficiaryDateOfBirth()
     {
@@ -508,13 +557,14 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param DateTime|null $beneficiaryDateOfBirth
+     * @param DateTimeInterface|null $beneficiaryDateOfBirth
      *
      * @return $this
      */
-    public function setBeneficiaryDateOfBirth(DateTime $beneficiaryDateOfBirth = null)
+    public function setBeneficiaryDateOfBirth(DateTimeInterface $beneficiaryDateOfBirth = null)
     {
         $this->beneficiaryDateOfBirth = $beneficiaryDateOfBirth;
+
         return $this;
     }
 
@@ -534,6 +584,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryIdentificationType($beneficiaryIdentificationType)
     {
         $this->beneficiaryIdentificationType = (string) $beneficiaryIdentificationType;
+
         return $this;
     }
 
@@ -553,6 +604,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryIdentificationValue($beneficiaryIdentificationValue)
     {
         $this->beneficiaryIdentificationValue = (string) $beneficiaryIdentificationValue;
+
         return $this;
     }
 
@@ -572,6 +624,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryExternalReference($beneficiaryExternalReference)
     {
         $this->beneficiaryExternalReference = (string) $beneficiaryExternalReference;
+
         return $this;
     }
 
@@ -591,6 +644,7 @@ class Beneficiary implements EntityInterface
     public function setRoutingCodeType1($routingCodeType1)
     {
         $this->routingCodeType1 = (string) $routingCodeType1;
+
         return $this;
     }
 
@@ -610,6 +664,7 @@ class Beneficiary implements EntityInterface
     public function setRoutingCodeValue1($routingCodeValue1)
     {
         $this->routingCodeValue1 = (string) $routingCodeValue1;
+
         return $this;
     }
 
@@ -629,6 +684,7 @@ class Beneficiary implements EntityInterface
     public function setRoutingCodeType2($routingCodeType2)
     {
         $this->routingCodeType2 = (string) $routingCodeType2;
+
         return $this;
     }
 
@@ -648,11 +704,12 @@ class Beneficiary implements EntityInterface
     public function setRoutingCodeValue2($routingCodeValue2)
     {
         $this->routingCodeValue2 = (string) $routingCodeValue2;
+
         return $this;
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getBeneficiaryAddress()
     {
@@ -667,6 +724,7 @@ class Beneficiary implements EntityInterface
     public function setBeneficiaryAddress($beneficiaryAddress = null)
     {
         $this->beneficiaryAddress = $beneficiaryAddress;
+
         return $this;
     }
 
@@ -694,6 +752,7 @@ class Beneficiary implements EntityInterface
     public function setBankAccountHolderName($bankAccountHolderName)
     {
         $this->bankAccountHolderName = (string) $bankAccountHolderName;
+
         return $this;
     }
 
@@ -713,6 +772,7 @@ class Beneficiary implements EntityInterface
     public function setName($name)
     {
         $this->name = (string) $name;
+
         return $this;
     }
 
@@ -732,6 +792,7 @@ class Beneficiary implements EntityInterface
     public function setEmail($email)
     {
         $this->email = (string) $email;
+
         return $this;
     }
 
@@ -743,6 +804,7 @@ class Beneficiary implements EntityInterface
     public function setIsDefaultBeneficiary($isDefaultBeneficiary)
     {
         $this->isDefaultBeneficiary = (boolean) $isDefaultBeneficiary;
+
         return $this;
     }
 
@@ -770,11 +832,12 @@ class Beneficiary implements EntityInterface
     public function setCreatorContactId($creatorContactId)
     {
         $this->creatorContactId = (string) $creatorContactId;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -782,18 +845,19 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTimeInterface $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
     public function getUpdatedAt()
     {
@@ -801,13 +865,14 @@ class Beneficiary implements EntityInterface
     }
 
     /**
-     * @param DateTime $updatedAt
+     * @param DateTimeInterface $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(DateTime $updatedAt)
+    public function setUpdatedAt(DateTimeInterface $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }
