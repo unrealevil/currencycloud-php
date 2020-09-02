@@ -97,7 +97,7 @@ class RatesEntryPoint extends AbstractEntryPoint
             $response->client_buy_amount,
             $response->client_sell_amount,
             $response->fixed_side,
-            $response->mid_market_rate,
+            $response->mid_market_rate ?? null,
             $response->core_rate,
             $response->partner_rate,
             $response->client_rate,
