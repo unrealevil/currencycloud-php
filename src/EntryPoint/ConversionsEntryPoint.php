@@ -86,7 +86,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ->setPartnerSellAmount($response->partner_sell_amount)
             ->setClientBuyAmount($response->client_buy_amount)
             ->setClientSellAmount($response->client_sell_amount)
-            ->setMidMarketRate($response->mid_market_rate)
+            ->setMidMarketRate($response->mid_market_rate ?? null)
             ->setCoreRate($response->core_rate)
             ->setPartnerRate($response->partner_rate)
             ->setClientRate($response->client_rate)
