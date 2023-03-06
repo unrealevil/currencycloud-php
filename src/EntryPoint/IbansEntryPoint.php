@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\FindIbansCriteria;
@@ -7,51 +8,49 @@ use CurrencyCloud\Model\Ibans;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 
-class IbansEntryPoint extends AbstractEntityEntryPoint {
+class IbansEntryPoint extends AbstractEntityEntryPoint
+{
 
-    /**
-     * @param FindIbansCriteria $findIbansCriteria
-     * @param Pagination $pagination
-     * @return Ibans
-     */
-    public function find(FindIbansCriteria $findIbansCriteria, Pagination $pagination){
+    public function find(?FindIbansCriteria $findIbansCriteria, ?Pagination $pagination): Ibans
+    {
         if (null === $findIbansCriteria) {
             $findIbansCriteria = new FindIbansCriteria();
         }
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('ibans/find', $findIbansCriteria, $pagination,
-            function ($findIbansCriteria){
+
+        return $this->doFind(
+            'ibans/find',
+            $findIbansCriteria,
+            $pagination,
+            function($findIbansCriteria) {
                 return $this->convertIbansCriteriaToRequest($findIbansCriteria);
             },
-            function ($response){
+            function($response) {
                 return $this->convertResponseToIban($response);
             },
-            function (array $entities, Pagination $pagination) {
+            function(array $entities, Pagination $pagination) {
                 return new Ibans($entities, $pagination);
             },
-            'ibans');
+            'ibans'
+        );
     }
 
-    /**
-     * @param FindIbansCriteria $findIbansCriteria
-     * @return array
-     */
-    protected function convertIbansCriteriaToRequest(FindIbansCriteria $findIbansCriteria){
-        $common = [
+    protected function convertIbansCriteriaToRequest(FindIbansCriteria $findIbansCriteria): array
+    {
+        return [
             'scope' => $findIbansCriteria->getScope(),
             'currency' => $findIbansCriteria->getCurrency(),
-            'account_id' => $findIbansCriteria->getAccountId()
+            'account_id' => $findIbansCriteria->getAccountId(),
         ];
-
-        return $common;
     }
 
-    protected function convertResponseToIban($response) {
+    protected function convertResponseToIban($response): Iban
+    {
         $iban = new Iban();
 
-        $this->setIdProperty($iban, $response->id, 'id');
+        $this->setIdProperty($iban, $response->id);
         $iban->setAccountId($response->account_id);
         $iban->setIbanCode($response->iban_code);
         $iban->setCurrency($response->currency);

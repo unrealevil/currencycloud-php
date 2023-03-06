@@ -6,201 +6,117 @@ use DateTime;
 
 class Settlement implements EntityInterface
 {
-
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $shortReference;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $status;
-    /**
-     * @var array
-     */
-    private $conversionIds;
+    private ?string $id = null;
+    private ?string $shortReference = null;
+    private ?string $type = null;
+    private ?string $status = null;
+    private ?array $conversionIds = null;
     /**
      * @var SettlementEntry[]
      */
-    private $entries;
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-    /**
-     * @var DateTime
-     */
-    private $releasedAt;
+    private ?array $entries = null;
+    private ?DateTime $createdAt = null;
+    private ?DateTime $updatedAt = null;
+    private ?DateTime $releasedAt = null;
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     *
-     * @return $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): self
     {
         $this->shortReference = $shortReference;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConversionIds()
-    {
-        return $this->conversionIds;
-    }
-
-    /**
-     * @param array $conversionIds
-     *
-     * @return $this
-     */
-    public function setConversionIds(array $conversionIds)
-    {
-        $this->conversionIds = $conversionIds;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getEntries()
-    {
-        return $this->entries;
-    }
-
-    /**
-     * @param SettlementEntry[] $entries
-     *
-     * @return $this
-     */
-    public function setEntries(array $entries)
-    {
-        $this->entries = $entries;
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getReleasedAt()
-    {
-        return $this->releasedAt;
-    }
-
-    /**
-     * @param DateTime $releasedAt
-     *
-     * @return $this
-     */
-    public function setReleasedAt(DateTime $releasedAt = null)
-    {
-        $this->releasedAt = $releasedAt;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
+    public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getConversionIds(): ?array
+    {
+        return $this->conversionIds;
+    }
+
+    public function setConversionIds(?array $conversionIds): self
+    {
+        $this->conversionIds = $conversionIds;
+
+        return $this;
+    }
+
+    public function getEntries(): ?array
+    {
+        return $this->entries;
+    }
+
+    public function setEntries(?array $entries): self
+    {
+        $this->entries = $entries;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getReleasedAt(): ?DateTime
+    {
+        return $this->releasedAt;
+    }
+
+    public function setReleasedAt(?DateTime $releasedAt): self
+    {
+        $this->releasedAt = $releasedAt;
+
         return $this;
     }
 }

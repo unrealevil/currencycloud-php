@@ -4,55 +4,18 @@ namespace CurrencyCloud\Model;
 
 class Pagination
 {
+    private ?int $totalEntries = null;
+    private ?int $totalPages = null;
+    private ?int $currentPage = null;
+    private ?int $perPage = null;
+    private ?int $previousPage = null;
+    private ?int $nextPage = null;
+    private ?string $order = null;
+    private ?string $orderAscDesc = null;
 
-    /**
-     * @var int
-     */
-    private $totalEntries;
-    /**
-     * @var int
-     */
-    private $totalPages;
-    /**
-     * @var int
-     */
-    private $currentPage;
-    /**
-     * @var int
-     */
-    private $perPage;
-    /**
-     * @var int
-     */
-    private $previousPage;
-    /**
-     * @var int
-     */
-    private $nextPage;
-    /**
-     * @var string
-     */
-    private $order;
-    /**
-     * @var string
-     */
-    private $orderAscDesc;
-
-    /**
-     * @param int $totalEntries
-     * @param int $totalPages
-     * @param int $currentPage
-     * @param int $perPage
-     * @param int $previousPage
-     * @param int $nextPage
-     * @param string $order
-     * @param string $orderAscDesc
-     *
-     * @return $this
-     */
-    public static function create($totalEntries, $totalPages, $currentPage, $perPage, $previousPage, $nextPage, $order, $orderAscDesc)
+    public static function create(?int $totalEntries, ?int $totalPages, ?int $currentPage, ?int $perPage, ?int $previousPage, ?int $nextPage, ?string $order, ?string $orderAscDesc): static
     {
-        return (new Pagination())
+        return (new self())
             ->setTotalEntries($totalEntries)
             ->setTotalPages($totalPages)
             ->setCurrentPage($currentPage)
@@ -63,170 +26,108 @@ class Pagination
             ->setOrderAscDesc($orderAscDesc);
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalEntries()
+    public function getTotalEntries(): ?int
     {
         return $this->totalEntries;
     }
 
-    /**
-     * @param int $totalEntries
-     *
-     * @return $this
-     */
-    public function setTotalEntries($totalEntries)
+    public function setTotalEntries(?int $totalEntries): self
     {
         $this->totalEntries = $totalEntries;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalPages()
+    public function getTotalPages(): ?int
     {
         return $this->totalPages;
     }
 
-    /**
-     * @param int $totalPages
-     *
-     * @return $this
-     */
-    public function setTotalPages($totalPages)
+    public function setTotalPages(?int $totalPages): self
     {
         $this->totalPages = $totalPages;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): ?int
     {
         return $this->currentPage;
     }
 
-    /**
-     * @param int $currentPage
-     *
-     * @return $this
-     */
-    public function setCurrentPage($currentPage)
+    public function setCurrentPage(?int $currentPage): self
     {
-        $this->currentPage = (null === $currentPage) ? null : (int) $currentPage;
+        $this->currentPage = $currentPage;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPerPage()
+    public function getPerPage(): ?int
     {
         return $this->perPage;
     }
 
-    /**
-     * @param int $perPage
-     *
-     * @return $this
-     */
-    public function setPerPage($perPage)
+    public function setPerPage(?int $perPage): self
     {
-        $this->perPage = (null === $perPage) ? null : (int) $perPage;
+        $this->perPage = $perPage;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPreviousPage()
+    public function getPreviousPage(): ?int
     {
         return $this->previousPage;
     }
 
-    /**
-     * @param int $previousPage
-     *
-     * @return $this
-     */
-    public function setPreviousPage($previousPage)
+    public function setPreviousPage(?int $previousPage): self
     {
         $this->previousPage = $previousPage;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getNextPage()
+    public function getNextPage(): ?int
     {
         return $this->nextPage;
     }
 
-    /**
-     * @param int $nextPage
-     *
-     * @return $this
-     */
-    public function setNextPage($nextPage)
+    public function setNextPage(?int $nextPage): self
     {
         $this->nextPage = $nextPage;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrder()
+    public function getOrder(): ?string
     {
         return $this->order;
     }
 
-    /**
-     * @param string $order
-     *
-     * @return $this
-     */
-    public function setOrder($order)
+    public function setOrder(?string $order): self
     {
-        $this->order = (null === $order) ? null : (string) $order;
+        $this->order = $order;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderAscDesc()
+    public function getOrderAscDesc(): ?string
     {
         return $this->orderAscDesc;
     }
 
-    /**
-     * @param string $orderAscDesc
-     *
-     * @return $this
-     */
-    public function setOrderAscDesc($orderAscDesc)
+    public function setOrderAscDesc(?string $orderAscDesc): self
     {
-        $this->orderAscDesc = (null === $orderAscDesc) ? null : (string) $orderAscDesc;
+        $this->orderAscDesc = $orderAscDesc;
+
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasNextPage()
+    public function hasNextPage(): bool
     {
         return -1 !== $this->nextPage;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPreviousPage()
+    public function hasPreviousPage(): bool
     {
         return -1 !== $this->previousPage;
     }

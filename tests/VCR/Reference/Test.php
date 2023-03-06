@@ -10,7 +10,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Reference/can_retrieve_beneficiary_required_details.yaml
      * @test
      */
-    public function canRetrieveBeneficiaryRequiredDetails()
+    public function canRetrieveBeneficiaryRequiredDetails(): void
     {
 
         $requiredDetails = $this->getAuthenticatedClient()->reference()->beneficiaryRequiredDetails('GBP', 'GB', 'GB');
@@ -21,7 +21,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
         );
         foreach ($dummy['details'] as $k => $detail) {
             $this->assertArrayHasKey($k, $requiredDetails);
-            $this->assertTrue($detail == (array) $requiredDetails[$k]);
+            $this->assertEquals($detail, (array) $requiredDetails[$k]);
         }
     }
 
@@ -29,7 +29,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Reference/can_retrieve_conversion_dates.yaml
      * @test
      */
-    public function canRetrieveConversionDates()
+    public function canRetrieveConversionDates(): void
     {
 
         $conversionDates = $this->getAuthenticatedClient()->reference()->conversionDates('GBPUSD');
@@ -41,7 +41,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $this->assertEquals($dummy['first_conversion_date'], $conversionDates->getFirstConversionDate()->format('Y-m-d'));
         $this->assertEquals($dummy['default_conversion_date'], $conversionDates->getDefaultConversionDate()->format('Y-m-d'));
         $invalidConversionDates = $conversionDates->getInvalidConversionDates();
-        $this->assertEquals(count($dummy['invalid_conversion_dates']), count($invalidConversionDates));
+        $this->assertSameSize($dummy['invalid_conversion_dates'], $invalidConversionDates);
         $i = 0;
         foreach ($dummy['invalid_conversion_dates'] as $date => $description) {
             $this->assertArrayHasKey($i, $invalidConversionDates);
@@ -54,7 +54,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Reference/can_retrieve_currencies.yaml
      * @test
      */
-    public function canRetrieveCurrencies()
+    public function canRetrieveCurrencies(): void
     {
 
         $currencies = $this->getAuthenticatedClient()->reference()->availableCurrencies();
@@ -64,7 +64,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
             true
         );
 
-        $this->assertEquals(count($dummy['currencies']), count($currencies));
+        $this->assertSameSize($dummy['currencies'], $currencies);
         foreach ($dummy['currencies'] as $k => $currency) {
             $this->assertArrayHasKey($k, $currencies);
             $this->assertEquals($currency['code'], $currencies[$k]->getCode());
@@ -80,7 +80,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Reference/can_retrieve_settlement_accounts.yaml
      * @test
      */
-    public function canRetrieveSettlementAccounts()
+    public function canRetrieveSettlementAccounts(): void
     {
 
         $settlementAccounts = $this->getAuthenticatedClient()->reference()->settlementAccounts('GBP');
@@ -90,7 +90,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
             true
         );
 
-        $this->assertEquals(count($dummy['settlement_accounts']), count($settlementAccounts));
+        $this->assertSameSize($dummy['settlement_accounts'], $settlementAccounts);
         foreach ($dummy['settlement_accounts'] as $k => $settlementAccount) {
             $this->assertArrayHasKey($k, $settlementAccounts);
             $this->validateObjectStrictName($settlementAccounts[$k], $settlementAccount);
@@ -101,7 +101,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Reference/can_get_payer_required_details.yaml
      * @test
      */
-    public function canGetPayerRequiredDetails()
+    public function canGetPayerRequiredDetails(): void
     {
         $dummy = json_decode(
             '{"details":[{"payer_entity_type":"company","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"},{"name":"payer_identification_value","validation_rule":"^.{1,255}"}],"payer_identification_type":"incorporation_number"},{"payer_entity_type":"individual","payment_type":"priority","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]},{"payer_entity_type":"company","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_company_name","validation_rule":"^.{1,255}"}]},{"payer_entity_type":"individual","payment_type":"regular","required_fields":[{"name":"payer_country","validation_rule":"^[A-z]{2}$"},{"name":"payer_city","validation_rule":"^.{1,255}"},{"name":"payer_address","validation_rule":"^.{1,255}"},{"name":"payer_first_name","validation_rule":"^.{1,255}"},{"name":"payer_last_name","validation_rule":"^.{1,255}"},{"name":"payer_date_of_birth","validation_rule":"/A([+-]?d{4}(?!d{2}\b))((-?)((0[1-9]|1[0-2])(\u0003([12]d|0[1-9]|3[01]))?|W([0-4]d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]d|[12]d{2}|3([0-5]d|6[1-6])))([T ]((([01]d|2[0-3])((:?)[0-5]d)?|24:?00)([.,]d+(?!:))?)?(\u000f[0-5]d([.,]d+)?)?([zZ]|([+-])([01]d|2[0-3]):?([0-5]d)?)?)?)?Z/"}]}]        }',
@@ -112,12 +112,12 @@ class Test extends BaseCurrencyCloudVCRTestCase
         $payerDetails = $payerRequiredDetails->getPayerDetails();
 
         foreach ($payerDetails as $key => $value) {
-            $this->assertSame($dummy['details'][$key]['payer_entity_type'], $payerDetails[$key]->getPayerEntityType());
-            $this->assertSame($dummy['details'][$key]['payment_type'], $payerDetails[$key]->getPaymentType());
+            $this->assertSame($dummy['details'][$key]['payer_entity_type'], $value->getPayerEntityType());
+            $this->assertSame($dummy['details'][$key]['payment_type'], $value->getPaymentType());
 
-            foreach($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue){
-                $this->assertSame($innerValue['name'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getName());
-                $this->assertSame($innerValue['validation_rule'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getValidationRule());
+            foreach ($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue) {
+                $this->assertSame($innerValue['name'], $value->getRequiredFields()[$innerKey]->getName());
+                $this->assertSame($innerValue['validation_rule'], $value->getRequiredFields()[$innerKey]->getValidationRule());
             }
         }
     }

@@ -19,7 +19,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Error/contains_full_details_for_api_error.yaml
      * @test
      */
-    public function containsFullDetailForApiError()
+    public function containsFullDetailForApiError(): void
     {
         try {
             $this->getInvalidClient()
@@ -49,7 +49,7 @@ errors:
         params:
             length: 64
 EOT;
-            $this->assertSame(sprintf($expected, phpversion()), (string) $e);
+            $this->assertSame(sprintf($expected, PHP_VERSION), (string) $e);
             $this->assertSame(
                 'api_key should be 64 character(s) long',
                 $e->getMessage()
@@ -67,7 +67,7 @@ EOT;
             $this->assertSame('auth_invalid_user_login_details', $e->getApiCode());
 
             $errors = $e->getErrors();
-            $this->assertInternalType('array', $errors);
+            $this->assertIsArray($errors);
             $this->assertArrayHasKey(0, $errors);
             $this->assertCount(1, $errors);
             $sub = $errors[0];
@@ -83,14 +83,14 @@ EOT;
 
             $params = $sub['params'];
 
-            $this->assertInternalType('array', $params);
+            $this->assertIsArray($params);
             $this->assertCount(1, $params);
             $this->assertArrayHasKey('length', $params);
             $this->assertSame(64, $params['length']);
 
             $params = $e->getParameters();
 
-            $this->assertInternalType('array', $params);
+            $this->assertIsArray($params);
             $this->assertCount(2, $params);
             $this->assertArrayHasKey('login_id', $params);
             $this->assertArrayHasKey('api_key', $params);
@@ -111,9 +111,10 @@ EOT;
      * @return CurrencyCloud
      */
     protected function getInvalidClient(
-        $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb57528f0',
-        $loginId = 'non-existent-login-id'
-    ) {
+        string $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb57528f0',
+        string $loginId = 'non-existent-login-id'
+    ): CurrencyCloud
+    {
         return parent::getClient($loginId, $apiKey);
     }
 
@@ -121,10 +122,9 @@ EOT;
      * @vcr Error/is_raised_on_a_bad_request.yaml
      * @test
      */
-    public function isRaisedOnABadRequest()
+    public function isRaisedOnABadRequest(): void
     {
-
-        $this->setExpectedException(BadRequestException::class);
+        $this->expectException(BadRequestException::class);
 
         $this->getInvalidClient()
             ->authenticate()
@@ -135,10 +135,9 @@ EOT;
      * @vcr Error/is_raised_on_a_forbidden_request.yaml
      * @test
      */
-    public function isRaisedOnAForbiddenRequest()
+    public function isRaisedOnAForbiddenRequest(): void
     {
-
-        $this->setExpectedException(ForbiddenException::class);
+        $this->expectException(ForbiddenException::class);
 
         $this->getClient()
             ->authenticate()
@@ -149,10 +148,9 @@ EOT;
      * @vcr Error/is_raised_on_an_internal_server_error.yaml
      * @test
      */
-    public function isRaisedOnAnInternalServerError()
+    public function isRaisedOnAnInternalServerError(): void
     {
-
-        $this->setExpectedException(InternalApplicationException::class);
+        $this->expectException(InternalApplicationException::class);
 
         $this->getClient()
             ->authenticate()
@@ -163,10 +161,9 @@ EOT;
      * @vcr Error/is_raised_on_incorrect_authentication_details.yaml
      * @test
      */
-    public function isRaisedOnIncorrectAuthenticationDetails()
+    public function isRaisedOnIncorrectAuthenticationDetails(): void
     {
-
-        $this->setExpectedException(AuthenticationException::class);
+        $this->expectException(AuthenticationException::class);
 
         $this->getInvalidClient('efb5ae2af84978b7a37f18dd61c8bbe139b403009faea83484405a3dcb64c4d8')
             ->authenticate()
@@ -177,10 +174,9 @@ EOT;
      * @vcr Error/is_raised_when_a_resource_is_not_found.yaml
      * @test
      */
-    public function isRaisedWhenAResourceIsNotFound()
+    public function isRaisedWhenAResourceIsNotFound(): void
     {
-
-        $this->setExpectedException(NotFoundException::class);
+        $this->expectException(NotFoundException::class);
 
         $client = $this->getAuthenticatedClient();
         $client->beneficiaries()
@@ -191,10 +187,9 @@ EOT;
      * @vcr Error/is_raised_when_too_many_requests_have_been_issued.yaml
      * @test
      */
-    public function isRaisedWhenToManyRequestsHaveBeenIssued()
+    public function isRaisedWhenToManyRequestsHaveBeenIssued(): void
     {
-
-        $this->setExpectedException(ToManyRequestsException::class);
+        $this->expectException(ToManyRequestsException::class);
 
         $this->getClient()
             ->authenticate()

@@ -6,5 +6,4 @@ use ArrayObject;
 
 class BeneficiaryRequiredDetail extends ArrayObject
 {
-
 }

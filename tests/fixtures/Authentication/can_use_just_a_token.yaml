@@ -1,15 +1,14 @@
--
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/beneficiaries/find
-    body: ''
-    headers:
-      X-Auth-Token: 2ec8a86c8cf6e0378a20ca6793f3260c
-  response:
-    status: 200
-    headers:
-      Date: Fri, 24 Apr 2015 21:23:27 GMT
-      Content-Type: application/json
-      Content-Length: '178'
-      X-Request-Id: '2771587521509285306'
-    body: '{"beneficiaries":[],"pagination":{"total_entries":0,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}'
+-   request:
+        method: GET
+        url: https://devapi.currencycloud.com/v2/beneficiaries/find
+        body: ''
+        headers:
+            X-Auth-Token: 2ec8a86c8cf6e0378a20ca6793f3260c
+    response:
+        status: 200
+        headers:
+            Date: Fri, 24 Apr 2015 21:23:27 GMT
+            Content-Type: application/json
+            Content-Length: '178'
+            X-Request-Id: '2771587521509285306'
+        body: '{"beneficiaries":[],"pagination":{"total_entries":0,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":-1,"order":"created_at","order_asc_desc":"asc"}}'

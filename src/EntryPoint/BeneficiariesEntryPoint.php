@@ -10,13 +10,7 @@ use stdClass;
 
 class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 {
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null|string $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function validate(Beneficiary $beneficiary, $onBehalfOf = null)
+    public function validate(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         $response = $this->request(
             'POST',
@@ -32,13 +26,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         return $this->createBeneficiaryFromResponse($response, true);
     }
 
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null|string $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function create(Beneficiary $beneficiary, $onBehalfOf = null)
+    public function create(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         return $this->doCreate(
             'beneficiaries/create',
@@ -53,13 +41,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param string $id
-     * @param null   $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Beneficiary
     {
         return $this->doRetrieve(
             \sprintf('beneficiaries/%s', $id),
@@ -70,13 +52,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null        $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function update(Beneficiary $beneficiary, $onBehalfOf = null)
+    public function update(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         return $this->doUpdate(
             \sprintf(
@@ -84,23 +60,17 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
                 $beneficiary->getId()
             ),
             $beneficiary,
-            function ($entity, $onBehalfOf) {
-                return $this->convertBeneficiaryToRequest($entity, $onBehalfOf, false, true);
+            function ($entity) {
+                return $this->convertBeneficiaryToRequest($entity, false, true);
             },
             function ($response) {
                 return $this->createBeneficiaryFromResponse($response);
-            }
+            },
+            $onBehalfOf
         );
     }
 
-    /**
-     * @param Beneficiary|null $beneficiary
-     * @param Pagination|null  $pagination
-     * @param null             $onBehalfOf
-     *
-     * @return Beneficiaries
-     */
-    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, $onBehalfOf = null)
+    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, string $onBehalfOf = null): Beneficiaries
     {
         if (null === $beneficiary) {
             $beneficiary = new Beneficiary();
@@ -113,8 +83,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'beneficiaries/find',
             $beneficiary,
             $pagination,
-            function ($entity, $onBehalfOf) {
-                return $this->convertBeneficiaryToRequest($entity, $onBehalfOf);
+            function ($entity) {
+                return $this->convertBeneficiaryToRequest($entity);
             },
             function ($response) {
                 return $this->createBeneficiaryFromResponse($response);
@@ -127,13 +97,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param Beneficiary $beneficiary
-     * @param null        $onBehalfOf
-     *
-     * @return Beneficiary
-     */
-    public function delete(Beneficiary $beneficiary, $onBehalfOf = null)
+    public function delete(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         return $this->doDelete(
             \sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
@@ -145,14 +109,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param Beneficiary $beneficiary
-     * @param bool        $convertForValidate
-     * @param bool        $convertForUpdate
-     *
-     * @return array
-     */
-    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, $convertForValidate = false, $convertForUpdate = false)
+    protected function convertBeneficiaryToRequest(Beneficiary $beneficiary, bool $convertForValidate = false, bool $convertForUpdate = false): array
     {
         $isDefaultBeneficiary = $beneficiary->isDefaultBeneficiary();
         $common = [
@@ -207,13 +164,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             ];
     }
 
-    /**
-     * @param stdClass $response
-     * @param bool     $fromValidate
-     *
-     * @return Beneficiary
-     */
-    private function createBeneficiaryFromResponse(stdClass $response, $fromValidate = false)
+    private function createBeneficiaryFromResponse(stdClass $response, bool $fromValidate = false): Beneficiary
     {
         $beneficiary = new Beneficiary();
 

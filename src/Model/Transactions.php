@@ -6,15 +6,13 @@ use ArrayIterator;
 
 class Transactions extends PaginatedData
 {
-
     /**
      * @var Transaction[]
      */
-    private $transactions;
+    private array $transactions;
 
     /**
      * @param Transaction[] $transactions
-     * @param Pagination $pagination
      */
     public function __construct(array $transactions, Pagination $pagination)
     {
@@ -25,7 +23,7 @@ class Transactions extends PaginatedData
     /**
      * @return Transaction[]
      */
-    public function getTransactions()
+    public function getTransactions(): array
     {
         return $this->transactions;
     }
@@ -33,7 +31,7 @@ class Transactions extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->transactions);
     }
@@ -41,7 +39,7 @@ class Transactions extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->transactions);
     }

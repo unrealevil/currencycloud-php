@@ -1,48 +1,18 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
-class Authorisation {
+class Authorisation
+{
+    private ?string $paymentId;
+    private ?string $paymentStatus;
+    private ?bool $updated;
+    private ?string $error;
+    private ?int $authSteptsTaken;
+    private ?int $authSteptsRequired;
+    private ?string $shortReference;
 
-    /**
-     * @var string
-     */
-    private $paymentId;
-    /**
-     * @var string
-     */
-    private $paymentStatus;
-    /**
-     * @var bool
-     */
-    private $updated;
-    /**
-     * @var string
-     */
-    private $error;
-    /**
-     * @var int
-     */
-    private $authSteptsTaken;
-    /**
-     * @var int
-     */
-    private $authSteptsRequired;
-    /**
-     * @var String
-     */
-    private $shortReference;
-
-    /**
-     * Authorisation constructor.
-     * @param string $paymentId
-     * @param string $paymentStatus
-     * @param bool $updated
-     * @param string $error
-     * @param int $authSteptsTaken
-     * @param int $authSteptsRequired
-     * @param String $shortReference
-     */
-    public function __construct($paymentId, $paymentStatus, $updated, $error, $authSteptsTaken, $authSteptsRequired, $shortReference)
+    public function __construct(?string $paymentId, ?string $paymentStatus, ?bool $updated, ?string $error, ?int $authSteptsTaken, ?int $authSteptsRequired, ?string $shortReference)
     {
         $this->paymentId = $paymentId;
         $this->paymentStatus = $paymentStatus;
@@ -53,60 +23,38 @@ class Authorisation {
         $this->shortReference = $shortReference;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentId()
+    public function getPaymentId(): ?string
     {
         return $this->paymentId;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentStatus()
+    public function getPaymentStatus(): ?string
     {
         return $this->paymentStatus;
     }
 
-    /**
-     * @return bool
-     */
-    public function getUpdated()
+    public function getUpdated(): ?bool
     {
         return $this->updated;
     }
 
-    /**
-     * @return string
-     */
-    public function getError()
+    public function getError(): ?string
     {
         return $this->error;
     }
 
-    /**
-     * @return int
-     */
-    public function getAuthSteptsTaken()
+    public function getAuthSteptsTaken(): ?int
     {
         return $this->authSteptsTaken;
     }
 
-    /**
-     * @return int
-     */
-    public function getAuthSteptsRequired()
+    public function getAuthSteptsRequired(): ?int
     {
         return $this->authSteptsRequired;
     }
 
-    /**
-     * @return String
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
-
 }

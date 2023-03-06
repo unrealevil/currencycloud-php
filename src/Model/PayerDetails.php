@@ -1,35 +1,21 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
-
-use stdClass;
-
-class PayerDetails {
-
-    /**
-     * @var string
-     */
-    private $payerEntityType;
-    /**
-     * @var string
-     */
-    private $paymentType;
+class PayerDetails
+{
+    private ?string $payerEntityType;
+    private ?string $paymentType;
     /**
      * @var RequiredFieldEntry[]
      */
-    private $requiredFields;
-    /**
-     * @var string
-     */
-    private $payerIdentificationType;
+    private ?array $requiredFields;
+    private ?string $payerIdentificationType;
 
     /**
-     * PayerDetails constructor.
-     * @param string $payerEntityType
-     * @param string $paymentType
      * @param RequiredFieldEntry[] $requiredFields
      */
-    public function __construct($payerEntityType, $paymentType, $payerIdentificationType,array $requiredFields)
+    public function __construct(?string $payerEntityType, ?string $paymentType, ?string $payerIdentificationType, ?array $requiredFields)
     {
         $this->payerEntityType = $payerEntityType;
         $this->paymentType = $paymentType;
@@ -37,36 +23,54 @@ class PayerDetails {
         $this->payerIdentificationType = $payerIdentificationType;
     }
 
-    /**
-     * @return string
-     */
-    public function getPayerEntityType()
+    public function getPayerEntityType(): ?string
     {
         return $this->payerEntityType;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentType()
+    public function setPayerEntityType(?string $payerEntityType): self
+    {
+        $this->payerEntityType = $payerEntityType;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?string
     {
         return $this->paymentType;
     }
 
+    public function setPaymentType(?string $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
     /**
-     * @return RequiredFieldEntry[]
+     * @return RequiredFieldEntry[]|null
      */
-    public function getRequiredFields()
+    public function getRequiredFields(): ?array
     {
         return $this->requiredFields;
     }
 
-    /**
-     * @return string
-     */
-    public function getPayerIdentificationType()
+    public function setRequiredFields(?array $requiredFields): self
+    {
+        $this->requiredFields = $requiredFields;
+
+        return $this;
+    }
+
+    public function getPayerIdentificationType(): ?string
     {
         return $this->payerIdentificationType;
     }
 
+    public function setPayerIdentificationType(?string $payerIdentificationType): self
+    {
+        $this->payerIdentificationType = $payerIdentificationType;
+
+        return $this;
+    }
 }

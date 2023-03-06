@@ -5,6 +5,7 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
+use DateTimeInterface;
 
 class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 {
@@ -12,7 +13,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canGetPaymentDates()
+    public function canGetPaymentDates(): void
     {
         $data = '{"invalid_payment_dates":{"2013-04-18":"Good Friday","2013-04-19":"No trading on Saturday"},"first_payment_date":"2013-04-15"}';
 
@@ -20,14 +21,14 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'reference/payment_dates',
-            [
-                'currency' => 'EUR',
-                'start_date' => $date->format(DateTime::ISO8601),
-            ]
-        )
+                json_decode($data),
+                'GET',
+                'reference/payment_dates',
+                [
+                    'currency' => 'EUR',
+                    'start_date' => $date->format(DateTimeInterface::ATOM),
+                ]
+            )
         );
 
         $payments = $entryPoint->paymentDates('EUR', $date);
@@ -39,7 +40,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $temp = json_decode($data, true)['invalid_payment_dates'];
 
-        $this->assertSame(count($temp), count($invalid));
+        $this->assertCount(count($temp), $invalid);
 
         foreach ($invalid as $single) {
             $k = $single->getDate()->format('Y-m-d');
@@ -51,7 +52,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canGetPayerRequirementDetails()
+    public function canGetPayerRequirementDetails(): void
     {
         $data = '{
             "details": [
@@ -175,7 +176,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
                 [
                     'payer_country' => 'GB',
                     'payer_entity_type' => null,
-                    'payment_type' => null
+                    'payment_type' => null,
                 ]
             )
         );
@@ -184,29 +185,27 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $dummy = json_decode($data, true);
 
-        $this->assertSame(count($dummy['details']), count($payerRequiredDetails->getPayerDetails()));
+        $this->assertCount(count($dummy['details']), $payerRequiredDetails->getPayerDetails());
 
         $payerDetails = $payerRequiredDetails->getPayerDetails();
 
         foreach ($payerDetails as $key => $value) {
-            $this->assertSame($dummy['details'][$key]['payer_entity_type'], $payerDetails[$key]->getPayerEntityType());
-            $this->assertSame($dummy['details'][$key]['payment_type'], $payerDetails[$key]->getPaymentType());
+            $this->assertSame($dummy['details'][$key]['payer_entity_type'], $value->getPayerEntityType());
+            $this->assertSame($dummy['details'][$key]['payment_type'], $value->getPaymentType());
 
-            foreach($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue){
-                $this->assertSame($innerValue['name'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getName());
-                $this->assertSame($innerValue['validation_rule'], $payerDetails[$key]->getRequiredFields()[$innerKey]->getValidationRule());
+            foreach ($dummy['details'][$key]['required_fields'] as $innerKey => $innerValue) {
+                $this->assertSame($innerValue['name'], $value->getRequiredFields()[$innerKey]->getName());
+                $this->assertSame($innerValue['validation_rule'], $value->getRequiredFields()[$innerKey]->getValidationRule());
             }
         }
     }
 
-
     /**
      * @test
      */
-    public function canGetBankDetails()
+    public function canGetBankDetails(): void
     {
         $data = '{"identifier_value":"GB19TCCL00997901654515","identifier_type":"iban","account_number":"GB19TCCL00997901654515","bic_swift":"TCCLGB22XXX","bank_name":"THE CURRENCY CLOUD LIMITED","bank_branch":"","bank_address":"12 STEWARD STREET  THE STEWARD BUILDING FLOOR 0","bank_city":"LONDON","bank_state":"LONDON","bank_post_code":"E1 6FQ","bank_country":"UNITED KINGDOM","bank_country_ISO":"GB","currency":null}';
-
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
@@ -222,7 +221,6 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $details = $entryPoint->bankDetails('iban', 'GB19TCCL00997901654515');
 
-
         $this->assertSame('GB19TCCL00997901654515', $details->getIdentifierValue());
         $this->assertSame('iban', $details->getIdentifierType());
         $this->assertSame('GB19TCCL00997901654515', $details->getAccountNumber());
@@ -236,7 +234,5 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('UNITED KINGDOM', $details->getBankCountry());
         $this->assertSame('GB', $details->getBankCountryISO());
         $this->assertSame('', $details->getCurrency());
-
-
     }
 }

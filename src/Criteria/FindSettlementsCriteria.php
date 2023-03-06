@@ -6,143 +6,82 @@ use DateTime;
 
 class FindSettlementsCriteria
 {
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $updatedAtFrom = null;
+    private ?DateTime $updatedAtTo = null;
+    private ?DateTime $releasedAtFrom = null;
+    private ?DateTime $releasedAtTo = null;
 
-    /**
-     * @var DateTime|null
-     */
-    private $createdAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $createdAtTo;
-    /**
-     * @var DateTime|null
-     */
-    private $updatedAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $updatedAtTo;
-    /**
-     * @var DateTime|null
-     */
-    private $releasedAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $releasedAtTo;
-
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param DateTime $createdAtFrom
-     *
-     * @return $this
-     */
-    public function setCreatedAtFrom(DateTime $createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param DateTime $createdAtTo
-     *
-     * @return $this
-     */
-    public function setCreatedAtTo(DateTime $createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?DateTime
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @param DateTime $updatedAtFrom
-     *
-     * @return $this
-     */
-    public function setUpdatedAtFrom(DateTime $updatedAtFrom)
+    public function setUpdatedAtFrom(?DateTime $updatedAtFrom): self
     {
         $this->updatedAtFrom = $updatedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?DateTime
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @param DateTime $updatedAtTo
-     *
-     * @return $this
-     */
-    public function setUpdatedAtTo(DateTime $updatedAtTo)
+    public function setUpdatedAtTo(?DateTime $updatedAtTo): self
     {
         $this->updatedAtTo = $updatedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getReleasedAtFrom()
+    public function getReleasedAtFrom(): ?DateTime
     {
         return $this->releasedAtFrom;
     }
 
-    /**
-     * @param DateTime $releasedAtFrom
-     *
-     * @return $this
-     */
-    public function setReleasedAtFrom(DateTime$releasedAtFrom)
+    public function setReleasedAtFrom(?DateTime $releasedAtFrom): self
     {
         $this->releasedAtFrom = $releasedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getReleasedAtTo()
+    public function getReleasedAtTo(): ?DateTime
     {
         return $this->releasedAtTo;
     }
 
-    /**
-     * @param DateTime $releasedAtTo
-     *
-     * @return $this
-     */
-    public function setReleasedAtTo(DateTime$releasedAtTo)
+    public function setReleasedAtTo(?DateTime $releasedAtTo): self
     {
         $this->releasedAtTo = $releasedAtTo;
+
         return $this;
     }
 }

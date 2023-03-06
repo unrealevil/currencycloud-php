@@ -4,7 +4,6 @@ namespace CurrencyCloud;
 
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
-use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use stdClass;
@@ -12,18 +11,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Client
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-    /**
-     * @var Session
-     */
-    protected $session;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    protected ClientInterface $client;
+    protected Session $session;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(Session $session, ClientInterface $client, EventDispatcherInterface $eventDispatcher)
     {
@@ -33,25 +23,10 @@ class Client
     }
 
     /**
-     * @param string $method
-     * @param string$uri
-     * @param array $queryParams
-     * @param array $requestParams
-     * @param array $options
-     * @param bool $secured
-     *
-     * @return array|stdClass
-     * @throws GuzzleException
-     * @throws Exception
+     * @throws \RuntimeException|\JsonException|GuzzleException
      */
-    public function request(
-        $method,
-        $uri,
-        array $queryParams,
-        array $requestParams,
-        array $options,
-        $secured
-    ) {
+    public function request(string $method, string $uri, array $queryParams, array $requestParams, array $options, bool $secured): array|stdClass
+    {
         $this->eventDispatcher->dispatch(new BeforeClientRequestEvent(
             $method,
             $uri,
@@ -114,11 +89,7 @@ class Client
 
             switch ($response->getStatusCode()) {
                 case 200:
-                    $data = json_decode(
-                        $response->getBody()
-                            ->getContents()
-                    );
-                    return $data;
+                    return \json_decode($response->getBody()->getContents(), flags: \JSON_THROW_ON_ERROR);
                 default:
                     //Everything that's not 200 consider error and dispatch event
                     $event = new ClientHttpErrorEvent(
@@ -140,20 +111,18 @@ class Client
                 $this->session->clearOnBehalfOf();
             }
         }
-        throw new Exception(
-            $response->getBody()
-                ->getContents()
-        );
+        throw new \RuntimeException($response->getBody()->getContents());
     }
 
-    protected function formatFormData(array &$options){
+    protected function formatFormData(array &$options): ?array
+    {
         $newForm = [];
         if(empty($options['form_params'])){
             return $newForm;
         }
         foreach ($options['form_params'] as $name => $param){
             if(is_array($param)){
-                foreach ($param as $key => $value){
+                foreach ($param as $value){
                     $newForm[] = ['name' => $name."[]", 'contents' => $value];
                 }
             } else {
@@ -162,15 +131,11 @@ class Client
         }
         unset($options['form_params']);
         $options['multipart'] = $newForm;
+
+        return null;
     }
 
-    /**
-     * @param string $path
-     * @param array $queryParams
-     *
-     * @return string
-     */
-    protected function applyApiBaseUrl($path, array $queryParams)
+    protected function applyApiBaseUrl(string $path, array $queryParams): string
     {
         if (count($queryParams) > 0) {
             return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));

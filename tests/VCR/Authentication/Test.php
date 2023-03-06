@@ -12,7 +12,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Authentication/can_be_closed.yaml
      * @test
      */
-    public function canBeClosed()
+    public function canBeClosed(): void
     {
 
         $client = $this->getClient();
@@ -26,15 +26,14 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Authentication/can_use_just_a_token.yaml
      * @test
      */
-    public function canUseJustToken()
+    public function canUseJustToken(): void
     {
 
         $client = $this->getAuthenticatedClient('2ec8a86c8cf6e0378a20ca6793f3260c');
 
-
         $beneficiaries = $client->beneficiaries()->find();
 
-        $this->assertTrue($beneficiaries instanceof Beneficiaries);
+        $this->assertInstanceOf(Beneficiaries::class, $beneficiaries);
         $this->assertCount(0, $beneficiaries->getBeneficiaries());
 
         $dummy = json_decode(
@@ -48,14 +47,14 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Authentication/happens_lazily.yaml
      * @test
      */
-    public function happensLazily()
+    public function happensLazily(): void
     {
         $client = $this->getClient();
         $client->getSession()->setAuthToken("038022bcd2f372cac7bab448db7b5c3b");
 
         $beneficiaries = $client->beneficiaries()->find();
 
-        $this->assertTrue($beneficiaries instanceof Beneficiaries);
+        $this->assertInstanceOf(Beneficiaries::class, $beneficiaries);
         $this->assertCount(0, $beneficiaries->getBeneficiaries());
 
         $dummy = json_decode(
@@ -70,13 +69,13 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Authentication/handles_session_timeout_error.yaml
      * @test
      */
-    public function handlesSessionTimeoutError()
+    public function handlesSessionTimeoutError(): void
     {
         $client = $this->getAuthenticatedClient();
 
         $beneficiaries = $client->beneficiaries()->find();
 
-        $this->assertTrue($beneficiaries instanceof Beneficiaries);
+        $this->assertInstanceOf(Beneficiaries::class, $beneficiaries);
         $this->assertCount(0, $beneficiaries->getBeneficiaries());
 
         $dummy = json_decode(

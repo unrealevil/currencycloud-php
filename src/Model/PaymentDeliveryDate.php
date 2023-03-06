@@ -2,43 +2,18 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
+
 class PaymentDeliveryDate
 {
+    private ?DateTime $paymentDate;
+    private ?DateTime $paymentDeliveryDate;
+    private ?DateTime $paymentCutoffTime;
+    private string $paymentType;
+    private string $currency;
+    private string $bankCountry;
 
-    /**
-     * @var DateTime
-     */
-    private $paymentDate;
-    /**
-     * @var DateTime
-     */
-    private $paymentDeliveryDate;
-    /**
-     * @var DateTime
-     */
-    private $paymentCutoffTime;
-    /**
-     * @var string
-     */
-    private $paymentType;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $bankCountry;
-
-    /**
-     * @param DateTime $paymentDate
-     * @param DateTime $paymentDeliveryDate
-     * @param DateTime $paymentCutoffTime
-     * @param string $paymentType
-     * @param string $currency
-     * @param string $canSell
-     */
-    public function __construct($paymentDate, $paymentDeliveryDate, $paymentCutoffTime, $paymentType, $currency, $bankCountry)
+    public function __construct(?DateTime $paymentDate, ?DateTime $paymentDeliveryDate, ?DateTime $paymentCutoffTime, ?string $paymentType, ?string $currency, ?string $bankCountry)
     {
         $this->paymentDate =  $paymentDate;
         $this->paymentDeliveryDate = $paymentDeliveryDate;
@@ -48,53 +23,33 @@ class PaymentDeliveryDate
         $this->bankCountry = (string) $bankCountry;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getPaymentDate()
+    public function getPaymentDate(): ?DateTime
     {
         return $this->paymentDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getPaymentDeliveryDate()
+    public function getPaymentDeliveryDate(): ?DateTime
     {
         return $this->paymentDeliveryDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getPaymentCutoffTime()
+    public function getPaymentCutoffTime(): ?DateTime
     {
         return $this->paymentCutoffTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentType()
+    public function getPaymentType(): string
     {
         return $this->paymentType;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountry()
+    public function getBankCountry(): string
     {
         return $this->bankCountry;
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\Criteria\FindTransferCriteria;
@@ -7,12 +8,14 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
-class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
+class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
+{
 
     /**
      * @test
      */
-    public function canGetTransfer(){
+    public function canGetTransfer(): void
+    {
         $data = '{
             "id": "dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a",
             "short_reference": "BT-20180426-GKCRMN",
@@ -36,14 +39,14 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
                 'GET',
                 'transfers/dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a',
                 [
-                    'on_behalf_of' => null
+                    'on_behalf_of' => null,
                 ]
             )
         );
 
         $transfer = $entrypoint->retrieve('dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a');
 
-        $dummy = json_decode($data,true);
+        $dummy = json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transfer->getId());
         $this->assertSame($dummy['short_reference'], $transfer->getShortReference());
@@ -58,7 +61,8 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
     /**
      * @test
      */
-    public function canFindTransfers(){
+    public function canFindTransfers(): void
+    {
         $data = '{
                 "transfers": [
                 {
@@ -145,7 +149,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
                     'per_page' => null,
                     'order' => null,
                     'order_asc_desc' => null,
-                    'on_behalf_of' => null
+                    'on_behalf_of' => null,
                 ]
             )
         );
@@ -155,11 +159,11 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
 
         $transfers = $entrypoint->find($findTransfersCriteria, $pagination);
 
-        $dummy = json_decode($data,true);
+        $dummy = json_decode($data, true);
 
         $this->assertSame($dummy['pagination']['total_entries'], $transfers->getPagination()->getTotalEntries());
 
-        foreach ($dummy['transfers'] as $key => $value){
+        foreach ($dummy['transfers'] as $key => $value) {
             $this->assertSame($value['id'], $transfers->getTransfers()[$key]->getId());
             $this->assertSame($value['short_reference'], $transfers->getTransfers()[$key]->getShortReference());
             $this->assertSame($value['source_account_id'], $transfers->getTransfers()[$key]->getSourceAccountId());
@@ -174,7 +178,8 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
     /**
      * @test
      */
-    public function canCreateTransfer(){
+    public function canCreateTransfer(): void
+    {
         $data = '{
             "id": "d7b775da-ab7c-4584-82f8-e036dbc2dafb",
             "short_reference": "BT-20181030-KVMTTT",
@@ -203,7 +208,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
                     'destination_account_id' => '22ed17b5-b90c-424e-aa78-d24928b1778e',
                     'currency' => 'GBP',
                     'amount' => '100',
-                    'reason' => null
+                    'reason' => null,
                 ]
             )
         );
@@ -215,7 +220,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase {
             '100'
         );
 
-        $dummy = json_decode($data,true);
+        $dummy = json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transfer->getId());
         $this->assertSame($dummy['short_reference'], $transfer->getShortReference());

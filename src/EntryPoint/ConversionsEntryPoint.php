@@ -9,36 +9,19 @@ use CurrencyCloud\Model\ConversionCancellationQuote;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\ConversionDateChangeQuote;
-use CurrencyCloud\Model\ConversionPreview;
 use CurrencyCloud\Model\ConversionProfitLoss;
 use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\Conversions;
 use CurrencyCloud\Model\ConversionProfitLossCollection;
 use CurrencyCloud\Model\ConversionSplitHistory;
-use CurrencyCloud\Model\ConversionSplitPreview;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
+use DateTimeInterface;
 use stdClass;
 
 class ConversionsEntryPoint extends AbstractEntryPoint
 {
-
-    /**
-     * @param Conversion $conversion
-     * @param string $amount
-     * @param string $reason
-     * @param boolean $termAgreement
-     * @param null|string $onBehalfOf
-     *
-     * @return Conversion
-     */
-    public function create(
-        Conversion $conversion,
-        $amount,
-        $reason,
-        $termAgreement,
-        $onBehalfOf = null
-    )
+    public function create(Conversion $conversion, string $amount, string $reason, bool $termAgreement, string $onBehalfOf = null): Conversion
     {
         $conversionDate = $conversion->getConversionDate();
         $response = $this->request(
@@ -51,31 +34,26 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'fixed_side' => $conversion->getFixedSide(),
                 'amount' => $amount,
                 'reason' => $reason,
-                'term_agreement' => $termAgreement ? "true" : "false",
-                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTime::RFC3339),
+                'term_agreement' => $termAgreement ? 'true' : 'false',
+                'conversion_date' => (null === $conversionDate) ? null : $conversionDate->format(DateTimeInterface::RFC3339),
                 'client_buy_amount' => $conversion->getClientBuyAmount(),
                 'client_sell_amount' => $conversion->getClientSellAmount(),
                 'unique_request_id' => $conversion->getUniqueRequestId(),
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createConversionFromResponse($response);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Conversion
-     */
-    private function createConversionFromResponse(stdClass $response)
+    private function createConversionFromResponse(stdClass $response): Conversion
     {
         $conversion = new Conversion();
         $conversion->setAccountId($response->account_id)
             ->setCreatorContactId($response->creator_contact_id)
             ->setShortReference($response->short_reference)
-            ->setSettlementDate(new DateTime($response->settlement_date))
-            ->setConversionDate(new DateTime($response->conversion_date))
+            ->setSettlementDate($response->settlement_date)
+            ->setConversionDate($response->conversion_date)
             ->setStatus($response->status)
             ->setPartnerStatus($response->partner_status)
             ->setCurrencyPair($response->currency_pair)
@@ -105,12 +83,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $conversion;
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return CancelledConversion
-     */
-    private function createConversionCancellationFromResponse(stdClass $response)
+    private function createConversionCancellationFromResponse(stdClass $response): CancelledConversion
     {
         $conversionCancellation = new CancelledConversion();
         $conversionCancellation->setAccountId($response->account_id)
@@ -127,12 +100,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $conversionCancellation;
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return ConversionDateChanged
-     */
-    private function createConversionDateChangeFromResponse(stdClass $response)
+    private function createConversionDateChangeFromResponse(stdClass $response): ConversionDateChanged
     {
 
         $conversionDateChanged = new ConversionDateChanged();
@@ -143,17 +111,12 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ->setNewSettlementDate($response->new_settlement_date)
             ->setOldConversionDate($response->old_conversion_date)
             ->setOldSettlementDate($response->old_conversion_date)
-            ->setEventDateTime(new DateTime($response->event_date_time));
+            ->setEventDateTime($response->event_date_time);
 
         return $conversionDateChanged;
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return ConversionSplit
-     */
-    private function createConversionSplitFromResponse(stdClass $response)
+    private function createConversionSplitFromResponse(stdClass $response): ConversionSplit
     {
         $conversionSplit = new ConversionSplit();
 
@@ -181,36 +144,24 @@ class ConversionsEntryPoint extends AbstractEntryPoint
 
         $conversionSplit->setParentConversion($parent_conversion)
             ->setChildConversion($child_conversion);
-        
+
         return $conversionSplit;
     }
 
-    /**
-     * @param string $id
-     * @param string|null $onBehalfOf
-     *
-     * @return Conversion
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Conversion
     {
         $response = $this->request(
             'GET',
             sprintf('conversions/%s', $id),
             [
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createConversionFromResponse($response);
     }
 
-    /**
-     * @param FindConversionsCriteria|null $criteria
-     * @param null $onBehalfOf
-     *
-     * @return Conversions
-     */
-    public function find(FindConversionsCriteria $criteria = null, $onBehalfOf = null)
+    public function find(FindConversionsCriteria $criteria = null, string $onBehalfOf = null): Conversions
     {
         if (null === $criteria) {
             $criteria = new FindConversionsCriteria();
@@ -220,30 +171,26 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'GET',
             'conversions/find',
             $this->convertFindConversionCriteriaToRequest($criteria) + [
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
-
 
         $conversions = [];
         foreach ($response->conversions as $data) {
             $conversions[] = $this->createConversionFromResponse($data);
         }
+
         return new Conversions($conversions, $this->createPaginationFromResponse($response));
     }
 
-    /**
-     * @param FindConversionsCriteria $criteria
-     *
-     * @return array
-     */
-    private function convertFindConversionCriteriaToRequest(FindConversionsCriteria $criteria)
+    private function convertFindConversionCriteriaToRequest(FindConversionsCriteria $criteria): array
     {
         $createdAtFrom = $criteria->getCreatedAtFrom();
         $createdAtTo = $criteria->getCreatedAtTo();
         $updatedAtFrom = $criteria->getUpdatedAtFrom();
         $updatedAtTo = $criteria->getUpdatedAtTo();
         $conversionIds = $criteria->getConversionIds();
+
         return [
             'short_reference' => $criteria->getShortReference(),
             'status' => $criteria->getStatus(),
@@ -251,10 +198,10 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'buy_currency' => $criteria->getBuyCurrency(),
             'sell_currency' => $criteria->getSellCurrency(),
             'conversion_ids' => (null === $conversionIds) ? null : implode(',', $conversionIds),
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTimeInterface::ATOM),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTimeInterface::ATOM),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTimeInterface::ATOM),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTimeInterface::ATOM),
             'currency_pair' => $criteria->getCurrencyPair(),
             'partner_buy_amount_from' => $criteria->getPartnerBuyAmountFrom(),
             'partner_buy_amount_to' => $criteria->getPartnerBuyAmountTo(),
@@ -264,97 +211,70 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'buy_amount_to' => $criteria->getBuyAmountTo(),
             'sell_amount_from' => $criteria->getSellAmountFrom(),
             'sell_amount_to' => $criteria->getSellAmountTo(),
-            'unique_request_id' => $criteria->getUniqueRequestId()
+            'unique_request_id' => $criteria->getUniqueRequestId(),
         ];
     }
 
-
-    /**
-     * @param string $id
-     * @param string|null $notes
-     *
-     * @return CancelledConversion
-     */
-    public function cancel($id, $notes = null)
+    public function cancel(string $id, string $notes = null): CancelledConversion
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/cancel', $id),
             [],
             [
-                'notes' => $notes
+                'notes' => $notes,
             ]
         );
 
         return $this->createConversionCancellationFromResponse($response);
     }
 
-
-    /**
-     * @param string $id
-     * @param string $new_settlement_date
-     * @param string|null $onBehalfOf
-     *
-     * @return CancelledConversion
-     */
-    public function date_change($id, $new_settlement_date)
+    public function date_change(string $id, string $new_settlement_date): CancelledConversion|ConversionDateChanged
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/date_change', $id),
             [
-                'new_settlement_date' => $new_settlement_date
+                'new_settlement_date' => $new_settlement_date,
             ]
         );
 
         return $this->createConversionDateChangeFromResponse($response);
     }
 
-    /**
-     * @param string $id
-     * @param string $amount
-     * @param string|null $onBehalfOf
-     *
-     * @return ConversionSplit
-     */
-    public function split($id, $amount)
+    public function split(string $id, string $amount): ConversionSplit
     {
         $response = $this->request(
             'POST',
             sprintf('conversions/%s/split', $id),
             [
-                'amount' => $amount
+                'amount' => $amount,
             ]
         );
 
         return $this->createConversionSplitFromResponse($response);
     }
 
-    /**
-     * @param ConversionProfitLossCriteria $conversionProfitLossCriteria
-     * @param Pagination $pagination
-     *
-     * @return ConversionProfitLossCollection
-     */
-    public function retrieveProfitLoss(ConversionProfitLossCriteria $conversionProfitLossCriteria, Pagination $pagination)
+    public function retrieveProfitLoss(?ConversionProfitLossCriteria $conversionProfitLossCriteria, ?Pagination $pagination): ConversionProfitLossCollection
     {
-        if(empty($conversionProfitLossCriteria)){
+        if (null === $conversionProfitLossCriteria) {
             $conversionProfitLossCriteria = new ConversionProfitLossCriteria();
         }
-        if(empty($pagination)){
+        if (null === $pagination) {
             $pagination = new Pagination();
         }
 
         $response = $this->request(
             'GET',
-            sprintf('conversions/profit_and_loss'),
+            'conversions/profit_and_loss',
             array_merge($this->createRequestFromConversionProfitLossCriteria($conversionProfitLossCriteria), $this->convertPaginationToRequest($pagination))
         );
 
         return $this->createConversionsProfitLossFromResponse($response);
     }
 
-    protected function createRequestFromConversionProfitLossCriteria(ConversionProfitLossCriteria $conversionProfitLossCriteria){
+    protected function createRequestFromConversionProfitLossCriteria(ConversionProfitLossCriteria $conversionProfitLossCriteria): array
+    {
         return [
             'account_id' => $conversionProfitLossCriteria->getAccountId(),
             'contact_id' => $conversionProfitLossCriteria->getContactId(),
@@ -365,21 +285,23 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'amount_from' => $conversionProfitLossCriteria->getAmountFrom(),
             'amount_to' => $conversionProfitLossCriteria->getAmountTo(),
             'currency' => $conversionProfitLossCriteria->getCurrency(),
-            'scope' => $conversionProfitLossCriteria->getScope()
+            'scope' => $conversionProfitLossCriteria->getScope(),
         ];
     }
 
-    protected function createConversionsProfitLossFromResponse($response){
+    protected function createConversionsProfitLossFromResponse($response): ConversionProfitLossCollection
+    {
         $conversions = [];
 
-        foreach($response->conversion_profit_and_losses as $key => $value){
-            array_push($conversions, $this->createConversionProfitLossFromResponse($value));
+        foreach ($response->conversion_profit_and_losses as $value) {
+            $conversions[] = $this->createConversionProfitLossFromResponse($value);
         }
 
         return new ConversionProfitLossCollection($conversions, $this->createPaginationFromResponse($response));
     }
 
-    protected function createConversionProfitLossFromResponse($object){
+    protected function createConversionProfitLossFromResponse($object): ConversionProfitLoss
+    {
         return new ConversionProfitLoss(
             $object->account_id,
             $object->contact_id,
@@ -394,29 +316,21 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
     }
 
-    /**
-     * @param string $id
-     * @param string $newSettlementDate
-     * @return ConversionDateChangeQuote
-     */
-    public function retrieveDateChangeQuote($id, $newSettlementDate)
+    public function retrieveDateChangeQuote(string $id, string $newSettlementDate): ConversionDateChangeQuote
     {
         $response = $this->request(
             'GET',
             sprintf('conversions/%s/date_change_quote', $id),
             [
-                'new_settlement_date' => $newSettlementDate
+                'new_settlement_date' => $newSettlementDate,
             ]
         );
 
         return $this->createConversionDateChangeQuoteFromResponse($response);
     }
 
-    /**
-     * @param stdClass $response
-     * @return ConversionDateChangeQuote
-     */
-    protected function createConversionDateChangeQuoteFromResponse($response){
+    protected function createConversionDateChangeQuoteFromResponse(stdClass $response): ConversionDateChangeQuote
+    {
         return new ConversionDateChangeQuote(
             $response->conversion_id,
             $response->amount,
@@ -429,40 +343,31 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
     }
 
-    /**
-     * @param string $id
-     * @param string $amount
-     * @return ConversionSplit
-     */
-    public function retrieveSplitPreview($id, $amount)
+    public function retrieveSplitPreview(string $id, string $amount): ConversionSplit
     {
         $response = $this->request(
             'GET',
             sprintf('conversions/%s/split_preview', $id),
             [
-                'amount' => $amount
+                'amount' => $amount,
             ]
         );
 
         return $this->createConversionSplitFromResponse($response);
     }
 
-    /**
-     * @param string $id
-     * @return ConversionSplitHistory
-     */
-    public function retrieveSplitHistory($id)
+    public function retrieveSplitHistory(string $id): ConversionSplitHistory
     {
         $response = $this->request(
             'GET',
             sprintf('conversions/%s/split_history', $id),
-            []
         );
 
         return $this->convertConversionSplitHistoryFromResponse($response);
     }
 
-    protected function convertConversionSplitHistoryFromResponse($response){
+    protected function convertConversionSplitHistoryFromResponse($response): ConversionSplitHistory
+    {
         return new ConversionSplitHistory(
             $this->createConversionObjectFromResponse($response->parent_conversion),
             $this->createConversionObjectFromResponse($response->origin_conversion),
@@ -470,14 +375,10 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         );
     }
 
-    /**
-     * @param stdClass $dummyObject
-     * @return Conversion
-     */
-    protected function createConversionObjectFromResponse($dummyObject){
-
+    protected function createConversionObjectFromResponse(?stdClass $dummyObject): Conversion
+    {
         $conversion = new Conversion();
-        if(!empty($dummyObject)) {
+        if (null !== $dummyObject) {
             $conversion->setShortReference($dummyObject->short_reference)
                 ->setClientSellAmount($dummyObject->sell_amount)
                 ->setSellCurrency($dummyObject->sell_currency)
@@ -492,42 +393,29 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $conversion;
     }
 
-    /**
-     * @param $response
-     * @return Conversion[]
-     */
-    protected function convertChildConversionsFromResponseArray($dummyArray) {
+    protected function convertChildConversionsFromResponseArray($dummyArray): array
+    {
         $childConversions = [];
 
-        foreach ($dummyArray as $key => $value){
-            array_push(
-                $childConversions,
-                $this->createConversionObjectFromResponse($value));
+        foreach ($dummyArray as $value) {
+            $childConversions[] = $this->createConversionObjectFromResponse($value);
         }
 
         return $childConversions;
     }
 
-    /**
-     * @param string $id
-     * @return ConversionCancellationQuote
-     */
-    public function retrieveCancellationQuote($id)
+    public function retrieveCancellationQuote(string $id): ConversionCancellationQuote
     {
         $response = $this->request(
             'GET',
             sprintf('conversions/%s/cancellation_quote', $id),
-            []
         );
 
         return $this->createCancellationQuotefromResponse($response);
     }
 
-    /**
-     * @param stdClass $response
-     * @return ConversionCancellationQuote
-     */
-    protected function createCancellationQuotefromResponse($response){
+    protected function createCancellationQuotefromResponse(stdClass $response): ConversionCancellationQuote
+    {
         return new ConversionCancellationQuote(
             $response->amount,
             $response->currency,

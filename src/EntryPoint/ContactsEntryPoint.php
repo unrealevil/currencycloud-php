@@ -10,11 +10,7 @@ use stdClass;
 
 class ContactsEntryPoint extends AbstractEntityEntryPoint
 {
-
-    /**
-     * @param null|string $loginId
-     */
-    public function createResetToken($loginId = null)
+    public function createResetToken(string $loginId = null): void
     {
         $this->request(
             'POST',
@@ -26,12 +22,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param Contact $contact
-     *
-     * @return Contact
-     */
-    public function create(Contact $contact)
+    public function create(Contact $contact): Contact
     {
         return $this->doCreate('contacts/create', $contact, function ($contact) {
             return $this->convertContactToRequest($contact);
@@ -40,13 +31,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         });
     }
 
-    /**
-     * @param Contact $contact
-     * @param bool $convertForFind
-     *
-     * @return array
-     */
-    private function convertContactToRequest(Contact $contact, $convertForFind = false)
+    private function convertContactToRequest(Contact $contact, bool $convertForFind = false): array
     {
         $dateOfBirth = $contact->getDateOfBirth();
         $common = [
@@ -71,12 +56,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         ];
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Contact
-     */
-    private function createContactFromResponse(stdClass $response)
+    private function createContactFromResponse(stdClass $response): Contact
     {
         $contact = new Contact();
         $contact->setLoginId($response->login_id)
@@ -99,13 +79,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         return $contact;
     }
 
-    /**
-     * @param Contact|null $contact
-     * @param Pagination|null $pagination
-     *
-     * @return Contacts
-     */
-    public function find(Contact $contact = null, Pagination $pagination = null)
+    public function find(Contact $contact = null, Pagination $pagination = null): Contacts
     {
         if (null === $contact) {
             $contact = new Contact();
@@ -122,24 +96,14 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         }, 'contacts');
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Contact
-     */
-    public function retrieve($id)
+    public function retrieve(string $id): Contact
     {
         return $this->doRetrieve(sprintf('contacts/%s', $id), function (stdClass $response) {
             return $this->createContactFromResponse($response);
         });
     }
 
-    /**
-     * @param Contact $contact $contact
-     *
-     * @return Contact
-     */
-    public function update(Contact $contact)
+    public function update(Contact $contact): Contact
     {
         return $this->doUpdate(sprintf('contacts/%s', $contact->getId()), $contact, function ($contact) {
             return $this->convertContactToRequest($contact);
@@ -148,10 +112,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         });
     }
 
-    /**
-     * @return Contact
-     */
-    public function current()
+    public function current(): Contact
     {
         return $this->doRetrieve('contacts/current', function (stdClass $response) {
             return $this->createContactFromResponse($response);

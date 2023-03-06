@@ -4,29 +4,12 @@ namespace CurrencyCloud\Model;
 
 class PurposeCode
 {
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var int
-     */
-    private $entityType;
-    /**
-     * @var string
-     */
-    private $purposeCode;
-    /**
-     * @var string
-     */
-    private $purposeDescription;
+    private ?string $currency;
+    private ?int $entityType;
+    private ?string $purposeCode;
+    private ?string $purposeDescription;
 
-    /**
-     * @param string $code
-     * @param int $decimalPlaces
-     * @param string $name
-     */
-    public function __construct($currency, $entityType, $purposeCode, $purposeDescription)
+    public function __construct(?string $currency, ?int $entityType, ?string $purposeCode, ?string $purposeDescription)
     {
         $this->currency = $currency;
         $this->entityType = $entityType;
@@ -34,34 +17,22 @@ class PurposeCode
         $this->purposeDescription = $purposeDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityType()
+    public function getEntityType(): ?int
     {
         return $this->entityType;
     }
 
-    /**
-     * @return string
-     */
-    public function getPurposeCode()
+    public function getPurposeCode(): ?string
     {
         return $this->purposeCode;
     }
 
-    /**
-     * @return string
-     */
-    public function getPurposeDescription()
+    public function getPurposeDescription(): ?string
     {
         return $this->purposeDescription;
     }

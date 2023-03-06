@@ -6,414 +6,215 @@ use DateTimeInterface;
 
 class Transaction
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
+    private ?string $balanceId = null;
+    private ?string $accountId = null;
+    private ?string $currency = null;
+    private ?string $amount = null;
+    private ?string $balanceAmount = null;
+    private ?string $type = null;
+    private ?string $action = null;
+    private ?string $relatedEntityType = null;
+    private ?string $relatedEntityId = null;
+    private ?string $relatedEntityShortReference = null;
+    private ?string $status = null;
+    private ?string $reason = null;
+    private ?DateTimeInterface $settlesAt = null;
+    private ?DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $completedAt = null;
 
-    /**
-     * @var null|string
-     */
-    private $balanceId;
-
-    /**
-     * @var null|string
-     */
-    private $accountId;
-
-    /**
-     * @var null|string
-     */
-    private $currency;
-
-    /**
-     * @var null|string
-     */
-    private $amount;
-
-    /**
-     * @var null|string
-     */
-    private $balanceAmount;
-
-    /**
-     * @var null|string
-     */
-    private $type;
-
-    /**
-     * @var null|string
-     */
-    private $action;
-
-    /**
-     * @var null|string
-     */
-    private $relatedEntityType;
-
-    /**
-     * @var null|string
-     */
-    private $relatedEntityId;
-
-    /**
-     * @var null|string
-     */
-    private $relatedEntityShortReference;
-
-    /**
-     * @var null|string
-     */
-    private $status;
-
-    /**
-     * @var null|string
-     */
-    private $reason;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $settlesAt;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $updatedAt;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $completedAt;
-
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBalanceId()
+    public function getBalanceId(): ?string
     {
         return $this->balanceId;
     }
 
-    /**
-     * @param null|string $balanceId
-     *
-     * @return $this
-     */
-    public function setBalanceId($balanceId)
+    public function setBalanceId(?string $balanceId): self
     {
-        $this->balanceId = (null === $balanceId) ? null : (string) $balanceId;
+        $this->balanceId = $balanceId;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param null|string $accountId
-     *
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): self
     {
-        $this->accountId = (null === $accountId) ? null : (string) $accountId;
+        $this->accountId = $accountId;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param null|string $currency
-     *
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
-        $this->currency = (null === $currency) ? null : (string) $currency;
+        $this->currency = $currency;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @param null|string $amount
-     *
-     * @return $this
-     */
-    public function setAmount($amount)
+    public function setAmount(?string $amount): self
     {
-        $this->amount = (null === $amount) ? null : (string) $amount;
+        $this->amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBalanceAmount()
+    public function getBalanceAmount(): ?string
     {
         return $this->balanceAmount;
     }
 
-    /**
-     * @param null|string $balanceAmount
-     *
-     * @return $this
-     */
-    public function setBalanceAmount($balanceAmount)
+    public function setBalanceAmount(?string $balanceAmount): self
     {
-        $this->balanceAmount = (null === $balanceAmount) ? null : (string) $balanceAmount;
+        $this->balanceAmount = $balanceAmount;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param null|string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
+    public function setType(?string $type): self
     {
-        $this->type = (null === $type) ? null : (string) $type;
+        $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAction()
+    public function getAction(): ?string
     {
         return $this->action;
     }
 
-    /**
-     * @param null|string $action
-     *
-     * @return $this
-     */
-    public function setAction($action)
+    public function setAction(?string $action): self
     {
-        $this->action = (null === $action) ? null : (string) $action;
+        $this->action = $action;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getRelatedEntityType()
+    public function getRelatedEntityType(): ?string
     {
         return $this->relatedEntityType;
     }
 
-    /**
-     * @param null|string $relatedEntityType
-     *
-     * @return $this
-     */
-    public function setRelatedEntityType($relatedEntityType)
+    public function setRelatedEntityType(?string $relatedEntityType): self
     {
-        $this->relatedEntityType = (null === $relatedEntityType) ? null : (string) $relatedEntityType;
+        $this->relatedEntityType = $relatedEntityType;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getRelatedEntityId()
+    public function getRelatedEntityId(): ?string
     {
         return $this->relatedEntityId;
     }
 
-    /**
-     * @param null|string $relatedEntityId
-     *
-     * @return $this
-     */
-    public function setRelatedEntityId($relatedEntityId)
+    public function setRelatedEntityId(?string $relatedEntityId): self
     {
-        $this->relatedEntityId = (null === $relatedEntityId) ? null : (string) $relatedEntityId;
+        $this->relatedEntityId = $relatedEntityId;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getRelatedEntityShortReference()
+    public function getRelatedEntityShortReference(): ?string
     {
         return $this->relatedEntityShortReference;
     }
 
-    /**
-     * @param null|string $relatedEntityShortReference
-     *
-     * @return $this
-     */
-    public function setRelatedEntityShortReference($relatedEntityShortReference)
+    public function setRelatedEntityShortReference(?string $relatedEntityShortReference): self
     {
-        $this->relatedEntityShortReference =
-            (null === $relatedEntityShortReference) ? null : (string) $relatedEntityShortReference;
+        $this->relatedEntityShortReference = $relatedEntityShortReference;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param null|string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
-        $this->status = (null === $status) ? null : (string) $status;
+        $this->status = $status;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getReason()
+    public function getReason(): ?string
     {
         return $this->reason;
     }
 
-    /**
-     * @param null|string $reason
-     *
-     * @return $this
-     */
-    public function setReason($reason)
+    public function setReason(?string $reason): self
     {
-        $this->reason = (null === $reason) ? null : (string) $reason;
+        $this->reason = $reason;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getSettlesAt()
+    public function getSettlesAt(): ?DateTimeInterface
     {
         return $this->settlesAt;
     }
 
-    /**
-     * @param DateTimeInterface|null $settlesAt
-     *
-     * @return $this
-     */
-    public function setSettlesAt(DateTimeInterface $settlesAt = null)
+    public function setSettlesAt(?DateTimeInterface $settlesAt): self
     {
         $this->settlesAt = $settlesAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTimeInterface|null $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt(DateTimeInterface $createdAt = null)
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTimeInterface|null $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt(DateTimeInterface $updatedAt = null)
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCompletedAt()
+    public function getCompletedAt(): ?DateTimeInterface
     {
         return $this->completedAt;
     }
 
-    /**
-     * @param DateTimeInterface|null $completedAt
-     *
-     * @return $this
-     */
-    public function setCompletedAt($completedAt)
+    public function setCompletedAt(?DateTimeInterface $completedAt): self
     {
         $this->completedAt = $completedAt;
 

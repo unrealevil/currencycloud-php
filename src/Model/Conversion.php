@@ -2,742 +2,423 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTime;
 use DateTimeInterface;
 
 class Conversion
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
 
-    /**
-     * @var string
-     */
-    private $accountId;
+    private ?string $accountId = null;
 
-    /**
-     * @var string
-     */
-    private $creatorContactId;
+    private ?string $creatorContactId = null;
 
-    /**
-     * @var string
-     */
-    private $shortReference;
+    private ?string $shortReference = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $settlementDate;
+    private ?DateTimeInterface $settlementDate = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $conversionDate;
+    private ?DateTimeInterface $conversionDate = null;
 
-    /**
-     * @var string
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var string
-     */
-    private $partnerStatus;
+    private ?string $partnerStatus = null;
 
-    /**
-     * @var string
-     */
-    private $currencyPair;
+    private ?string $currencyPair = null;
 
-    /**
-     * @var string
-     */
-    private $buyCurrency;
+    private ?string $buyCurrency = null;
 
-    /**
-     * @var string
-     */
-    private $sellCurrency;
+    private ?string $sellCurrency = null;
 
-    /**
-     * @var string
-     */
-    private $fixedSide;
+    private ?string $fixedSide = null;
 
-    /**
-     * @var string
-     */
-    private $partnerBuyAmount;
+    private ?string $partnerBuyAmount = null;
 
-    /**
-     * @var string
-     */
-    private $partnerSellAmount;
+    private ?string $partnerSellAmount = null;
 
-    /**
-     * @var string
-     */
-    private $clientBuyAmount;
+    private ?string $clientBuyAmount = null;
 
-    /**
-     * @var string
-     */
-    private $clientSellAmount;
+    private ?string $clientSellAmount = null;
 
-    /**
-     * @var string
-     */
-    private $midMarketRate;
+    private ?string $midMarketRate = null;
 
-    /**
-     * @var string
-     */
-    private $coreRate;
+    private ?string $coreRate = null;
 
-    /**
-     * @var string
-     */
-    private $partnerRate;
+    private ?string $partnerRate = null;
 
-    /**
-     * @var string
-     */
-    private $clientRate;
+    private ?string $clientRate = null;
 
-    /**
-     * @var string
-     */
-    private $depositRequired;
+    private ?string $depositRequired = null;
 
-    /**
-     * @var string
-     */
-    private $depositAmount;
+    private ?string $depositAmount = null;
 
-    /**
-     * @var string
-     */
-    private $depositCurrency;
+    private ?string $depositCurrency = null;
 
-    /**
-     * @var string
-     */
-    private $depositStatus;
+    private ?string $depositStatus = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $depositRequiredAt;
+    private ?DateTimeInterface $depositRequiredAt = null;
 
-    /**
-     * @var array
-     */
-    private $paymentIds;
+    private ?array $paymentIds = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var string
-     */
-    private $uniqueRequestId;
+    private ?string $uniqueRequestId = null;
 
-    /**
-     * @param string $buyCurrency
-     * @param string $sellCurrency
-     * @param string $fixedSide
-     *
-     * @return Conversion
-     */
-    public static function create($buyCurrency, $sellCurrency, $fixedSide)
+    public static function create(?string $buyCurrency, string $sellCurrency, string $fixedSide): Conversion
     {
-        return (new Conversion())
+        return (new self())
             ->setBuyCurrency($buyCurrency)
             ->setSellCurrency($sellCurrency)
             ->setFixedSide($fixedSide);
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     *
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): static
     {
         $this->accountId = $accountId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorContactId()
+    public function getCreatorContactId(): ?string
     {
         return $this->creatorContactId;
     }
 
-    /**
-     * @param string $creatorContactId
-     *
-     * @return $this
-     */
-    public function setCreatorContactId($creatorContactId)
+    public function setCreatorContactId(?string $creatorContactId): static
     {
         $this->creatorContactId = $creatorContactId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     *
-     * @return $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): static
     {
         $this->shortReference = $shortReference;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getSettlementDate()
+    public function getSettlementDate(): ?DateTimeInterface
     {
         return $this->settlementDate;
     }
 
-    /**
-     * @param DateTimeInterface $settlementDate
-     *
-     * @return $this
-     */
-    public function setSettlementDate($settlementDate)
+    public function setSettlementDate(?string $settlementDate): static
     {
-        $this->settlementDate = $settlementDate;
+        if ($settlementDate) {
+            $this->settlementDate = new DateTime($settlementDate);
+        }
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getConversionDate()
+    public function getConversionDate(): ?DateTimeInterface
     {
         return $this->conversionDate;
     }
 
-    /**
-     * @param DateTimeInterface $conversionDate
-     *
-     * @return $this
-     */
-    public function setConversionDate($conversionDate)
+    public function setConversionDate(?string $conversionDate): static
     {
-        $this->conversionDate = $conversionDate;
+        if ($conversionDate) {
+            $this->conversionDate = new DateTime($conversionDate);
+        }
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): static
     {
         $this->status = $status;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerStatus()
+    public function getPartnerStatus(): ?string
     {
         return $this->partnerStatus;
     }
 
-    /**
-     * @param string $partnerStatus
-     *
-     * @return $this
-     */
-    public function setPartnerStatus($partnerStatus)
+    public function setPartnerStatus(?string $partnerStatus): static
     {
         $this->partnerStatus = $partnerStatus;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrencyPair()
+    public function getCurrencyPair(): ?string
     {
         return $this->currencyPair;
     }
 
-    /**
-     * @param string $currencyPair
-     *
-     * @return $this
-     */
-    public function setCurrencyPair($currencyPair)
+    public function setCurrencyPair(?string $currencyPair): static
     {
         $this->currencyPair = $currencyPair;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBuyCurrency()
+    public function getBuyCurrency(): ?string
     {
         return $this->buyCurrency;
     }
 
-    /**
-     * @param string $buyCurrency
-     *
-     * @return $this
-     */
-    public function setBuyCurrency($buyCurrency)
+    public function setBuyCurrency(?string $buyCurrency): static
     {
         $this->buyCurrency = $buyCurrency;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSellCurrency()
+    public function getSellCurrency(): ?string
     {
         return $this->sellCurrency;
     }
 
-    /**
-     * @param string $sellCurrency
-     *
-     * @return $this
-     */
-    public function setSellCurrency($sellCurrency)
+    public function setSellCurrency(?string $sellCurrency): static
     {
         $this->sellCurrency = $sellCurrency;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFixedSide()
+    public function getFixedSide(): ?string
     {
         return $this->fixedSide;
     }
 
-    /**
-     * @param string $fixedSide
-     *
-     * @return $this
-     */
-    public function setFixedSide($fixedSide)
+    public function setFixedSide(?string $fixedSide): static
     {
         $this->fixedSide = $fixedSide;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerBuyAmount()
+    public function getPartnerBuyAmount(): ?string
     {
         return $this->partnerBuyAmount;
     }
 
-    /**
-     * @param string $partnerBuyAmount
-     *
-     * @return $this
-     */
-    public function setPartnerBuyAmount($partnerBuyAmount)
+    public function setPartnerBuyAmount(?string $partnerBuyAmount): static
     {
         $this->partnerBuyAmount = $partnerBuyAmount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerSellAmount()
+    public function getPartnerSellAmount(): ?string
     {
         return $this->partnerSellAmount;
     }
 
-    /**
-     * @param string $partnerSellAmount
-     *
-     * @return $this
-     */
-    public function setPartnerSellAmount($partnerSellAmount)
+    public function setPartnerSellAmount(?string $partnerSellAmount): static
     {
         $this->partnerSellAmount = $partnerSellAmount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientBuyAmount()
+    public function getClientBuyAmount(): ?string
     {
         return $this->clientBuyAmount;
     }
 
-    /**
-     * @param string $clientBuyAmount
-     *
-     * @return $this
-     */
-    public function setClientBuyAmount($clientBuyAmount)
+    public function setClientBuyAmount(?string $clientBuyAmount): static
     {
         $this->clientBuyAmount = $clientBuyAmount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSellAmount()
+    public function getClientSellAmount(): ?string
     {
         return $this->clientSellAmount;
     }
 
-    /**
-     * @param string $clientSellAmount
-     *
-     * @return $this
-     */
-    public function setClientSellAmount($clientSellAmount)
+    public function setClientSellAmount(?string $clientSellAmount): static
     {
         $this->clientSellAmount = $clientSellAmount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMidMarketRate()
+    public function getMidMarketRate(): ?string
     {
         return $this->midMarketRate;
     }
 
-    /**
-     * @param string $midMarketRate
-     *
-     * @return $this
-     */
-    public function setMidMarketRate($midMarketRate)
+    public function setMidMarketRate(?string $midMarketRate): static
     {
         $this->midMarketRate = $midMarketRate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerRate()
+    public function getPartnerRate(): ?string
     {
         return $this->partnerRate;
     }
 
-    /**
-     * @param string $partnerRate
-     *
-     * @return $this
-     */
-    public function setPartnerRate($partnerRate)
+    public function setPartnerRate(?string $partnerRate): static
     {
         $this->partnerRate = $partnerRate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientRate()
+    public function getClientRate(): ?string
     {
         return $this->clientRate;
     }
 
-    /**
-     * @param string $clientRate
-     *
-     * @return $this
-     */
-    public function setClientRate($clientRate)
+    public function setClientRate(?string $clientRate): static
     {
         $this->clientRate = $clientRate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositRequired()
+    public function getDepositRequired(): ?string
     {
         return $this->depositRequired;
     }
 
-    /**
-     * @param string $depositRequired
-     *
-     * @return $this
-     */
-    public function setDepositRequired($depositRequired)
+    public function setDepositRequired(?string $depositRequired): static
     {
         $this->depositRequired = $depositRequired;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositAmount()
+    public function getDepositAmount(): ?string
     {
         return $this->depositAmount;
     }
 
-    /**
-     * @param string $depositAmount
-     *
-     * @return $this
-     */
-    public function setDepositAmount($depositAmount)
+    public function setDepositAmount(?string $depositAmount): static
     {
         $this->depositAmount = $depositAmount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositCurrency()
+    public function getDepositCurrency(): ?string
     {
         return $this->depositCurrency;
     }
 
-    /**
-     * @param string $depositCurrency
-     *
-     * @return $this
-     */
-    public function setDepositCurrency($depositCurrency)
+    public function setDepositCurrency(?string $depositCurrency): static
     {
         $this->depositCurrency = $depositCurrency;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositStatus()
+    public function getDepositStatus(): ?string
     {
         return $this->depositStatus;
     }
 
-    /**
-     * @param string $depositStatus
-     *
-     * @return $this
-     */
-    public function setDepositStatus($depositStatus)
+    public function setDepositStatus(?string $depositStatus): static
     {
         $this->depositStatus = $depositStatus;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getDepositRequiredAt()
+    public function getDepositRequiredAt(): DateTimeInterface
     {
         return $this->depositRequiredAt;
     }
 
-    /**
-     * @param DateTimeInterface $depositRequiredAt
-     *
-     * @return $this
-     */
-    public function setDepositRequiredAt($depositRequiredAt)
+    public function setDepositRequiredAt(DateTimeInterface $depositRequiredAt): static
     {
         $this->depositRequiredAt = $depositRequiredAt;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getPaymentIds()
+    public function getPaymentIds(): ?array
     {
         return $this->paymentIds;
     }
 
-    /**
-     * @param array $paymentIds
-     *
-     * @return $this
-     */
-    public function setPaymentIds($paymentIds)
+    public function setPaymentIds(?array $paymentIds): static
     {
         $this->paymentIds = $paymentIds;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTimeInterface $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(?DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTimeInterface $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCoreRate()
+    public function getCoreRate(): ?string
     {
         return $this->coreRate;
     }
 
-    /**
-     * @param string $coreRate
-     *
-     * @return $this
-     */
-    public function setCoreRate($coreRate)
+    public function setCoreRate(?string $coreRate): static
     {
         $this->coreRate = $coreRate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueRequestId()
+    public function getUniqueRequestId(): ?string
     {
         return $this->uniqueRequestId;
     }
 
-    /**
-     * @param string $uniqueRequestId
-     *
-     * @return $this
-     */
-    public function setUniqueRequestId($uniqueRequestId)
+    public function setUniqueRequestId(?string $uniqueRequestId): static
     {
         $this->uniqueRequestId = $uniqueRequestId;
 

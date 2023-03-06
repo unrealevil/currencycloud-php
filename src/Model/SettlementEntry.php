@@ -4,38 +4,21 @@ namespace CurrencyCloud\Model;
 
 class SettlementEntry
 {
+    private ?string $sendAmount;
+    private ?string $receiveAmount;
 
-    /**
-     * @var string
-     */
-    private $sendAmount;
-    /**
-     * @var string
-     */
-    private $receiveAmount;
-
-    /**
-     * @param string $sendAmount
-     * @param string $receiveAmount
-     */
-    public function __construct($sendAmount, $receiveAmount)
+    public function __construct(?string $sendAmount, ?string $receiveAmount)
     {
         $this->sendAmount = $sendAmount;
         $this->receiveAmount = $receiveAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getSendAmount()
+    public function getSendAmount(): ?string
     {
         return $this->sendAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getReceiveAmount()
+    public function getReceiveAmount(): ?string
     {
         return $this->receiveAmount;
     }

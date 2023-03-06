@@ -6,84 +6,26 @@ use DateTime;
 
 class Contact implements EntityInterface
 {
+    private ?string $id = null;
+    private ?string $loginId = null;
+    private ?string $yourReference = null;
+    private ?string $firstName = null;
+    private ?string $lastName = null;
+    private ?string $accountId = null;
+    private ?string $accountName = null;
+    private ?string $status = null;
+    private ?string $phoneNumber = null;
+    private ?string $mobilePhoneNumber = null;
+    private ?string $locale = null;
+    private ?string $timezone = null;
+    private ?string $emailAddress = null;
+    private ?DateTime $dateOfBirth = null;
+    private ?DateTime $createdAt = null;
+    private ?DateTime $updatedAt = null;
 
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $loginId;
-    /**
-     * @var string
-     */
-    private $yourReference;
-    /**
-     * @var string
-     */
-    private $firstName;
-    /**
-     * @var string
-     */
-    private $lastName;
-    /**
-     * @var string
-     */
-    private $accountId;
-    /**
-     * @var string
-     */
-    private $accountName;
-    /**
-     * @var string
-     */
-    private $status;
-    /**
-     * @var string
-     */
-    private $phoneNumber;
-    /**
-     * @var string
-     */
-    private $mobilePhoneNumber;
-    /**
-     * @var string
-     */
-    private $locale;
-    /**
-     * @var string
-     */
-    private $timezone;
-    /**
-     * @var string
-     */
-    private $emailAddress;
-    /**
-     * @var DateTime
-     */
-    private $dateOfBirth;
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @param string $accountId
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $emailAddress
-     * @param string $phoneNumber
-     *
-     * @return Contact
-     */
-    public static function create($accountId, $firstName, $lastName, $emailAddress, $phoneNumber)
+    public static function create(string $accountId, ?string $firstName, ?string $lastName, ?string $emailAddress, ?string $phoneNumber): Contact
     {
-        return (new Contact())
+        return (new self())
             ->setAccountId($accountId)
             ->setFirstName($firstName)
             ->setLastName($lastName)
@@ -91,296 +33,188 @@ class Contact implements EntityInterface
             ->setPhoneNumber($phoneNumber);
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoginId()
+    public function getLoginId(): ?string
     {
         return $this->loginId;
     }
 
-    /**
-     * @param string $loginId
-     *
-     * @return $this
-     */
-    public function setLoginId($loginId)
+    public function setLoginId(?string $loginId): self
     {
         $this->loginId = $loginId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getYourReference()
+    public function getYourReference(): ?string
     {
         return $this->yourReference;
     }
 
-    /**
-     * @param string $yourReference
-     *
-     * @return $this
-     */
-    public function setYourReference($yourReference)
+    public function setYourReference(?string $yourReference): self
     {
         $this->yourReference = $yourReference;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     *
-     * @return $this
-     */
-    public function setFirstName($firstName)
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     *
-     * @return $this
-     */
-    public function setLastName($lastName)
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     *
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): self
     {
         $this->accountId = $accountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountName()
+    public function getAccountName(): ?string
     {
         return $this->accountName;
     }
 
-    /**
-     * @param string $accountName
-     *
-     * @return $this
-     */
-    public function setAccountName($accountName)
+    public function setAccountName(?string $accountName): self
     {
         $this->accountName = $accountName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    /**
-     * @param string $phoneNumber
-     *
-     * @return $this
-     */
-    public function setPhoneNumber($phoneNumber)
+    public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMobilePhoneNumber()
+    public function getMobilePhoneNumber(): ?string
     {
         return $this->mobilePhoneNumber;
     }
 
-    /**
-     * @param string $mobilePhoneNumber
-     *
-     * @return $this
-     */
-    public function setMobilePhoneNumber($mobilePhoneNumber)
+    public function setMobilePhoneNumber(?string $mobilePhoneNumber): self
     {
         $this->mobilePhoneNumber = $mobilePhoneNumber;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return $this
-     */
-    public function setLocale($locale)
+    public function setLocale(?string $locale): self
     {
         $this->locale = $locale;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTimezone()
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
 
-    /**
-     * @param string $timezone
-     *
-     * @return $this
-     */
-    public function setTimezone($timezone)
+    public function setTimezone(?string $timezone): self
     {
         $this->timezone = $timezone;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmailAddress()
+    public function getEmailAddress(): ?string
     {
         return $this->emailAddress;
     }
 
-    /**
-     * @param string $emailAddress
-     *
-     * @return $this
-     */
-    public function setEmailAddress($emailAddress)
+    public function setEmailAddress(?string $emailAddress): self
     {
         $this->emailAddress = $emailAddress;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateOfBirth()
+    public function getDateOfBirth(): ?DateTime
     {
         return $this->dateOfBirth;
     }
 
-    /**
-     * @param DateTime $dateOfBirth
-     *
-     * @return $this
-     */
-    public function setDateOfBirth($dateOfBirth)
+    public function setDateOfBirth(?DateTime $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(?DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(?DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }

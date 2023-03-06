@@ -11,15 +11,9 @@ use stdClass;
 
 class TransactionsEntryPoint extends AbstractEntryPoint
 {
-    const DATE_FORMAT = 'Y-m-d';
+    public const DATE_FORMAT = 'Y-m-d';
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return Transaction
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Transaction
     {
         $response = $this->request(
             'GET',
@@ -31,40 +25,23 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         return $this->createTransactionFromResponse($response);
     }
 
-    /**
-     * @param Transaction|null $transaction
-     * @param null|string $amountFrom
-     * @param null|string $amountTo
-     * @param DateTime|null $settlesAtFrom
-     * @param DateTime|null $settlesAtTo
-     * @param DateTime|null $createdAtFrom
-     * @param DateTime|null $createdAtTo
-     * @param DateTime|null $updatedAtFrom
-     * @param DateTime|null $updatedAtTo
-     * @param null|string $onBehalfOf
-     * @param Pagination|null $pagination
-     * @param DateTime|null $completedAtFrom
-     * @param DateTime|null $completedAtTo
-     * @param String|null $scope
-     *
-     * @return Transactions
-     */
     public function find(
         Transaction $transaction = null,
-        $amountFrom = null,
-        $amountTo = null,
+        string $amountFrom = null,
+        string $amountTo = null,
         DateTime $settlesAtFrom = null,
         DateTime $settlesAtTo = null,
         DateTime $createdAtFrom = null,
         DateTime $createdAtTo = null,
         DateTime $updatedAtFrom = null,
         DateTime $updatedAtTo = null,
-        $onBehalfOf = null,
+        string $onBehalfOf = null,
         Pagination $pagination = null,
         DateTime $completedAtFrom = null,
         DateTime $completedAtTo = null,
-        $scope = null
-    ) {
+        string $scope = null
+    ): Transactions
+    {
         if (null === $transaction) {
             $transaction = new Transaction();
         }
@@ -97,12 +74,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         return new Transactions($accounts, $this->createPaginationFromResponse($response));
     }
 
-    /**
-     * @param Transaction $transaction
-     *
-     * @return array
-     */
-    public function convertTransactionToRequest(Transaction $transaction)
+    public function convertTransactionToRequest(Transaction $transaction): array
     {
         return [
             'currency' => $transaction->getCurrency(),
@@ -117,12 +89,7 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         ];
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Transaction
-     */
-    protected function createTransactionFromResponse(stdClass $response)
+    protected function createTransactionFromResponse(stdClass $response): Transaction
     {
         $transaction = (new Transaction())->setBalanceId($response->balance_id)
             ->setAccountId($response->account_id)
@@ -146,12 +113,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         return $transaction;
     }
 
-    /**
-     * @param string $id
-     * @param string $onBehalfOf
-     * @return TransactionSender
-     */
-    public function retrieveSender($id, $onBehalfOf = null){
+    public function retrieveSender(string $id, string $onBehalfOf = null): TransactionSender
+    {
         $response = $this->request(
             'GET',
             sprintf('transactions/sender/%s', $id),
@@ -163,11 +126,8 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         return $this->createTransactionSenderFromResponse($response);
     }
 
-    /**
-     * @param stdClass
-     * @return TransactionSender
-     */
-    protected function createTransactionSenderFromResponse($response){
+    protected function createTransactionSenderFromResponse($response): TransactionSender
+    {
         return new TransactionSender(
             $response->id,
             $response->amount,

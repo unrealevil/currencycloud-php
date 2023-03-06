@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\Criteria\ConversionReportCriteria;
@@ -9,12 +10,14 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
-class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
+class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
+{
 
     /**
      * @test
      */
-    public function canCreateConversionReport(){
+    public function canCreateConversionReport(): void
+    {
         $data = '{
             "id": "ea8da492-b03d-4330-b279-b5e4a25804a0",
             "short_reference": "RP-3256961-MLEPRN",
@@ -37,37 +40,37 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
 
         $reportsEntryPoint = new ReportsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
-                json_decode($data),
-                'POST',
-                'reports/conversions/create',
-                [],
-                [
-                    'buy_currency' => 'EUR',
-                    'sell_currency' => 'GBP',
-                    'scope' => null,
-                    'on_behalf_of' => null,
-                    'description' => null,
-                    'client_buy_amount_from' => null,
-                    'client_buy_amount_to' => null,
-                    'client_sell_amount_from' => null,
-                    'client_sell_amount_to' => null,
-                    'partner_buy_amount_from' => null,
-                    'partner_buy_amount_to' => null,
-                    'partner_sell_amount_from' => null,
-                    'partner_sell_amount_to' => null,
-                    'client_status' => null,
-                    'partner_status' => null,
-                    'conversion_date_from' => null,
-                    'conversion_date_to' => null,
-                    'settlement_date_from' => null,
-                    'settlement_date_to' => null,
-                    'created_at_from' => null,
-                    'created_at_to' => null,
-                    'updated_at_from' => null,
-                    'updated_at_to' => null,
-                    'unique_request_id' => null
-                ]
-            )
+            json_decode($data),
+            'POST',
+            'reports/conversions/create',
+            [],
+            [
+                'buy_currency' => 'EUR',
+                'sell_currency' => 'GBP',
+                'scope' => null,
+                'on_behalf_of' => null,
+                'description' => null,
+                'client_buy_amount_from' => null,
+                'client_buy_amount_to' => null,
+                'client_sell_amount_from' => null,
+                'client_sell_amount_to' => null,
+                'partner_buy_amount_from' => null,
+                'partner_buy_amount_to' => null,
+                'partner_sell_amount_from' => null,
+                'partner_sell_amount_to' => null,
+                'client_status' => null,
+                'partner_status' => null,
+                'conversion_date_from' => null,
+                'conversion_date_to' => null,
+                'settlement_date_from' => null,
+                'settlement_date_to' => null,
+                'created_at_from' => null,
+                'created_at_to' => null,
+                'updated_at_from' => null,
+                'updated_at_to' => null,
+                'unique_request_id' => null,
+            ]
+        )
         );
 
         $conversionReportCriteria = new ConversionReportCriteria();
@@ -80,13 +83,13 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame("RP-3256961-MLEPRN", $report->getShortReference());
         $this->assertSame("conversion", $report->getReportType());
         $this->assertSame("Test report for Conversion", $report->getDescription());
-
     }
 
     /**
      * @test
      */
-    public function canCreatePaymentReport(){
+    public function canCreatePaymentReport(): void
+    {
         $data = '{
             "id": "f2ec161b-5713-4d1a-953a-f6c783c622c0",
             "short_reference": "RP-2683901-DQIJUJ",
@@ -108,33 +111,33 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
 
         $reportsEntryPoint = new ReportsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
-                json_decode($data),
-                'POST',
-                'reports/payments/create',
-                [],
-                [
-                    'on_behalf_of' => null,
-                    'description' => null,
-                    'currency' => 'EUR',
-                    'amount_from' => null,
-                    'amount_to' => null,
-                    'status' => null,
-                    'payment_date_from' => null,
-                    'payment_date_to' => null,
-                    'transfered_at_from' => null,
-                    'transfered_at_to' => null,
-                    'created_at_from' => null,
-                    'created_at_to' => null,
-                    'updated_at_from' => null,
-                    'updated_at_to' => null,
-                    'beneficiary_id' => null,
-                    'conversion_id' => null,
-                    'with_deleted' => null,
-                    'payment_group_id' => null,
-                    'unique_request_id' => null,
-                    'scope' => null
-                ]
-            )
+            json_decode($data),
+            'POST',
+            'reports/payments/create',
+            [],
+            [
+                'on_behalf_of' => null,
+                'description' => null,
+                'currency' => 'EUR',
+                'amount_from' => null,
+                'amount_to' => null,
+                'status' => null,
+                'payment_date_from' => null,
+                'payment_date_to' => null,
+                'transfered_at_from' => null,
+                'transfered_at_to' => null,
+                'created_at_from' => null,
+                'created_at_to' => null,
+                'updated_at_from' => null,
+                'updated_at_to' => null,
+                'beneficiary_id' => null,
+                'conversion_id' => null,
+                'with_deleted' => null,
+                'payment_group_id' => null,
+                'unique_request_id' => null,
+                'scope' => null,
+            ]
+        )
         );
 
         $paymentReportCriteria = new PaymentReportCriteria();
@@ -146,13 +149,13 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame("RP-2683901-DQIJUJ", $report->getShortReference());
         $this->assertSame("payment", $report->getReportType());
         $this->assertSame("Test Report for Payment", $report->getDescription());
-
     }
 
     /**
      * @test
      */
-    public function canFindReportRequests(){
+    public function canFindReportRequests(): void
+    {
         $data = '{
             "report_requests": [
                 {
@@ -244,14 +247,13 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
                 'page' => null,
                 'per_page' => null,
                 'order' => null,
-                'order_asc_desc' => null
+                'order_asc_desc' => null,
             ],
-            []
         )
         );
 
         $findReportCriteria = new FindReportsCriteria();
-        $pagination  = new Pagination();
+        $pagination = new Pagination();
         $reports = $reportsEntryPoint->findReports($findReportCriteria, $pagination);
 
         $this->assertSame(3, $reports->getPagination()->getTotalEntries());
@@ -269,7 +271,8 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
     /**
      * @test
      */
-    public function canRetrieveReport(){
+    public function canRetrieveReport(): void
+    {
         $data = '{
             "id": "075ce584-b977-4538-a524-16b759277d66",
             "short_reference": "RP-5279826-KZJHNX",
@@ -296,7 +299,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
             'GET',
             'reports/report_requests/075ce584-b977-4538-a524-16b759277d66',
             ['on_behalf_of' => null],
-            []
         )
         );
 
@@ -305,6 +307,5 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame("075ce584-b977-4538-a524-16b759277d66", $report->getId());
         $this->assertSame("RP-5279826-KZJHNX", $report->getShortReference());
         $this->assertSame("completed", $report->getStatus());
-
     }
 }

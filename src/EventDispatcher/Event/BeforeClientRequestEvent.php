@@ -6,48 +6,22 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class BeforeClientRequestEvent extends Event
 {
+    public const NAME = 'client.request.before.event';
 
-    const NAME = 'client.request.before.event';
-    /**
-     * @var string
-     */
-    private $method;
-    /**
-     * @var string
-     */
-    private $uri;
-    /**
-     * @var array
-     */
-    private $queryParams;
-    /**
-     * @var array
-     */
-    private $requestParams;
-    /**
-     * @var array
-     */
-    private $options;
-    /**
-     * @var bool
-     */
-    private $secured;
+    private ?string $method;
+    private ?string $uri;
+    private ?array $queryParams;
+    private ?array $requestParams;
+    private ?array $options;
+    private ?bool $secured;
 
-    /**
-     * @param string $method
-     * @param string $uri
-     * @param array $queryParams
-     * @param array $requestParams
-     * @param array $options
-     * @param bool $secured
-     */
     public function __construct(
-        $method,
-        $uri,
-        array $queryParams,
-        array $requestParams,
-        array $options,
-        $secured
+        ?string $method,
+        ?string $uri,
+        ?array $queryParams,
+        ?array $requestParams,
+        ?array $options,
+        ?bool $secured
     ) {
         $this->method = $method;
         $this->uri = $uri;
@@ -57,50 +31,32 @@ final class BeforeClientRequestEvent extends Event
         $this->secured = $secured;
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod()
+    public function getMethod(): ?string
     {
         return $this->method;
     }
 
-    /**
-     * @return string
-     */
-    public function getUri()
+    public function getUri(): ?string
     {
         return $this->uri;
     }
 
-    /**
-     * @return array
-     */
-    public function getQueryParams()
+    public function getQueryParams(): ?array
     {
         return $this->queryParams;
     }
 
-    /**
-     * @return array
-     */
-    public function getRequestParams()
+    public function getRequestParams(): ?array
     {
         return $this->requestParams;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): ?array
     {
         return $this->options;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isSecured()
+    public function isSecured(): ?bool
     {
         return $this->secured;
     }

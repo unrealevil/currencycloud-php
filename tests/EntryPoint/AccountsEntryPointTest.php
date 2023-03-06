@@ -11,8 +11,7 @@ use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
 class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
-    protected $out = [
+    protected array $out = [
         'id' => 'B7DE235A-FF5D-4252-83C2-06A605267FEA',
         'legal_entity_type' => 'company',
         'account_name' => 'Company PLC',
@@ -29,10 +28,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'updated_at' => '2014-01-12T00:00:00+00:00',
         'identification_type' => 'green_card',
         'identification_value' => '123',
-        'short_reference' => '110104-00004'
+        'short_reference' => '110104-00004',
     ];
 
-    protected $in = [
+    protected array $in = [
         'legal_entity_type' => 'A',
         'account_name' => 'B',
         'brand' => null,
@@ -46,13 +45,13 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'spread_table' => null,
         'identification_type' => null,
         'identification_value' => null,
-        'on_behalf_of' => null
+        'on_behalf_of' => null,
     ];
 
     /**
      * @test
      */
-    public function nullableFieldsCanBeNull()
+    public function nullableFieldsCanBeNull(): void
     {
 
         $entryPoint = new AccountsEntryPoint(
@@ -73,7 +72,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function allFieldsCanBeSet()
+    public function allFieldsCanBeSet(): void
     {
         $in = [
             'legal_entity_type' => 'A',
@@ -89,7 +88,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'spread_table' => 'K',
             'identification_type' => 'L',
             'identification_value' => 'M',
-            'on_behalf_of' => null
+            'on_behalf_of' => null,
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -125,7 +124,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function accountCanBeRetrievedWithOnBehalfOf()
+    public function accountCanBeRetrievedWithOnBehalfOf(): void
     {
 
         $entryPoint = new AccountsEntryPoint(
@@ -145,7 +144,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function accountsCanBeFound()
+    public function accountsCanBeFound(): void
     {
         $in = array_merge(
             $this->in,
@@ -156,7 +155,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 'page' => 2,
                 'per_page' => 3,
                 'order' => '4',
-                'order_asc_desc' => '5'
+                'order_asc_desc' => '5',
             ]
         );
         unset($in['spread_table']);
@@ -169,7 +168,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 json_encode(
                     [
                         'accounts' => [$this->out],
-                        'pagination' => $this->getDummyPagination()
+                        'pagination' => $this->getDummyPagination(),
                     ]
                 )
             ),
@@ -191,7 +190,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canCurrent()
+    public function canCurrent(): void
     {
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
@@ -210,17 +209,17 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canUpdate()
+    public function canUpdate(): void
     {
         $account = new Account();
         $this->setIdProperty($account, 'abc');
         $changeSet = (new Account())->setCountry('test');
 
         $in = [
-                  'country' => 'test',
-                  'account_name' => null,
-                  'legal_entity_type' => null
-              ] + $this->in;
+                'country' => 'test',
+                'account_name' => null,
+                'legal_entity_type' => null,
+            ] + $this->in;
         unset($in['on_behalf_of']);
 
         $entryPoint = new AccountsEntryPoint(
@@ -241,7 +240,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canGetPaymentChargesSettings()
+    public function canGetPaymentChargesSettings(): void
     {
 
         $data = '{
@@ -265,15 +264,15 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
-                json_decode($data),
-                'GET',
-                'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings'
-            )
+            json_decode($data),
+            'GET',
+            'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings'
+        )
         );
 
         $settings = $entryPoint->getPaymentChargesSettings('3e12053j-ae22-40b1-cc4e-cc0230c009a5');
 
-        $this->assertSame(2, sizeof($settings));
+        $this->assertCount(2, $settings);
 
         $setting1 = $settings[0];
         $this->assertSame('090baf7e-5chh-4bfd-9b7l-ad3f8a310123', $setting1->getChargeSettingsId());
@@ -288,16 +287,12 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('shared', $setting2->getChargeType());
         $this->assertTrue($setting2->isEnabled());
         $this->assertTrue($setting2->isDefault());
-
-
-
-
     }
 
     /**
      * @test
      */
-    public function canUpdatePaymentChargesSettings()
+    public function canUpdatePaymentChargesSettings(): void
     {
 
         $data = '{        
@@ -314,13 +309,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'POST',
             'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings/090baf7e-5chh-4bfd-9b7l-ad3f8a310123',
             [],
-            [ 'enabled' => 'true', 'default' => 'false']
+            ['enabled' => 'true', 'default' => 'false']
         )
         );
 
-
-        $setting = new AccountPaymentChargesSetting("090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
-            "3e12053j-ae22-40b1-cc4e-cc0230c009a5", "ours", true, false);
+        $setting = new AccountPaymentChargesSetting(
+            "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
+            "3e12053j-ae22-40b1-cc4e-cc0230c009a5", "ours", true, false
+        );
 
         $updated = $entryPoint->updatePaymentChargesSettings($setting);
         $this->assertSame('090baf7e-5chh-4bfd-9b7l-ad3f8a310123', $updated->getChargeSettingsId());

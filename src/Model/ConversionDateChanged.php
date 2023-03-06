@@ -6,196 +6,118 @@ use DateTime;
 
 class ConversionDateChanged
 {
+    private ?string $conversion_id = null;
+    private ?string $amount = null;
+    private ?string $currency = null;
+    private ?DateTime $new_conversion_date = null;
+    private ?DateTime $new_settlement_date = null;
+    private ?DateTime $old_conversion_date = null;
+    private ?DateTime $old_settlement_date = null;
+    private ?DateTime $event_date_time = null;
 
-
-    /**
-     * @var string
-     */
-    private $conversion_id;
-
-    /**
-     * @var string
-     */
-    private $amount;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-
-    /**
-     * @var DateTime
-     */
-    private $new_conversion_date;
-
-
-    /**
-     * @var DateTime
-     */
-    private $new_settlement_date;
-
-
-    /**
-     * @var DateTime
-     */
-    private $old_conversion_date;
-
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversion_id;
     }
 
-    /**
-     * @param string $conversion_id
-     * @return ConversionDateChanged
-     */
-    public function setConversionId($conversion_id)
+    public function setConversionId(?string $conversion_id): self
     {
         $this->conversion_id = $conversion_id;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @param string $amount
-     * @return ConversionDateChanged
-     */
-    public function setAmount($amount)
+    public function setAmount(?string $amount): self
     {
         $this->amount = $amount;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return ConversionDateChanged
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getNewConversionDate()
+    public function getNewConversionDate(): ?DateTime
     {
         return $this->new_conversion_date;
     }
 
-    /**
-     * @param DateTime $new_conversion_date
-     * @return ConversionDateChanged
-     */
-    public function setNewConversionDate($new_conversion_date)
+    public function setNewConversionDate(?string $new_conversion_date): self
     {
-        $this->new_conversion_date = $new_conversion_date;
+        if ($new_conversion_date) {
+            $this->new_conversion_date = new DateTime($new_conversion_date);
+        }
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getNewSettlementDate()
+    public function getNewSettlementDate(): ?DateTime
     {
         return $this->new_settlement_date;
     }
 
-    /**
-     * @param DateTime $new_settlement_date
-     * @return ConversionDateChanged
-     */
-    public function setNewSettlementDate($new_settlement_date)
+    public function setNewSettlementDate(?string $new_settlement_date): self
     {
-        $this->new_settlement_date = $new_settlement_date;
+        if ($new_settlement_date) {
+            $this->new_settlement_date = new DateTime($new_settlement_date);
+        }
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getOldConversionDate()
+    public function getOldConversionDate(): ?DateTime
     {
         return $this->old_conversion_date;
     }
 
-    /**
-     * @param DateTime $old_conversion_date
-     * @return ConversionDateChanged
-     */
-    public function setOldConversionDate($old_conversion_date)
+    public function setOldConversionDate(?string $old_conversion_date): self
     {
-        $this->old_conversion_date = $old_conversion_date;
+        if ($old_conversion_date) {
+            $this->old_conversion_date = new DateTime($old_conversion_date);
+        }
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getOldSettlementDate()
+    public function getOldSettlementDate(): ?DateTime
     {
         return $this->old_settlement_date;
     }
 
-    /**
-     * @param DateTime $old_settlement_date
-     * @return ConversionDateChanged
-     */
-    public function setOldSettlementDate($old_settlement_date)
+    public function setOldSettlementDate(?string $old_settlement_date): self
     {
-        $this->old_settlement_date = $old_settlement_date;
+        if ($old_settlement_date) {
+            $this->old_settlement_date = new DateTime($old_settlement_date);
+        }
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getEventDateTime()
+    public function getEventDateTime(): ?DateTime
     {
         return $this->event_date_time;
     }
 
-    /**
-     * @param DateTime $event_date_time
-     * @return ConversionDateChanged
-     */
-    public function setEventDateTime($event_date_time)
+    public function setEventDateTime(?string $event_date_time): self
     {
-        $this->event_date_time = $event_date_time;
+        if ($event_date_time) {
+            $this->event_date_time = new DateTime($event_date_time);
+        }
+
         return $this;
     }
-
-
-    /**
-     * @var DateTime
-     */
-    private $old_settlement_date;
-
-
-    /**
-     * @var DateTime
-     */
-    private $event_date_time;
-
-
 }

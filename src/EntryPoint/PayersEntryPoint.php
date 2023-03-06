@@ -7,14 +7,7 @@ use DateTime;
 
 class PayersEntryPoint extends AbstractEntryPoint
 {
-
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return Payer
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Payer
     {
         $response = $this->request(
             'GET',
@@ -27,7 +20,7 @@ class PayersEntryPoint extends AbstractEntryPoint
         return $this->createPayerFromResponse($response);
     }
 
-    protected function createPayerFromResponse($response)
+    protected function createPayerFromResponse($response): Payer
     {
         $payer = new Payer(
             $response->legal_entity_type,

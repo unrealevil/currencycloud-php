@@ -1,73 +1,46 @@
 <?php
+
 namespace CurrencyCloud\Criteria;
 
-class FindIbansCriteria {
+class FindIbansCriteria
+{
+    private ?string $scope = null;
+    private ?string $currency = null;
+    private ?string $accountId = null;
 
-    /**
-     * @var string
-     */
-    private $scope;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $accountId;
-
-    /**
-     * @return string
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @param string $scope
-     * @return $this
-     */
-    public function setScope($scope)
+    public function setScope(?string $scope): self
     {
         $this->scope = $scope;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): self
     {
         $this->accountId = $accountId;
+
         return $this;
     }
-
 }

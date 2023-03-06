@@ -5,17 +5,13 @@ namespace CurrencyCloud\Tests\Core;
 use CurrencyCloud\Session;
 use InvalidArgumentException;
 use LogicException;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
+    private Session $session;
 
-    /**
-     * @var Session
-     */
-    private $session;
-
-    public function setUp()
+    public function setUp(): void
     {
         $this->session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
     }
@@ -23,57 +19,60 @@ class SessionTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function invalidEnvironmentThrowsException()
+    public function invalidEnvironmentThrowsException(): void
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            'Invalid environment test provided, expected one of [prod, demonstration, uat]'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid environment test provided, expected one of [prod, demonstration, uat]');
         new Session('test', 'test', 'test');
     }
 
     /**
      * @test
      */
-    public function invalidLoginIdThrowsException()
+    public function invalidLoginIdThrowsException(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Login ID can not be nul');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Login ID can not be nul');
         new Session(Session::ENVIRONMENT_DEMONSTRATION, null, 'test');
     }
 
     /**
      * @test
      */
-    public function invalidApiKeyThrowsException()
+    public function invalidApiKeyThrowsException(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'API key can not be null');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('API key can not be null');
         new Session(Session::ENVIRONMENT_DEMONSTRATION, 'test', null);
     }
 
     /**
      * @test
      */
-    public function onBehalfOfCanNotBeNull()
+    public function onBehalfOfCanNotBeNull(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Contact ID expected to be UUID');
         $this->session->setOnBehalfOf(null);
     }
 
     /**
      * @test
      */
-    public function onBehalfOfMustBeValidUUID()
+    public function onBehalfOfMustBeValidUUID(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'Contact ID expected to be UUID');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Contact ID expected to be UUID');
         $this->session->setOnBehalfOf('bok');
     }
 
     /**
      * @test
      */
-    public function onBehalfOfCanNotBeSetBeforeItIsUnset()
+    public function onBehalfOfCanNotBeSetBeforeItIsUnset(): void
     {
-        $this->setExpectedException(LogicException::class, 'Already in on-behalf-of call with ID: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Already in on-behalf-of call with ID: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
     }
@@ -81,7 +80,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function onBehalfOfCanBeSetAfterUnset()
+    public function onBehalfOfCanBeSetAfterUnset(): void
     {
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->assertEquals('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', $this->session->getOnBehalfOf());

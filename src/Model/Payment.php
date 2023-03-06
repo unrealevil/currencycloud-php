@@ -2,142 +2,61 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTimeInterface;
-
 class Payment implements EntityInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
 
-    /**
-     * @var string
-     */
-    private $shortReference;
+    private ?string $shortReference = null;
 
-    /**
-     * @var string
-     */
-    private $beneficiaryId;
+    private ?string $beneficiaryId = null;
 
-    /**
-     * @var string
-     */
-    private $conversionId;
+    private ?string $conversionId = null;
 
-    /**
-     * @var string
-     */
-    private $amount;
+    private ?string $amount = null;
 
-    /**
-     * @var string
-     */
-    private $currency;
+    private ?string $currency = null;
 
-    /**
-     * @var string
-     */
-    private $status;
+    private ?string $status = null;
 
-    /**
-     * @var string
-     */
-    private $paymentType;
+    private ?string $reviewStatus = null;
 
-    /**
-     * @var string
-     */
-    private $reference;
+    private ?string $paymentType = null;
 
-    /**
-     * @var string
-     */
-    private $reason;
+    private ?string $reference = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $paymentDate;
+    private ?string $reason = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $transferredAt;
+    private ?\DateTimeInterface $paymentDate = null;
 
-    /**
-     * @var string
-     */
-    private $authorisationStepsRequired;
+    private ?\DateTimeInterface $transferredAt = null;
 
-    /**
-     * @var string
-     */
-    private $creatorContactId;
+    private ?string $authorisationStepsRequired = null;
 
-    /**
-     * @var string
-     */
-    private $lastUpdaterContactId;
+    private ?string $creatorContactId = null;
 
-    /**
-     * @var string
-     */
-    private $failureReason;
+    private ?string $lastUpdaterContactId = null;
 
-    /**
-     * @var string
-     */
-    private $payerDetailsSource;
+    private ?string $failureReason = null;
 
-    /**
-     * @var string
-     */
-    private $payerId;
+    private ?string $payerDetailsSource = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $createdAt;
+    private ?string $payerId = null;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $updatedAt;
+    private ?\DateTimeInterface $createdAt = null;
 
-    /**
-     * @var String
-     */
-    private $uniqueRequestId;
+    private ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var string
-     */
-    private $failureReturnedAmount;
+    private ?string $uniqueRequestId = null;
 
-    /**
-     * @var string|null
-     */
-    private $purposeCode;
+    private ?string $failureReturnedAmount = null;
 
-    /**
-     * @var string|null
-     */
-    private $chargeType;
+    private ?string $purposeCode = null;
 
-    /**
-     * @param string $currency
-     * @param string $beneficiaryId
-     * @param string $amount
-     * @param string $reason
-     * @param string $reference
-     *
-     * @return $this
-     */
-    public static function create($currency, $beneficiaryId, $amount, $reason, $reference)
+    private ?string $chargeType = null;
+
+    public static function create(?string $currency, ?string $beneficiaryId, ?string $amount, ?string $reason, ?string $reference): self
     {
-        return (new Payment())
+        return (new self())
             ->setCurrency($currency)
             ->setBeneficiaryId($beneficiaryId)
             ->setAmount($amount)
@@ -145,468 +64,300 @@ class Payment implements EntityInterface
             ->setReference($reference);
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function setId(?string $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     *
-     * @return $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): self
     {
         $this->shortReference = $shortReference;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryId()
+    public function getBeneficiaryId(): ?string
     {
         return $this->beneficiaryId;
     }
 
-    /**
-     * @param string $beneficiaryId
-     *
-     * @return $this
-     */
-    public function setBeneficiaryId($beneficiaryId)
+    public function setBeneficiaryId(?string $beneficiaryId): self
     {
         $this->beneficiaryId = $beneficiaryId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @param string $conversionId
-     *
-     * @return $this
-     */
-    public function setConversionId($conversionId)
+    public function setConversionId(?string $conversionId): self
     {
         $this->conversionId = $conversionId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @param string $amount
-     *
-     * @return $this
-     */
-    public function setAmount($amount)
+    public function setAmount(?string $amount): self
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     *
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentType()
+    public function getReviewStatus(): ?string
+    {
+        return $this->reviewStatus;
+    }
+
+    public function setReviewStatus(?string $reviewStatus): self
+    {
+        $this->reviewStatus = $reviewStatus;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?string
     {
         return $this->paymentType;
     }
 
-    /**
-     * @param string $paymentType
-     *
-     * @return $this
-     */
-    public function setPaymentType($paymentType)
+    public function setPaymentType(?string $paymentType): self
     {
         $this->paymentType = $paymentType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReference()
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return $this
-     */
-    public function setReference($reference)
+    public function setReference(?string $reference): self
     {
         $this->reference = $reference;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReason()
+    public function getReason(): ?string
     {
         return $this->reason;
     }
 
-    /**
-     * @param string $reason
-     *
-     * @return $this
-     */
-    public function setReason($reason)
+    public function setReason(?string $reason): self
     {
         $this->reason = $reason;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getPaymentDate()
+    public function getPaymentDate(): ?\DateTimeInterface
     {
         return $this->paymentDate;
     }
 
-    /**
-     * @param DateTimeInterface $paymentDate
-     *
-     * @return $this
-     */
-    public function setPaymentDate(DateTimeInterface $paymentDate)
+    public function setPaymentDate(?\DateTimeInterface $paymentDate): self
     {
         $this->paymentDate = $paymentDate;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getTransferredAt()
+    public function getTransferredAt(): ?\DateTimeInterface
     {
         return $this->transferredAt;
     }
 
-    /**
-     * @param DateTimeInterface $transferredAt
-     *
-     * @return $this
-     */
-    public function setTransferredAt(DateTimeInterface $transferredAt)
+    public function setTransferredAt(?\DateTimeInterface $transferredAt): self
     {
         $this->transferredAt = $transferredAt;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthorisationStepsRequired()
+    public function getAuthorisationStepsRequired(): ?string
     {
         return $this->authorisationStepsRequired;
     }
 
-    /**
-     * @param string $authorisationStepsRequired
-     *
-     * @return $this
-     */
-    public function setAuthorisationStepsRequired($authorisationStepsRequired)
+    public function setAuthorisationStepsRequired(?string $authorisationStepsRequired): self
     {
         $this->authorisationStepsRequired = $authorisationStepsRequired;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorContactId()
+    public function getCreatorContactId(): ?string
     {
         return $this->creatorContactId;
     }
 
-    /**
-     * @param string $creatorContactId
-     *
-     * @return $this
-     */
-    public function setCreatorContactId($creatorContactId)
+    public function setCreatorContactId(?string $creatorContactId): self
     {
         $this->creatorContactId = $creatorContactId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastUpdaterContactId()
+    public function getLastUpdaterContactId(): ?string
     {
         return $this->lastUpdaterContactId;
     }
 
-    /**
-     * @param string $lastUpdaterContactId
-     *
-     * @return $this
-     */
-    public function setLastUpdaterContactId($lastUpdaterContactId)
+    public function setLastUpdaterContactId(?string $lastUpdaterContactId): self
     {
         $this->lastUpdaterContactId = $lastUpdaterContactId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFailureReason()
+    public function getFailureReason(): ?string
     {
         return $this->failureReason;
     }
 
-    /**
-     * @param string $failureReason
-     *
-     * @return $this
-     */
-    public function setFailureReason($failureReason)
+    public function setFailureReason(?string $failureReason): self
     {
         $this->failureReason = $failureReason;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPayerId()
-    {
-        return $this->payerId;
-    }
-
-    /**
-     * @param string $payerId
-     *
-     * @return $this
-     */
-    public function setPayerId($payerId)
-    {
-        $this->payerId = $payerId;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTimeInterface $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt(DateTimeInterface $createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTimeInterface $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt(DateTimeInterface $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return String
-     */
-    public function getUniqueRequestId()
-    {
-        return $this->uniqueRequestId;
-    }
-
-    /**
-     * @param String $uniqueRequestId
-     *
-     * @return $this
-     */
-    public function setUniqueRequestId($uniqueRequestId)
-    {
-        $this->uniqueRequestId = $uniqueRequestId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerDetailsSource()
+    public function getPayerDetailsSource(): ?string
     {
         return $this->payerDetailsSource;
     }
 
-    /**
-     * @param string $payerDetailsSource
-     *
-     * @return $this
-     */
-    public function setPayerDetailsSource($payerDetailsSource)
+    public function setPayerDetailsSource(?string $payerDetailsSource): self
     {
         $this->payerDetailsSource = $payerDetailsSource;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFailureReturnedAmount()
+    public function getPayerId(): ?string
+    {
+        return $this->payerId;
+    }
+
+    public function setPayerId(?string $payerId): self
+    {
+        $this->payerId = $payerId;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUniqueRequestId(): ?string
+    {
+        return $this->uniqueRequestId;
+    }
+
+    public function setUniqueRequestId(?string $uniqueRequestId): self
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
+
+        return $this;
+    }
+
+    public function getFailureReturnedAmount(): ?string
     {
         return $this->failureReturnedAmount;
     }
 
-    /**
-     * @param string $failureReturnedAmount
-     *
-     * @return $this
-     */
-    public function setFailureReturnedAmount($failureReturnedAmount)
+    public function setFailureReturnedAmount(?string $failureReturnedAmount): self
     {
         $this->failureReturnedAmount = $failureReturnedAmount;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPurposeCode()
+    public function getPurposeCode(): ?string
     {
         return $this->purposeCode;
     }
 
-    /**
-     * @param null|string purposeCode
-     *
-     * @return $this
-     */
-    public function setPurposeCode($purposeCode)
+    public function setPurposeCode(?string $purposeCode): self
     {
         $this->purposeCode = $purposeCode;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getChargeType()
+    public function getChargeType(): ?string
     {
         return $this->chargeType;
     }
 
-    /**
-     * @param null|string chargeType
-     *
-     * @return $this
-     */
-    public function setChargeType($chargeType)
+    public function setChargeType(?string $chargeType): self
     {
         $this->chargeType = $chargeType;
 

@@ -7,40 +7,16 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class ClientHttpErrorEvent extends Event
 {
-    const NAME = 'client.response.error.event';
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
-    /**
-     * @var
-     */
-    private $requestParams;
-    /**
-     * @var
-     */
-    private $method;
-    /**
-     * @var
-     */
-    private $url;
-    /**
-     * @var array
-     */
-    private $originalRequest;
-    /**
-     * @var mixed
-     */
-    private $interceptedResponse;
+    public const NAME = 'client.response.error.event';
 
-    /**
-     * @param ResponseInterface $response
-     * @param array $requestParams
-     * @param string $method
-     * @param string $url
-     * @param array $originalRequest
-     */
-    public function __construct(ResponseInterface $response, array $requestParams, $method, $url, array $originalRequest)
+    private ResponseInterface $response;
+    private ?array $requestParams;
+    private string $method;
+    private string $url;
+    private ?array $originalRequest;
+    private mixed $interceptedResponse;
+
+    public function __construct(ResponseInterface $response, ?array $requestParams, string $method, string $url, ?array $originalRequest)
     {
         $this->response = $response;
         $this->requestParams = $requestParams;
@@ -49,58 +25,39 @@ final class ClientHttpErrorEvent extends Event
         $this->originalRequest = $originalRequest;
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function getResponse()
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRequestParams()
+    public function getRequestParams(): ?array
     {
         return $this->requestParams;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return array
-     */
-    public function getOriginalRequest()
+    public function getOriginalRequest(): ?array
     {
         return $this->originalRequest;
     }
 
-    /**
-     * @param mixed $response
-     */
-    public function setInterceptedResponse($response)
+    public function setInterceptedResponse(mixed $response): self
     {
         $this->interceptedResponse = $response;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInterceptedResponse()
+    public function getInterceptedResponse(): mixed
     {
         return $this->interceptedResponse;
     }

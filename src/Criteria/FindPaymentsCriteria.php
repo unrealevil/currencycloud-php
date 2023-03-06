@@ -6,235 +6,134 @@ use DateTime;
 
 class FindPaymentsCriteria
 {
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $updatedAtFrom = null;
+    private ?DateTime $updatedAtTo = null;
+    private ?DateTime $paymentDateFrom = null;
+    private ?DateTime $paymentDateTo = null;
+    private ?DateTime $transferredAtFrom = null;
+    private ?DateTime $transferredAtTo = null;
+    private ?string $amountFrom = null;
+    private ?string $amountTo = null;
 
-    /**
-     * @var DateTime|null
-     */
-    private $createdAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $createdAtTo;
-    /**
-     * @var DateTime|null
-     */
-    private $updatedAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $updatedAtTo;
-    /**
-     * @var DateTime|null
-     */
-    private $paymentDateFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $paymentDateTo;
-    /**
-     * @var DateTime|null
-     */
-    private $transferredAtFrom;
-    /**
-     * @var DateTime|null
-     */
-    private $transferredAtTo;
-    /**
-     * @var string|null
-     */
-    private $amountFrom;
-    /**
-     * @var string|null
-     */
-    private $amountTo;
-
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param DateTime $createdAtFrom
-     *
-     * @return $this
-     */
-    public function setCreatedAtFrom(DateTime $createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param DateTime $createdAtTo
-     *
-     * @return $this
-     */
-    public function setCreatedAtTo(DateTime $createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?DateTime
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @param DateTime $updatedAtFrom
-     *
-     * @return $this
-     */
-    public function setUpdatedAtFrom(DateTime $updatedAtFrom)
+    public function setUpdatedAtFrom(?DateTime $updatedAtFrom): self
     {
         $this->updatedAtFrom = $updatedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?DateTime
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @param DateTime $updatedAtTo
-     *
-     * @return $this
-     */
-    public function setUpdatedAtTo(DateTime $updatedAtTo)
+    public function setUpdatedAtTo(?DateTime $updatedAtTo): self
     {
         $this->updatedAtTo = $updatedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getPaymentDateFrom()
+    public function getPaymentDateFrom(): ?DateTime
     {
         return $this->paymentDateFrom;
     }
 
-    /**
-     * @param DateTime|null $paymentDateFrom
-     *
-     * @return $this
-     */
-    public function setPaymentDateFrom(DateTime $paymentDateFrom)
+    public function setPaymentDateFrom(?DateTime $paymentDateFrom): self
     {
         $this->paymentDateFrom = $paymentDateFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getPaymentDateTo()
+    public function getPaymentDateTo(): ?DateTime
     {
         return $this->paymentDateTo;
     }
 
-    /**
-     * @param DateTime|null $paymentDateTo
-     *
-     * @return $this
-     */
-    public function setPaymentDateTo(DateTime $paymentDateTo)
+    public function setPaymentDateTo(?DateTime $paymentDateTo): self
     {
         $this->paymentDateTo = $paymentDateTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getTransferredAtFrom()
+    public function getTransferredAtFrom(): ?DateTime
     {
         return $this->transferredAtFrom;
     }
 
-    /**
-     * @param DateTime|null $transferredAtFrom
-     *
-     * @return $this
-     */
-    public function setTransferredAtFrom(DateTime $transferredAtFrom)
+    public function setTransferredAtFrom(?DateTime $transferredAtFrom): self
     {
         $this->transferredAtFrom = $transferredAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getTransferredAtTo()
+    public function getTransferredAtTo(): ?DateTime
     {
         return $this->transferredAtTo;
     }
 
-    /**
-     * @param DateTime|null $transferredAtTo
-     *
-     * @return $this
-     */
-    public function setTransferredAtTo(DateTime $transferredAtTo)
+    public function setTransferredAtTo(?DateTime $transferredAtTo): self
     {
         $this->transferredAtTo = $transferredAtTo;
+
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAmountFrom()
+    public function getAmountFrom(): ?string
     {
         return $this->amountFrom;
     }
 
-    /**
-     * @param null|string $amountFrom
-     *
-     * @return $this
-     */
-    public function setAmountFrom($amountFrom)
+    public function setAmountFrom(?string $amountFrom): self
     {
         $this->amountFrom = $amountFrom;
+
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAmountTo()
+    public function getAmountTo(): ?string
     {
         return $this->amountTo;
     }
 
-    /**
-     * @param null|string $amountTo
-     *
-     * @return $this
-     */
-    public function setAmountTo($amountTo)
+    public function setAmountTo(?string $amountTo): self
     {
         $this->amountTo = $amountTo;
+
         return $this;
     }
 }

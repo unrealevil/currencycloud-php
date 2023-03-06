@@ -1,189 +1,60 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use stdClass;
 
-class ReportSearchParams {
+class ReportSearchParams
+{
+    private ?string $shortReference;
+    private ?string $description;
+    private ?string $accountId;
+    private ?string $contactId;
+    private ?string $createdAtFrom;
+    private ?string $createdAtTo;
+    private ?string $expirationDateFrom;
+    private ?string $expirationDateTo;
+    private ?string $status;
+    private ?string $reportType;
+    private ?string $onBehalfOf;
+    private ?string $buyCurrency;
+    private ?string $sellCurrency;
+    private ?string $clientBuyAmountFrom;
+    private ?string $clientBuyAmountTo;
+    private ?string $clientSellAmountFrom;
+    private ?string $clientSellAmountTo;
+    private ?string $partnerBuyAmountFrom;
+    private ?string $partnerBuyAmountTo;
+    private ?string $partnerSellAmountFrom;
+    private ?string $partnerSellAmountTo;
+    private ?string $clientStatus;
+    private ?string $partnerStatus;
+    private ?string $conversionDateFrom;
+    private ?string $conversionDateTo;
+    private ?string $settlementDateFrom;
+    private ?string $settlementDateTo;
+    private ?string $updatedAtFrom;
+    private ?string $updatedAtTo;
+    private ?string $uniqueRequestId;
+    private ?string $scope;
+    private ?string $currency;
+    private ?string $amountFrom;
+    private ?string $amountTo;
+    private ?string $paymentDateFrom;
+    private ?string $paymentDateTo;
+    private ?string $transferedAtFrom;
+    private ?string $transferedAtTo;
+    private ?string $beneficiaryId;
+    private ?string $conversionId;
+    private ?string $withDeleted;
+    private ?string $paymentGroupId;
 
-    /*
-     * @var string|null
-     */
-    private $shortReference;
-    /*
-     * @var string|null
-     */
-    private $description;
-    /*
-     * @var string|null
-     */
-    private $accountId;
-    /*
-     * @var string|null
-     */
-    private $contactId;
-    /*
-     * @var DateTime
-     */
-    private $createdAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $createdAtTo;
-    /*
-     * @var DateTime
-     */
-    private $expirationDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $expirationDateTo;
-    /*
-     * @var string|null
-     */
-    private $status;
-    /*
-     * @var string|null
-     */
-    private $reportType;
-    /*
-     * @var string|null
-     */
-    private $onBehalfOf;
-    /*
-     * @var string|null
-     */
-    private $buyCurrency;
-    /*
-     * @var string|null
-     */
-    private $sellCurrency;
-    /*
-     * @var string|null
-     */
-    private $clientBuyAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $clientBuyAmountTo;
-    /*
-     * @var string|null
-     */
-    private $clientSellAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $clientSellAmountTo;
-    /*
-     * @var string|null
-     */
-    private $partnerBuyAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $partnerBuyAmountTo;
-    /*
-     * @var string|null
-     */
-    private $partnerSellAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $partnerSellAmountTo;
-    /*
-     * @var string|null
-     */
-    private $clientStatus;
-    /*
-     * @var string|null
-     */
-    private $partnerStatus;
-    /*
-     * @var DateTime
-     */
-    private $conversionDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $conversionDateTo;
-    /*
-     * @var DateTime
-     */
-    private $settlementDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $settlementDateTo;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtTo;
-    /*
-     * @var string|null
-     */
-    private $uniqueRequestId;
-    /*
-     * @var string|null
-     */
-    private $scope;
-    /*
-     * @var string|null
-     */
-    private $currency;
-    /*
-     * @var string|null
-     */
-    private $amountFrom;
-    /*
-     * @var string|null
-     */
-    private $amountTo;
-    /*
-     * @var DateTime
-     */
-    private $paymentDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $paymentDateTo;
-    /*
-     * @var DateTime
-     */
-    private $transferedAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $transferedAtTo;
-    /*
-     * @var string|null
-     */
-    private $beneficiaryId;
-    /*
-     * @var string|null
-     */
-    private $conversionId;
-    /*
-     * @var string|null
-     */
-    private $withDeleted;
-    /*
-     * @var string|null
-     */
-    private $paymentGroupId;
-
-    /**
-     * ReportSearchParams constructor.
-     * @param stdClass $data
-     */
-    public function __construct($data)
+    public function __construct(stdClass $data)
     {
-        $this->shortReference = $this->getValue($data,'short_reference');
+        $this->shortReference = $this->getValue($data, 'short_reference');
         $this->description = $this->getValue($data, 'description');
         $this->accountId = $this->getValue($data, 'account_id');
-        $this->contactId = $this->getValue($data,'contact_id');
+        $this->contactId = $this->getValue($data, 'contact_id');
         $this->createdAtFrom = $this->getValue($data, 'created_at_from');
         $this->createdAtTo = $this->getValue($data, 'created_at_to');
         $this->expirationDateFrom = $this->getValue($data, 'expiration_date_from');
@@ -224,347 +95,217 @@ class ReportSearchParams {
         $this->paymentGroupId = $this->getValue($data, 'payment_group_id');
     }
 
-    /**
-     * @param stdClass $data
-     * @param string $name
-     * @return string|null
-     */
-    protected function getValue($data, $name){
+    protected function getValue(stdClass $data, string $name): ?string
+    {
         return !empty($data->$name) ? $data->$name : null;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getContactId()
+    public function getContactId(): ?string
     {
         return $this->contactId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?string
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?string
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getExpirationDateFrom()
+    public function getExpirationDateFrom(): ?string
     {
         return $this->expirationDateFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getExpirationDateTo()
+    public function getExpirationDateTo(): ?string
     {
         return $this->expirationDateTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getReportType()
+    public function getReportType(): ?string
     {
         return $this->reportType;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getOnBehalfOf()
+    public function getOnBehalfOf(): ?string
     {
         return $this->onBehalfOf;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBuyCurrency()
+    public function getBuyCurrency(): ?string
     {
         return $this->buyCurrency;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getSellCurrency()
+    public function getSellCurrency(): ?string
     {
         return $this->sellCurrency;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClientBuyAmountFrom()
+    public function getClientBuyAmountFrom(): ?string
     {
         return $this->clientBuyAmountFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClientBuyAmountTo()
+    public function getClientBuyAmountTo(): ?string
     {
         return $this->clientBuyAmountTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClientSellAmountFrom()
+    public function getClientSellAmountFrom(): ?string
     {
         return $this->clientSellAmountFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClientSellAmountTo()
+    public function getClientSellAmountTo(): ?string
     {
         return $this->clientSellAmountTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPartnerBuyAmountFrom()
+    public function getPartnerBuyAmountFrom(): ?string
     {
         return $this->partnerBuyAmountFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPartnerBuyAmountTo()
+    public function getPartnerBuyAmountTo(): ?string
     {
         return $this->partnerBuyAmountTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPartnerSellAmountFrom()
+    public function getPartnerSellAmountFrom(): ?string
     {
         return $this->partnerSellAmountFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPartnerSellAmountTo()
+    public function getPartnerSellAmountTo(): ?string
     {
         return $this->partnerSellAmountTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClientStatus()
+    public function getClientStatus(): ?string
     {
         return $this->clientStatus;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPartnerStatus()
+    public function getPartnerStatus(): ?string
     {
         return $this->partnerStatus;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getConversionDateFrom()
+    public function getConversionDateFrom(): ?string
     {
         return $this->conversionDateFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getConversionDateTo()
+    public function getConversionDateTo(): ?string
     {
         return $this->conversionDateTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getSettlementDateFrom()
+    public function getSettlementDateFrom(): ?string
     {
         return $this->settlementDateFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getSettlementDateTo()
+    public function getSettlementDateTo(): ?string
     {
         return $this->settlementDateTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?string
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?string
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getUniqueRequestId()
+    public function getUniqueRequestId(): ?string
     {
         return $this->uniqueRequestId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAmountFrom()
+    public function getAmountFrom(): ?string
     {
         return $this->amountFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAmountTo()
+    public function getAmountTo(): ?string
     {
         return $this->amountTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPaymentDateFrom()
+    public function getPaymentDateFrom(): ?string
     {
         return $this->paymentDateFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPaymentDateTo()
+    public function getPaymentDateTo(): ?string
     {
         return $this->paymentDateTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getTransferedAtFrom()
+    public function getTransferedAtFrom(): ?string
     {
         return $this->transferedAtFrom;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getTransferedAtTo()
+    public function getTransferedAtTo(): ?string
     {
         return $this->transferedAtTo;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBeneficiaryId()
+    public function getBeneficiaryId(): ?string
     {
         return $this->beneficiaryId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getWithDeleted()
+    public function getWithDeleted(): ?string
     {
         return $this->withDeleted;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPaymentGroupId()
+    public function getPaymentGroupId(): ?string
     {
         return $this->paymentGroupId;
     }

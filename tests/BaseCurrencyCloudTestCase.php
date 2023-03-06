@@ -5,24 +5,12 @@ namespace CurrencyCloud\Tests;
 use CurrencyCloud\Client;
 use CurrencyCloud\SimpleEntityManager;
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
+class BaseCurrencyCloudTestCase extends TestCase
 {
-
-    /**
-     * @param $returns
-     * @param $method
-     * @param $path
-     * @param array $query
-     * @param array $request
-     * @param array $options
-     * @param bool|true $secured
-     *
-     * @return Client
-     */
-    protected function getMockedClient($returns, $method, $path, $query = [], $request = [], $options = [], $secured = true)
+    protected function getMockedClient(mixed $returns, string $method, string $path, array $query = [], array $request = [], array $options = [], bool $secured = true): Client
     {
         $mock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -30,32 +18,26 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
 
         $mock->expects($this->once())->method('request')
             ->with($method, $path, $query, $request, $options, $secured)
-            ->will($this->returnValue($returns));
+            ->willReturn($returns);
 
         return $mock;
     }
 
-    /**
-     * @param $expectedModel
-     * @param $changeSet
-     *
-     * @return SimpleEntityManager
-     */
-    protected function getMockedEntityManager($expectedModel, $changeSet)
+    protected function getMockedEntityManager($expectedModel, $changeSet): SimpleEntityManager
     {
         $mock = $this->getMockBuilder(SimpleEntityManager::class)
             ->getMock();
 
         $mock->expects($this->once())->method('computeChangeSet')
             ->with($expectedModel)
-            ->will($this->returnValue($changeSet));
+            ->willReturn($changeSet);
 
         return $mock;
     }
 
-    protected function validateObjectStrictName($object, $dummy)
+    protected function validateObjectStrictName($object, $dummy): void
     {
-        $this->assertInternalType('object', $object);
+        $this->assertIsObject($object);
         foreach ($dummy as $key => $original) {
             $parts = explode('_', $key);
             $uCased = implode('', array_map('ucfirst', $parts));
@@ -72,7 +54,7 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
             if ($value instanceof DateTime) {
                 $value = $value->getTimestamp();
                 $original = (new DateTime($original))->getTimestamp();
-            } else if (is_bool($value)) {
+            } elseif (is_bool($value)) {
                 if (!is_bool($original)) {
                     $value = $value ? 'true' : 'false';
                 }
@@ -80,13 +62,10 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
             $this->assertEquals($original, $value, sprintf('Property "%s" with method "%s"', $key, $getter));
             unset($dummy[$key]);
         }
-        $this->assertEquals(0, count($dummy));
+        $this->assertCount(0, $dummy);
     }
 
-    /**
-     * @return array
-     */
-    protected function getDummyPagination()
+    protected function getDummyPagination(): array
     {
         return [
             'total_entries' => 1,
@@ -96,29 +75,21 @@ class BaseCurrencyCloudTestCase extends PHPUnit_Framework_TestCase
             'previous_page' => -1,
             'next_page' => 2,
             'order' => 'created_at',
-            'order_asc_desc' => 'asc'
+            'order_asc_desc' => 'asc',
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getDummyPaginationRequest()
+    protected function getDummyPaginationRequest(): array
     {
         return [
             'page' => null,
             'per_page' => null,
             'order' => null,
-            'order_asc_desc' => null
+            'order_asc_desc' => null,
         ];
     }
 
-    /**
-     * @param object $object
-     * @param mixed $value
-     * @param string $propertyName
-     */
-    protected function setIdProperty($object, $value, $propertyName = 'id')
+    protected function setIdProperty(object $object, mixed $value, string $propertyName = 'id'): void
     {
         $reflection = new ReflectionClass($object);
         $property = $reflection->getProperty($propertyName);

@@ -5,18 +5,19 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\Criteria\FindSettlementsCriteria;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\Model\Settlement;
+use CurrencyCloud\Model\SettlementEntry;
 use CurrencyCloud\Model\Settlements;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
+use DateTimeInterface;
 
 class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
     /**
      * @test
      */
-    public function canRetrieve()
+    public function canRetrieve(): void
     {
         $data = '{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[{"GBP":{"send_amount":"0.00","receive_amount":"1000.00"}},{"USD":{"send_amount":"1587.80","receive_amount":"0.00"}}],"created_at":"2014-01-01T12:00:00+00:00","updated_at":"2014-01-01T12:00:00+00:00","released_at":"2014-01-01T12:00:00+00:00"}';
 
@@ -26,7 +27,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             'GET',
             'settlements/hi',
             [
-                'on_behalf_of' => null
+                'on_behalf_of' => null,
             ]
         )
         );
@@ -41,7 +42,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             $this->assertArrayHasKey($k, $entries);
             foreach ($t as $c => $o) {
                 $this->assertArrayHasKey($c, $entries[$k]);
-                /* @var \CurrencyCloud\Model\SettlementEntry $a */
+                /* @var SettlementEntry $a */
                 $a = $entries[$k][$c];
                 $this->assertSame($o['send_amount'], $a->getSendAmount());
                 $this->assertSame($o['receive_amount'], $a->getReceiveAmount());
@@ -56,7 +57,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canRetrieveWithOnBehalfOf()
+    public function canRetrieveWithOnBehalfOf(): void
     {
         $data = '{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[],"created_at":"2014-01-01T12:00:00+00:00","updated_at":"2014-01-01T12:00:00+00:00","released_at":"2014-01-01T12:00:00+00:00"}';
 
@@ -66,7 +67,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             'GET',
             'settlements/hi',
             [
-                'on_behalf_of' => 'me'
+                'on_behalf_of' => 'me',
             ]
         )
         );
@@ -83,7 +84,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canDelete()
+    public function canDelete(): void
     {
         $data = '{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[],"created_at":"2014-01-01T12:00:00+00:00","updated_at":"2014-01-01T12:00:00+00:00","released_at":"2014-01-01T12:00:00+00:00"}';
 
@@ -94,7 +95,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             'settlements/hi/delete',
             [],
             [
-                'on_behalf_of' => null
+                'on_behalf_of' => null,
             ]
         )
         );
@@ -114,7 +115,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canDeleteWithOnBehalfOF()
+    public function canDeleteWithOnBehalfOF(): void
     {
         $data = '{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[],"created_at":"2014-01-01T12:00:00+00:00","updated_at":"2014-01-01T12:00:00+00:00","released_at":"2014-01-01T12:00:00+00:00"}';
 
@@ -125,7 +126,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             'settlements/hi/delete',
             [],
             [
-                'on_behalf_of' => 'me'
+                'on_behalf_of' => 'me',
             ]
         )
         );
@@ -145,7 +146,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canFind()
+    public function canFind(): void
     {
         $data = '{"settlements":[{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[],"created_at": "2014-01-01T12:00:00+00:00","updated_at": "2014-01-01T12:00:00+00:00","released_at": "2014-01-01T12:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
@@ -186,7 +187,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canFindWithAllParams()
+    public function canFindWithAllParams(): void
     {
         $data = '{"settlements":[{"id":"a937f05e-e9fd-442e-a46f-11e84ba37806","short_reference":"20140101-BCDFGH","status":"open","conversion_ids":["c9b6b851-10f9-4bbf-881e-1d8a49adf7d8"],"entries":[],"created_at": "2014-01-01T12:00:00+00:00","updated_at": "2014-01-01T12:00:00+00:00","released_at": "2014-01-01T12:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
@@ -197,7 +198,7 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             (new DateTime())->modify('-2 hour'),
             (new DateTime())->modify('-3 hour'),
             (new DateTime())->modify('-4 hour'),
-            (new DateTime())->modify('-5 hour')
+            (new DateTime())->modify('-5 hour'),
         ];
 
         $entryPoint = new SettlementsEntryPoint(
@@ -206,12 +207,12 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             'GET',
             'settlements/find',
             [
-                'created_at_from' => $dateTimes[0]->format(DateTime::ISO8601),
-                'created_at_to' => $dateTimes[1]->format(DateTime::ISO8601),
-                'updated_at_from' => $dateTimes[2]->format(DateTime::ISO8601),
-                'updated_at_to' => $dateTimes[3]->format(DateTime::ISO8601),
-                'released_at_from' => $dateTimes[4]->format(DateTime::ISO8601),
-                'released_at_to' => $dateTimes[5]->format(DateTime::ISO8601),
+                'created_at_from' => $dateTimes[0]->format(DateTimeInterface::ATOM),
+                'created_at_to' => $dateTimes[1]->format(DateTimeInterface::ATOM),
+                'updated_at_from' => $dateTimes[2]->format(DateTimeInterface::ATOM),
+                'updated_at_to' => $dateTimes[3]->format(DateTimeInterface::ATOM),
+                'released_at_from' => $dateTimes[4]->format(DateTimeInterface::ATOM),
+                'released_at_to' => $dateTimes[5]->format(DateTimeInterface::ATOM),
                 'short_reference' => 'A',
                 'status' => 'B',
                 'on_behalf_of' => 'C',
@@ -230,7 +231,6 @@ class SettlementsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setUpdatedAtTo($dateTimes[3])
             ->setReleasedAtFrom($dateTimes[4])
             ->setReleasedAtTo($dateTimes[5]);
-
 
         $settlements = $entryPoint->find('A', 'B', $criteria, null, 'C');
 

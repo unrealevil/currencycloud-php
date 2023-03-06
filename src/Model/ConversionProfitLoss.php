@@ -1,65 +1,23 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class ConversionProfitLoss {
+class ConversionProfitLoss
+{
+    private ?string $accountId;
+    private ?string $contactId;
+    private ?string $eventAccountId;
+    private ?string $eventContactId;
+    private ?string $conversionId;
+    private ?string $eventType;
+    private ?string $amount;
+    private ?string $currency;
+    private ?string $notes;
+    private ?DateTime $eventDateTime;
 
-    /**
-     * @var string
-     */
-    private $accountId;
-    /**
-     * @var string
-     */
-    private $contactId;
-    /**
-     * @var string
-     */
-    private $eventAccountId;
-    /**
-     * @var string
-     */
-    private $eventContactId;
-    /**
-     * @var string
-     */
-    private $conversionId;
-    /**
-     * @var string
-     */
-    private $eventType;
-    /**
-     * @var string
-     */
-    private $amount;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $notes;
-    /**
-     * @var DateTime
-     */
-    private $eventDateTime;
-
-    /**
-     * ConversionProfitLoss constructor.
-     * @param string $accountId
-     * @param string $contactId
-     * @param string $eventAccountId
-     * @param string $eventContactId
-     * @param string $conversionId
-     * @param string $eventType
-     * @param string $amount
-     * @param string $currency
-     * @param string $notes
-     * @param DateTime $eventDateTime
-     */
-    public function __construct($accountId, $contactId, $eventAccountId, $eventContactId, $conversionId, $eventType, $amount, $currency, $notes, $eventDateTime)
+    public function __construct(?string $accountId, ?string $contactId, ?string $eventAccountId, ?string $eventContactId, string $conversionId, string $eventType, string $amount, string $currency, string $notes, DateTime $eventDateTime)
     {
         $this->accountId = $accountId;
         $this->contactId = $contactId;
@@ -73,84 +31,53 @@ class ConversionProfitLoss {
         $this->eventDateTime = $eventDateTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactId()
+    public function getContactId(): ?string
     {
         return $this->contactId;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventAccountId()
+    public function getEventAccountId(): ?string
     {
         return $this->eventAccountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventContactId()
+    public function getEventContactId(): ?string
     {
         return $this->eventContactId;
     }
 
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventType()
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getNotes()
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getEventDateTime()
+    public function getEventDateTime(): ?DateTime
     {
         return $this->eventDateTime;
     }
-
 }

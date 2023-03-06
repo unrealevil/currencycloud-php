@@ -1,16 +1,19 @@
 <?php
-namespace CurrencyCloud\Model;
+
+namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\VansEntryPoint;
+use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
-class VansEntryPointTest extends BaseCurrencyCloudTestCase {
-
+class VansEntryPointTest extends BaseCurrencyCloudTestCase
+{
     /**
      * @test
      */
-    public function canGetVans(){
+    public function canGetVans(): void
+    {
         $data = '{
             "virtual_accounts": [{
                 "id": "00d272ee-fae5-4f97-b425-993a2d6e3a46",
@@ -46,7 +49,7 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase {
                     'page' => null,
                     'per_page' => null,
                     'order' => null,
-                    'order_asc_desc' => null
+                    'order_asc_desc' => null,
                 ]
             )
         );
@@ -66,13 +69,13 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame($dummy['virtual_accounts'][0]['bank_institution_address'], $vansCollection->getVans()[0]->getBankInstitutionAddress());
         $this->assertSame($dummy['virtual_accounts'][0]['bank_institution_country'], $vansCollection->getVans()[0]->getBankInstitutionCountry());
         $this->assertSame($dummy['virtual_accounts'][0]['routing_code'], $vansCollection->getVans()[0]->getRoutingCode());
-
     }
 
     /**
      * @test
      */
-    public function canFindVans(){
+    public function canFindVans(): void
+    {
         $data = '{
             "virtual_accounts": [{
                 "id": "00d272ee-fae5-4f97-b425-993a2d6e3a46",
@@ -110,7 +113,7 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase {
                     'page' => null,
                     'per_page' => null,
                     'order' => null,
-                    'order_asc_desc' => null
+                    'order_asc_desc' => null,
                 ]
             )
         );
@@ -130,6 +133,5 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase {
         $this->assertSame($dummy['virtual_accounts'][0]['bank_institution_address'], $vansCollection->getVans()[0]->getBankInstitutionAddress());
         $this->assertSame($dummy['virtual_accounts'][0]['bank_institution_country'], $vansCollection->getVans()[0]->getBankInstitutionCountry());
         $this->assertSame($dummy['virtual_accounts'][0]['routing_code'], $vansCollection->getVans()[0]->getRoutingCode());
-
     }
 }

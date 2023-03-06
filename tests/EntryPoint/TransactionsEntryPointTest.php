@@ -2,14 +2,9 @@
 
 namespace CurrencyCloud\Tests\EntryPoint;
 
-use CurrencyCloud\Criteria\FindSettlementsCriteria;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
-use CurrencyCloud\Model\Settlement;
-use CurrencyCloud\Model\Settlements;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Model\Transactions;
-use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 
@@ -19,19 +14,19 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canRetrieve()
+    public function canRetrieve(): void
     {
         $data = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'transactions/hi',
-            [
-                'on_behalf_of' => null
-            ]
-        )
+                json_decode($data),
+                'GET',
+                'transactions/hi',
+                [
+                    'on_behalf_of' => null,
+                ]
+            )
         );
 
         $entity = $entryPoint->retrieve('hi');
@@ -44,19 +39,19 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canRetrieveWithOnBehalfOf()
+    public function canRetrieveWithOnBehalfOf(): void
     {
         $data = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'transactions/hi',
-            [
-                'on_behalf_of' => 'me'
-            ]
-        )
+                json_decode($data),
+                'GET',
+                'transactions/hi',
+                [
+                    'on_behalf_of' => 'me',
+                ]
+            )
         );
 
         $entity = $entryPoint->retrieve('hi', 'me');
@@ -69,43 +64,43 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canFind()
+    public function canFind(): void
     {
         $data = '{"transactions":[{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"e93e322f-93aa-4d31-b050-449da723db0b","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'transactions/find',
-            [
-                'currency' => null,
-                'amount' => null,
-                'action' => null,
-                'related_entity_type' => null,
-                'related_entity_id' => null,
-                'related_entity_short_reference' => null,
-                'status' => null,
-                'type' => null,
-                'reason' => null,
-                'on_behalf_of' => null,
-                'amount_from' => null,
-                'amount_to' => null,
-                'settles_at_from' => null,
-                'settles_at_to' => null,
-                'created_at_from' => null,
-                'created_at_to' => null,
-                'updated_at_from' => null,
-                'updated_at_to' => null,
-                'completed_at_from' => null,
-                'completed_at_to' => null,
-                'page' => null,
-                'per_page' => null,
-                'order' => null,
-                'order_asc_desc' => null,
-                'scope' => null
-            ]
-        )
+                json_decode($data),
+                'GET',
+                'transactions/find',
+                [
+                    'currency' => null,
+                    'amount' => null,
+                    'action' => null,
+                    'related_entity_type' => null,
+                    'related_entity_id' => null,
+                    'related_entity_short_reference' => null,
+                    'status' => null,
+                    'type' => null,
+                    'reason' => null,
+                    'on_behalf_of' => null,
+                    'amount_from' => null,
+                    'amount_to' => null,
+                    'settles_at_from' => null,
+                    'settles_at_to' => null,
+                    'created_at_from' => null,
+                    'created_at_to' => null,
+                    'updated_at_from' => null,
+                    'updated_at_to' => null,
+                    'completed_at_from' => null,
+                    'completed_at_to' => null,
+                    'page' => null,
+                    'per_page' => null,
+                    'order' => null,
+                    'order_asc_desc' => null,
+                    'scope' => null,
+                ]
+            )
         );
 
         $transactions = $entryPoint->find();
@@ -122,7 +117,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canFindWithAllParams()
+    public function canFindWithAllParams(): void
     {
         $data = '{"transactions":[{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"e93e322f-93aa-4d31-b050-449da723db0b","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
@@ -140,37 +135,37 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'transactions/find',
-            [
-                'currency' => 'C',
-                'amount' => 'D',
-                'action' => 'E',
-                'related_entity_type' => 'F',
-                'related_entity_id' => 'G',
-                'related_entity_short_reference' => 'H',
-                'status' => 'I',
-                'type' => 'J',
-                'reason' => 'K',
-                'on_behalf_of' => 'L',
-                'amount_from' => 'A',
-                'amount_to' => 'B',
-                'settles_at_from' => $dateTimes[0]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'settles_at_to' => $dateTimes[1]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'created_at_from' => $dateTimes[2]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'created_at_to' => $dateTimes[3]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'updated_at_from' => $dateTimes[4]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'updated_at_to' => $dateTimes[5]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'completed_at_from' => $dateTimes[6]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'completed_at_to' => $dateTimes[7]->format(TransactionsEntryPoint::DATE_FORMAT),
-                'page' => null,
-                'per_page' => null,
-                'order' => null,
-                'order_asc_desc' => null,
-                'scope' => null
-            ]
-        )
+                json_decode($data),
+                'GET',
+                'transactions/find',
+                [
+                    'currency' => 'C',
+                    'amount' => 'D',
+                    'action' => 'E',
+                    'related_entity_type' => 'F',
+                    'related_entity_id' => 'G',
+                    'related_entity_short_reference' => 'H',
+                    'status' => 'I',
+                    'type' => 'J',
+                    'reason' => 'K',
+                    'on_behalf_of' => 'L',
+                    'amount_from' => 'A',
+                    'amount_to' => 'B',
+                    'settles_at_from' => $dateTimes[0]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'settles_at_to' => $dateTimes[1]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'created_at_from' => $dateTimes[2]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'created_at_to' => $dateTimes[3]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'updated_at_from' => $dateTimes[4]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'updated_at_to' => $dateTimes[5]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'completed_at_from' => $dateTimes[6]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'completed_at_to' => $dateTimes[7]->format(TransactionsEntryPoint::DATE_FORMAT),
+                    'page' => null,
+                    'per_page' => null,
+                    'order' => null,
+                    'order_asc_desc' => null,
+                    'scope' => null,
+                ]
+            )
         );
 
         $transaction = new Transaction();
@@ -183,7 +178,6 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setStatus('I')
             ->setType('J')
             ->setReason('K');
-
 
         $transactions = $entryPoint->find(
             $transaction,
@@ -213,7 +207,8 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canRetrieveSenderDetails(){
+    public function canRetrieveSenderDetails(): void
+    {
         $data = '{
             "id": "e68301d3-5b04-4c1d-8f8b-13a9b8437040",
             "amount": "1701.51",
@@ -227,14 +222,16 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             "updated_at": "2018-07-04T14:57:39+00:00"
         }';
 
-        $entryPoint = new TransactionsEntryPoint($this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'transactions/sender/12345678-abcd-1234-abcd-123456789012',
-            [
-                'on_behalf_of' => null
-            ]
-        ));
+        $entryPoint = new TransactionsEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'GET',
+                'transactions/sender/12345678-abcd-1234-abcd-123456789012',
+                [
+                    'on_behalf_of' => null,
+                ]
+            )
+        );
 
         $transactionSender = $entryPoint->retrieveSender('12345678-abcd-1234-abcd-123456789012');
 

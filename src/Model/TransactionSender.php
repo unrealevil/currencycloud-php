@@ -1,74 +1,23 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class  TransactionSender implements EntityInterface {
+class  TransactionSender implements EntityInterface
+{
+    private ?string $id;
+    private ?string $amount;
+    private ?string $currency;
+    private ?string $additionalInformation;
+    private ?DateTime $valueDate;
+    private ?string $sender;
+    private ?string $receivingAcountNumber;
+    private ?string $receivingAcountIban;
+    private ?DateTime $createdAt;
+    private ?DateTime $updatedAt;
 
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $amount;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @var string
-     */
-    private $additionalInformation;
-
-    /**
-     * @var DateTime
-     */
-    private $valueDate;
-
-    /**
-     * @var string
-     */
-    private $sender;
-
-    /**
-     * @var string
-     */
-    private $receivingAcountNumber;
-
-    /**
-     * @var string
-     */
-    private $receivingAcountIban;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * TransactionSender constructor.
-     * @param string $id
-     * @param string $amount
-     * @param string $currency
-     * @param string $additionalInformation
-     * @param DateTime $valueDate
-     * @param string $sender
-     * @param string $receivingAcountNumber
-     * @param string $receivingAcountIban
-     * @param DateTime $createdAt
-     * @param DateTime $updatedAt
-     */
-    public function __construct($id, $amount, $currency, $additionalInformation, DateTime $valueDate, $sender, $receivingAcountNumber, $receivingAcountIban, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct(?string $id, ?string $amount, ?string $currency, ?string $additionalInformation, ?DateTime $valueDate, ?string $sender, ?string $receivingAcountNumber, ?string $receivingAcountIban, ?DateTime $createdAt, ?DateTime $updatedAt)
     {
         $this->id = $id;
         $this->amount = $amount;
@@ -82,84 +31,116 @@ class  TransactionSender implements EntityInterface {
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function setAmount(?string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getAdditionalInformation()
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getAdditionalInformation(): ?string
     {
         return $this->additionalInformation;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getValueDate()
+    public function setAdditionalInformation(?string $additionalInformation): self
+    {
+        $this->additionalInformation = $additionalInformation;
+
+        return $this;
+    }
+
+    public function getValueDate(): ?DateTime
     {
         return $this->valueDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getSender()
+    public function setValueDate(?DateTime $valueDate): self
+    {
+        $this->valueDate = $valueDate;
+
+        return $this;
+    }
+
+    public function getSender(): ?string
     {
         return $this->sender;
     }
 
-    /**
-     * @return string
-     */
-    public function getReceivingAcountNumber()
+    public function setSender(?string $sender): self
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    public function getReceivingAcountNumber(): ?string
     {
         return $this->receivingAcountNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getReceivingAcountIban()
+    public function setReceivingAcountNumber(?string $receivingAcountNumber): self
+    {
+        $this->receivingAcountNumber = $receivingAcountNumber;
+
+        return $this;
+    }
+
+    public function getReceivingAcountIban(): ?string
     {
         return $this->receivingAcountIban;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function setReceivingAcountIban(?string $receivingAcountIban): self
+    {
+        $this->receivingAcountIban = $receivingAcountIban;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function setCreatedAt(?DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
+    public function setUpdatedAt(?DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

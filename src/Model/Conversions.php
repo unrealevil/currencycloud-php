@@ -6,11 +6,10 @@ use ArrayIterator;
 
 class Conversions extends PaginatedData
 {
-
     /**
      * @var Conversion[]
      */
-    private $conversions;
+    private array $conversions;
 
     /**
      * @param Conversion[] $conversions
@@ -25,7 +24,7 @@ class Conversions extends PaginatedData
     /**
      * @return Conversion[]
      */
-    public function getConversions()
+    public function getConversions(): array
     {
         return $this->conversions;
     }
@@ -33,7 +32,7 @@ class Conversions extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->conversions);
     }
@@ -41,7 +40,7 @@ class Conversions extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->conversions);
     }

@@ -1,5 +1,4 @@
--
-    request:
+-   request:
         method: POST
         url: 'https://devapi.currencycloud.com/v2/transfers/create'
         headers:

@@ -6,21 +6,16 @@ use DateTime;
 
 class PaymentDates
 {
-
     /**
      * @var InvalidPaymentDate[]
      */
-    private $invalidPaymentDates;
-    /**
-     * @var DateTime
-     */
-    private $firstPaymentDay;
+    private array $invalidPaymentDates;
+    private ?DateTime $firstPaymentDay;
 
     /**
      * @param InvalidPaymentDate[] $invalidPaymentDates
-     * @param DateTime $firstPaymentDay
      */
-    public function __construct(array $invalidPaymentDates, DateTime $firstPaymentDay)
+    public function __construct(array $invalidPaymentDates, ?DateTime $firstPaymentDay)
     {
         $this->invalidPaymentDates = $invalidPaymentDates;
         $this->firstPaymentDay = $firstPaymentDay;
@@ -29,15 +24,12 @@ class PaymentDates
     /**
      * @return InvalidPaymentDate[]
      */
-    public function getInvalidPaymentDates()
+    public function getInvalidPaymentDates(): array
     {
         return $this->invalidPaymentDates;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getFirstPaymentDay()
+    public function getFirstPaymentDay(): ?DateTime
     {
         return $this->firstPaymentDay;
     }

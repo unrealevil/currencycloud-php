@@ -13,45 +13,28 @@ use CurrencyCloud\Exception\ToManyRequestsException;
 
 class ClientHttpErrorListener
 {
-
-    /**
-     * @param ClientHttpErrorEvent $event
-     */
-    public function onClientHttpErrorEvent(ClientHttpErrorEvent $event)
+    public function onClientHttpErrorEvent(ClientHttpErrorEvent $event): void
     {
         $response = $event->getResponse();
         $requestParams = $event->getRequestParams();
         $method = $event->getMethod();
         $url = $event->getUrl();
-        switch ($response->getStatusCode()) {
-            case 400:
-                $class = BadRequestException::class;
-                break;
-            case 401:
-                $class = AuthenticationException::class;
-                break;
-            case 403:
-                $class = ForbiddenException::class;
-                break;
-            case 404:
-                $class = NotFoundException::class;
-                break;
-            case 429:
-                $class = ToManyRequestsException::class;
-                break;
-            case 500:
-                $class = InternalApplicationException::class;
-                break;
-            default:
-                $class = ApiException::class;
-        }
+        $class = match ($response->getStatusCode()) {
+            400 => BadRequestException::class,
+            401 => AuthenticationException::class,
+            403 => ForbiddenException::class,
+            404 => NotFoundException::class,
+            429 => ToManyRequestsException::class,
+            500 => InternalApplicationException::class,
+            default => ApiException::class,
+        };
         $statusCode = $response->getStatusCode();
         $date = current($response->getHeader('Date'));
         $requestId = current($response->getHeader('X-Request-Id'));
         $body =
             $response->getBody()
                 ->getContents();
-        $decoded = json_decode($body, true);
+        $decoded = json_decode($body, true, flags: \JSON_THROW_ON_ERROR);
         if (is_array($decoded)) {
             $errors = [];
             $messages = [];
@@ -67,7 +50,7 @@ class ClientHttpErrorListener
                 }
             }
             $message = implode('; ', $messages);
-            $code = $decoded['error_code'];
+            $code = (int) $decoded['error_code'];
         } else {
             $message = 'Invalid JSON describing error returned';
             $errors = null;

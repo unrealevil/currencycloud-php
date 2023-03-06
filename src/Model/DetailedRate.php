@@ -6,95 +6,36 @@ use DateTime;
 
 class DetailedRate
 {
+    private ?DateTime $settlementCutOffTime;
+    private string $currencyPair;
+    private string $clientBuyCurrency;
+    private string $clientSellCurrency;
+    private string $clientBuyAmount;
+    private string $clientSellAmount;
+    private string $fixedSide;
+    private string $midMarketRate;
+    private string $coreRate;
+    private string $partnerRate;
+    private string $clientRate;
+    private string $depositRequired;
+    private string $depositAmount;
+    private string $depositCurrency;
 
-    /**
-     * @var DateTime
-     */
-    private $settlementCutOffTime;
-    /**
-     * @var string
-     */
-    private $currencyPair;
-    /**
-     * @var string
-     */
-    private $clientBuyCurrency;
-    /**
-     * @var string
-     */
-    private $clientSellCurrency;
-    /**
-     * @var string
-     */
-    private $clientBuyAmount;
-    /**
-     * @var string
-     */
-    private $clientSellAmount;
-    /**
-     * @var string
-     */
-    private $fixedSide;
-    /**
-     * @var string
-     */
-    private $midMarketRate;
-    /**
-     * @var string
-     */
-    private $coreRate;
-    /**
-     * @var string
-     */
-    private $partnerRate;
-    /**
-     * @var string
-     */
-    private $clientRate;
-    /**
-     * @var string
-     */
-    private $depositRequired;
-    /**
-     * @var string
-     */
-    private $depositAmount;
-    /**
-     * @var string
-     */
-    private $depositCurrency;
-
-    /**
-     * @param DateTime $settlementCutOffTime
-     * @param string $currencyPair
-     * @param string $clientBuyCurrency
-     * @param string $clientSellCurrency
-     * @param string $clientBuyAmount
-     * @param string $clientSellAmount
-     * @param string $fixedSide
-     * @param string $midMarketRate
-     * @param string $coreRate
-     * @param string $partnerRate
-     * @param string $clientRate
-     * @param string $depositRequired
-     * @param string $depositAmount
-     * @param string $depositCurrency
-     */
     public function __construct(
-        DateTime $settlementCutOffTime,
-        $currencyPair,
-        $clientBuyCurrency,
-        $clientSellCurrency,
-        $clientBuyAmount,
-        $clientSellAmount,
-        $fixedSide,
-        $midMarketRate,
-        $coreRate,
-        $partnerRate,
-        $clientRate,
-        $depositRequired,
-        $depositAmount,
-        $depositCurrency
+        ?DateTime $settlementCutOffTime,
+        ?string $currencyPair,
+        ?string $clientBuyCurrency,
+        ?string $clientSellCurrency,
+        ?string $clientBuyAmount,
+        ?string $clientSellAmount,
+        ?string $fixedSide,
+        ?string $midMarketRate,
+        ?string $coreRate,
+        ?string $partnerRate,
+        ?string $clientRate,
+        ?string $depositRequired,
+        ?string $depositAmount,
+        ?string $depositCurrency
     ) {
         $this->settlementCutOffTime = $settlementCutOffTime;
         $this->currencyPair = (string) $currencyPair;
@@ -112,114 +53,72 @@ class DetailedRate
         $this->depositCurrency = (string) $depositCurrency;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getSettlementCutOffTime()
+    public function getSettlementCutOffTime(): ?DateTime
     {
         return $this->settlementCutOffTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrencyPair()
+    public function getCurrencyPair(): string
     {
         return $this->currencyPair;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientBuyCurrency()
+    public function getClientBuyCurrency(): string
     {
         return $this->clientBuyCurrency;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSellCurrency()
+    public function getClientSellCurrency(): string
     {
         return $this->clientSellCurrency;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientBuyAmount()
+    public function getClientBuyAmount(): string
     {
         return $this->clientBuyAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSellAmount()
+    public function getClientSellAmount(): string
     {
         return $this->clientSellAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getFixedSide()
+    public function getFixedSide(): string
     {
         return $this->fixedSide;
     }
 
-    /**
-     * @return string
-     */
-    public function getMidMarketRate()
+    public function getMidMarketRate(): string
     {
         return $this->midMarketRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getCoreRate()
+    public function getCoreRate(): string
     {
         return $this->coreRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerRate()
+    public function getPartnerRate(): string
     {
         return $this->partnerRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientRate()
+    public function getClientRate(): string
     {
         return $this->clientRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositRequired()
+    public function getDepositRequired(): string
     {
         return $this->depositRequired;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositAmount()
+    public function getDepositAmount(): string
     {
         return $this->depositAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepositCurrency()
+    public function getDepositCurrency(): string
     {
         return $this->depositCurrency;
     }

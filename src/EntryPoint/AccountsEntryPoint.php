@@ -11,13 +11,7 @@ use stdClass;
 
 class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
-
-    /**
-     * @param Account $account
-     *
-     * @return Account
-     */
-    public function create(Account $account)
+    public function create(Account $account): Account
     {
         return $this->doCreate('accounts/create', $account, function ($account) {
             return $this->convertAccountToRequest($account);
@@ -26,25 +20,14 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         });
     }
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return Account
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Account
     {
         return $this->doRetrieve(sprintf('accounts/%s', $id), function (stdClass $response) {
             return $this->createAccountFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param Account $account
-     *
-     * @return Account
-     */
-    public function update(Account $account)
+    public function update(Account $account): Account
     {
         return $this->doUpdate(sprintf('accounts/%s', $account->getId()), $account, function ($account) {
             return $this->convertAccountToRequest($account);
@@ -53,16 +36,8 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         });
     }
 
-    /**
-     * @param Account|null $account
-     * @param Pagination|null $pagination
-     *
-     * @return Accounts
-     */
-    public function find(
-        Account $account = null,
-        Pagination $pagination = null
-    ) {
+    public function find(Account $account = null, Pagination $pagination = null): Accounts
+    {
         if (null === $account) {
             $account = new Account();
         }
@@ -78,23 +53,14 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         }, 'accounts');
     }
 
-    /**
-     * @return Account
-     */
-    public function current()
+    public function current(): Account
     {
         return $this->doRetrieve('accounts/current', function (stdClass $response) {
             return $this->createAccountFromResponse($response);
         });
     }
 
-    /**
-     * @param Account $account
-     * @param bool $convertForSearch
-     *
-     * @return array
-     */
-    public function convertAccountToRequest(Account $account, $convertForSearch = false)
+    public function convertAccountToRequest(Account $account, bool $convertForSearch = false): array
     {
         $common = [
             'legal_entity_type' => $account->getLegalEntityType(),
@@ -120,12 +86,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         ];
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Account
-     */
-    public function createAccountFromResponse(stdClass $response)
+    public function createAccountFromResponse(stdClass $response): Account
     {
         $account =
             (new Account())->setAccountName($response->account_name)
@@ -150,12 +111,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
     }
 
 
-    /**
-     * @param string $accountId
-     *
-     * @return array
-     */
-    public function getPaymentChargesSettings($accountId)
+    public function getPaymentChargesSettings(string $accountId): array
     {
         $response = $this->request('GET',
             sprintf('accounts/%s/payment_charges_settings', $accountId));
@@ -168,12 +124,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         return $paymentSettings;
     }
 
-    /**
-     * @param AccountPaymentChargesSetting $paymentSettings
-     *
-     * @return AccountPaymentChargesSetting
-     */
-    public function updatePaymentChargesSettings(AccountPaymentChargesSetting $paymentSettings)
+    public function updatePaymentChargesSettings(AccountPaymentChargesSetting $paymentSettings): AccountPaymentChargesSetting
     {
         $response = $this->request('POST',
             sprintf('accounts/%s/payment_charges_settings/%s', $paymentSettings->getAccountId(), $paymentSettings->getChargeSettingsId()),

@@ -1,15 +1,14 @@
--
-  request:
-    method: POST
-    url: https://devapi.currencycloud.com/v2/authenticate/close_session
-    body: ''
-    headers:
-      X-Auth-Token: 2ec8a86c8cf6e0378a20ca6793f3260c
-  response:
-    status: 200
-    headers:
-      Date: Fri, 24 Apr 2015 22:33:15 GMT
-      Content-Type: application/json
-      Content-Length: '2'
-      X-Request-Id: '2771622659047755249'
-    body: "{}"
+-   request:
+        method: POST
+        url: https://devapi.currencycloud.com/v2/authenticate/close_session
+        body: ''
+        headers:
+            X-Auth-Token: 2ec8a86c8cf6e0378a20ca6793f3260c
+    response:
+        status: 200
+        headers:
+            Date: Fri, 24 Apr 2015 22:33:15 GMT
+            Content-Type: application/json
+            Content-Length: '2'
+            X-Request-Id: '2771622659047755249'
+        body: "{}"

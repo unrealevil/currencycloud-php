@@ -1,20 +1,21 @@
 <?php
 
+namespace CurrencyCloud\Tests\VCR\Reports;
+
+use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Criteria\FindReportsCriteria;
 use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Model\Pagination;
-use CurrencyCloud\Model\Report;
-use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-
-class Test extends BaseCurrencyCloudVCRTestCase{
+class Test extends BaseCurrencyCloudVCRTestCase
+{
 
     /**
      * @vcr Reports/can_create_conversion_report.yaml
      * @test
      */
-    public function canCreateConversionReport()
+    public function canCreateConversionReport(): void
     {
 
         $conversionReportCriteria = new ConversionReportCriteria();
@@ -37,7 +38,7 @@ class Test extends BaseCurrencyCloudVCRTestCase{
      * @vcr Reports/can_create_payment_report.yaml
      * @test
      */
-    public function canCreatePaymentReport()
+    public function canCreatePaymentReport(): void
     {
 
         $paymentReportCriteria = new PaymentReportCriteria();
@@ -59,7 +60,7 @@ class Test extends BaseCurrencyCloudVCRTestCase{
      * @vcr Reports/can_find_reports_requests.yaml
      * @test
      */
-    public function canFindReportsRequests()
+    public function canFindReportsRequests(): void
     {
 
         $findReportsCriteria = new FindReportsCriteria();
@@ -83,14 +84,13 @@ class Test extends BaseCurrencyCloudVCRTestCase{
         $this->assertSame($dummy['report_requests'][0]['search_params']['buy_currency'], $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
         $this->assertSame($dummy['report_requests'][0]['search_params']['sell_currency'], $reports->getReports()[0]->getSearchParams()->getSellCurrency());
         $this->assertSame($dummy['report_requests'][0]['search_params']['scope'], $reports->getReports()[0]->getSearchParams()->getScope());
-
     }
 
     /**
      * @vcr Reports/can_retrieve_report.yaml
      * @test
      */
-    public function canRetrieveReport()
+    public function canRetrieveReport(): void
     {
         $report = $this->getAuthenticatedClient()->reports()->retrieve("075ce584-b977-4538-a524-16b759277d66");
 
@@ -101,6 +101,5 @@ class Test extends BaseCurrencyCloudVCRTestCase{
 
         $this->assertSame($dummy['id'], $report->getId());
         $this->assertSame($dummy['short_reference'], $report->getShortReference());
-
     }
 }
