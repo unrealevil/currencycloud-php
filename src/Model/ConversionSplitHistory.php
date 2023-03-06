@@ -1,46 +1,29 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
-class ConversionSplitHistory {
-
-    /**
-     * @var Conversion
-     */
-    private $parentConversion;
-    /**
-     * @var Conversion
-     */
-    private $originConversion;
+class ConversionSplitHistory
+{
+    private Conversion $parentConversion;
+    private Conversion $originConversion;
     /**
      * @var Conversion[]
      */
-    private $childConversions;
+    private array $childConversions;
 
-    /**
-     * ConversionSplitHistory constructor.
-     * @param Conversion $parentConversion
-     * @param Conversion $originConversion
-     * @param Conversion[] $childConversions
-     */
-    public function __construct($parentConversion, $originConversion, $childConversions)
+    public function __construct(Conversion $parentConversion, Conversion $originConversion, array $childConversions)
     {
         $this->parentConversion = $parentConversion;
         $this->originConversion = $originConversion;
         $this->childConversions = $childConversions;
     }
 
-    /**
-     * @return Conversion
-     */
-    public function getParentConversion()
+    public function getParentConversion(): Conversion
     {
         return $this->parentConversion;
     }
 
-    /**
-     * @return Conversion
-     */
-    public function getOriginConversion()
+    public function getOriginConversion(): Conversion
     {
         return $this->originConversion;
     }
@@ -48,9 +31,8 @@ class ConversionSplitHistory {
     /**
      * @return Conversion[]
      */
-    public function getChildConversions()
+    public function getChildConversions(): array
     {
         return $this->childConversions;
     }
-
 }

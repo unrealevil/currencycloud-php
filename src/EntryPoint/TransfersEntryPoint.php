@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\FindTransferCriteria;
@@ -8,27 +9,22 @@ use CurrencyCloud\Model\Transfers;
 use DateTime;
 use stdClass;
 
-class TransfersEntryPoint extends AbstractEntityEntryPoint {
+class TransfersEntryPoint extends AbstractEntityEntryPoint
+{
 
-    /**
-     * @param string $id
-     * @param string|null $onBehalfOf
-     * @return Transfer
-     */
-    public function retrieve($id, $onBehalfOf = null){
+    public function retrieve(string $id, string $onBehalfOf = null): Transfer
+    {
         return $this->doRetrieve(
             sprintf('transfers/%s', $id),
-            function (stdClass $response) {
+            function(stdClass $response) {
                 return $this->createTransferFromResponse($response);
             },
-            $onBehalfOf);
+            $onBehalfOf
+        );
     }
 
-    /**
-     * @param stdClass $response
-     * @return Transfer
-     */
-    protected function createTransferFromResponse($response){
+    protected function createTransferFromResponse(stdClass $response): Transfer
+    {
         return new Transfer(
             $response->id,
             $response->short_reference,
@@ -46,26 +42,23 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
         );
     }
 
-    /**
-     * @param FindTransferCriteria $findTransferCriteria
-     * @param Pagination $pagination
-     * @return Transfers
-     */
-    public function find($findTransferCriteria, $pagination, $onBehalfOf = null){
+    public function find(FindTransferCriteria $findTransferCriteria, Pagination $pagination, string $onBehalfOf = null): Transfers
+    {
         return $this->doFind(
             'transfers/find',
             $findTransferCriteria,
             $pagination,
-            function () use ($findTransferCriteria, $pagination, $onBehalfOf){
+            function() use ($findTransferCriteria, $pagination, $onBehalfOf) {
                 return $this->convertFindCriteriaToRequest(
-                    $findTransferCriteria) +
+                        $findTransferCriteria
+                    ) +
                     $this->convertPaginationToRequest($pagination) +
-                    [ 'on_behalf_of' => $onBehalfOf ];
+                    ['on_behalf_of' => $onBehalfOf];
             },
-            function ($response){
+            function($response) {
                 return $this->createTransferFromResponse($response);
             },
-            function ($entities, $pagination){
+            function($entities, $pagination) {
                 return new Transfers($entities, $pagination);
             },
             'transfers',
@@ -73,11 +66,8 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
         );
     }
 
-    /**
-     * @param FindTransferCriteria $criteria
-     * @return array
-     */
-    protected function convertFindCriteriaToRequest($criteria){
+    protected function convertFindCriteriaToRequest(FindTransferCriteria $criteria): array
+    {
         return [
             "short_reference" => $criteria->getShortReference(),
             "source_account_id" => $criteria->getSourceAccountId(),
@@ -93,15 +83,12 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
             "completed_at_from" => $criteria->getCompletedAtFrom(),
             "completed_at_to" => $criteria->getCompletedAtFrom(),
             "creator_account_id" => $criteria->getCreatorAccountId(),
-            "creator_contact_id" => $criteria->getCreatorContactId()
+            "creator_contact_id" => $criteria->getCreatorContactId(),
         ];
     }
 
-    /**
-     * @param stdClass $response
-     * @return Transfer
-     */
-    public function convertTransferFromResponse($response){
+    public function convertTransferFromResponse(stdClass $response): Transfer
+    {
         return new  Transfer(
             $response->id,
             $response->short_reference,
@@ -119,15 +106,8 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
         );
     }
 
-    /**
-     * @param string $sourceAccountId
-     * @param string $destinationAccountId
-     * @param string $currency
-     * @param string $amount
-     * @param string $reason
-     * @return Transfer
-     */
-    public function create($sourceAccountId, $destinationAccountId, $currency, $amount, $reason = null){
+    public function create(string $sourceAccountId, string $destinationAccountId, string $currency, string $amount, string $reason = null): Transfer
+    {
         $response = $this->request(
             'POST',
             'transfers/create',
@@ -137,7 +117,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint {
                 'destination_account_id' => $destinationAccountId,
                 'currency' => $currency,
                 'amount' => $amount,
-                'reason' => $reason
+                'reason' => $reason,
             ]
         );
 

@@ -10,66 +10,32 @@ use CurrencyCloud\SimpleEntityManager;
 
 abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
 {
+    protected SimpleEntityManager $entityManager;
 
-    /**
-     * @var SimpleEntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @param SimpleEntityManager $entityManager
-     * @param Client $client
-     */
     public function __construct(SimpleEntityManager $entityManager, Client $client)
     {
         parent::__construct($client);
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param string $entryPoint
-     * @param mixed $data
-     * @param callable $converterToRequest
-     * @param callable $converterFromResponse
-     * @param null|string $onBehalfOf
-     *
-     * @return EntityInterface
-     */
-    protected function doCreate(
-        $entryPoint,
-        $data,
-        callable $converterToRequest,
-        callable $converterFromResponse,
-        $onBehalfOf = null
-    ) {
+    protected function doCreate(string $entryPoint, mixed $data, callable $converterToRequest, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
+    {
 
         $response = $this->request(
             'POST',
             $entryPoint,
             [],
-            call_user_func($converterToRequest, $data) + [
+            $converterToRequest($data) + [
                 'on_behalf_of' => $onBehalfOf
             ]
         );
-        $data = call_user_func($converterFromResponse, $response);
+        $data = $converterFromResponse($response);
         $this->entityManager->add($data);
         return $data;
     }
 
-    /**
-     * @param string $entryPoint
-     * @param EntityInterface $entity
-     * @param callable $converterFromResponse
-     * @param null|string $onBehalfOf
-     *
-     * @return EntityInterface
-     */
-    protected function doDelete(
-        $entryPoint,
-        EntityInterface $entity,
-        callable $converterFromResponse,
-        $onBehalfOf = null
-    ) {
+    protected function doDelete(string $entryPoint, EntityInterface $entity, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
+    {
         $response = $this->request(
             'POST',
             $entryPoint,
@@ -79,17 +45,10 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             ]
         );
         $this->entityManager->remove($entity);
-        return call_user_func($converterFromResponse, $response);
+        return $converterFromResponse($response);
     }
 
-    /**
-     * @param string $entryPoint
-     * @param callable $converterFromResponse
-     * @param null|string $onBehalfOf
-     *
-     * @return EntityInterface
-     */
-    protected function doRetrieve($entryPoint, callable $converterFromResponse, $onBehalfOf = null)
+    protected function doRetrieve(string $entryPoint, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
     {
         $response = $this->request(
             'GET',
@@ -98,68 +57,49 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
                 'on_behalf_of' => $onBehalfOf
             ]
         );
-        $entity = call_user_func($converterFromResponse, $response);
+        $entity = $converterFromResponse($response);
 
         $this->entityManager->add($entity);
 
         return $entity;
     }
 
-    /**
-     * @param string $entryPoint
-     * @param mixed $searchModel
-     * @param Pagination $pagination
-     * @param callable $converterToRequest
-     * @param callable $converterFromResponse
-     * @param callable $collectionConverter
-     * @param string $property
-     * @param null|string $onBehalfOf
-     *
-     * @return PaginatedData
-     */
     protected function doFind(
-        $entryPoint,
-        $searchModel,
+        string $entryPoint,
+        mixed $searchModel,
         Pagination $pagination,
         callable $converterToRequest,
         callable $converterFromResponse,
         callable $collectionConverter,
-        $property,
-        $onBehalfOf = null
-    ) {
+        string $property,
+        string $onBehalfOf = null
+    ): PaginatedData
+    {
 
         $response = $this->request(
             'GET',
             $entryPoint,
-            call_user_func($converterToRequest, $searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
+            $converterToRequest($searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
                 $pagination
             )
         );
         $beneficiaries = [];
-        foreach ($response->$property as $searchModel) {
-            $entity = call_user_func($converterFromResponse, $searchModel);
+        foreach ($response->$property as $model) {
+            $entity = $converterFromResponse($model);
             $this->entityManager->add($entity);
             $beneficiaries[] = $entity;
         }
-        return call_user_func($collectionConverter, $beneficiaries, $this->createPaginationFromResponse($response));
+        return $collectionConverter($beneficiaries, $this->createPaginationFromResponse($response));
     }
 
-    /**
-     * @param string $entryPoint
-     * @param EntityInterface $entity
-     * @param callable $converterToRequest
-     * @param callable $converterFromResponse
-     * @param null|string $onBehalfOf
-     *
-     * @return EntityInterface
-     */
     protected function doUpdate(
-        $entryPoint,
+        string $entryPoint,
         EntityInterface $entity,
         callable $converterToRequest,
         callable $converterFromResponse,
-        $onBehalfOf = null
-    ) {
+        string $onBehalfOf = null
+    ): EntityInterface
+    {
         $changeSet = $this->entityManager->computeChangeSet($entity);
         if (null === $changeSet) {
             return $entity;
@@ -168,9 +108,9 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             'POST',
             $entryPoint,
             [],
-            call_user_func($converterToRequest, $changeSet, $onBehalfOf)
+            $converterToRequest($changeSet, $onBehalfOf)
         );
-        $newEntity = call_user_func($converterFromResponse, $response);
+        $newEntity = $converterFromResponse($response);
 
         $this->entityManager->remove($entity);
         $this->entityManager->add($newEntity);

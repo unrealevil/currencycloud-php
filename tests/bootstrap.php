@@ -1,15 +1,15 @@
 <?php
 
-use VCR\Request;
 use CurrencyCloud\Tests\FormDataExtractor;
+use VCR\Request;
 
-$parametersMatcher = function ($first, $second) {
+$parametersMatcher = function($first, $second) {
     //process and check data sent as form-data via POST
-    if(strpos($first, "form-data")){
+    if (strpos($first, "form-data")) {
         $first = FormDataExtractor::extract($first);
         $second = FormDataExtractor::extract($second);
 
-        foreach ($first as $key => $value){
+        foreach ($first as $key => $value) {
             if (!empty($key) && !empty($key)) {
                 if ($first[$key] !== $second[$key]) {
                     return false;
@@ -20,7 +20,6 @@ $parametersMatcher = function ($first, $second) {
                 return false;
             }
         }
-
     } else { // process other data (queryParams, etc)
         if (!is_array($first)) {
             parse_str($first, $firstParams);
@@ -50,13 +49,14 @@ $parametersMatcher = function ($first, $second) {
             return false;
         }
     }
+
     return true;
 };
 
-$filterHeadersInWhitelist = function (array $headers) {
-    $result = array_filter($headers, function($key){
+$filterHeadersInWhitelist = function(array $headers) {
+    $result = array_filter($headers, function($key) {
         $whitelist = ["Date", "X-Request-Id", "X-Auth-Token"];
-        if(in_array($key, $whitelist)){
+        if (in_array($key, $whitelist)) {
             return $key;
         }
     }, ARRAY_FILTER_USE_KEY);
@@ -65,23 +65,23 @@ $filterHeadersInWhitelist = function (array $headers) {
 };
 
 \VCR\VCR::configure()
-    ->setCassettePath('tests/fixtures/')
+    ->setCassettePath(__DIR__.'/fixtures/')
     ->enableRequestMatchers(['url', 'body', 'headers'])
     ->addRequestMatcher(
         'body',
-        function (Request $first, Request $second) use ($parametersMatcher) {
+        function(Request $first, Request $second) use ($parametersMatcher) {
             return $parametersMatcher($first->getBody(), $second->getBody());
         }
     )
     ->addRequestMatcher(
         'query_string',
-        function (Request $first, Request $second) use ($parametersMatcher) {
+        function(Request $first, Request $second) use ($parametersMatcher) {
             return $parametersMatcher($first->getQuery(), $second->getQuery());
         }
     )
     ->addRequestMatcher(
         'headers',
-        function (Request $first, Request $second) use ($filterHeadersInWhitelist){
+        function(Request $first, Request $second) use ($filterHeadersInWhitelist) {
             $secondHeaders = $second->getHeaders();
             $firstHeaders = $first->getHeaders();
             $firstHeaders = $filterHeadersInWhitelist($firstHeaders);

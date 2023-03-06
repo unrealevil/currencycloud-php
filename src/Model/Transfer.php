@@ -1,93 +1,26 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Transfer implements EntityInterface {
+class Transfer implements EntityInterface
+{
+    private ?string $id;
+    private ?string $shortReference;
+    private ?string $sourceAccountId;
+    private ?string $destinationAccountId;
+    private ?string $currency;
+    private ?string $amount;
+    private ?string $status;
+    private ?string $reason;
+    private ?DateTime $createdAt;
+    private ?DateTime $updatedAt;
+    private ?DateTime $completedAt;
+    private ?string $creatorAccountId;
+    private ?string $creatorContactId;
 
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-
-    private $shortReference;
-    /**
-     * @var string
-     */
-
-    private $sourceAccountId;
-    /**
-     * @var string
-     */
-
-    private $destinationAccountId;
-    /**
-     * @var string
-     */
-
-    private $currency;
-    /**
-     * @var string
-     */
-
-    private $amount;
-    /**
-     * @var string
-     */
-
-    private $status;
-    /**
-     * @var string
-     */
-
-    private $reason;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @var DateTime
-     */
-    private $completedAt;
-
-    /**
-     * @var string
-     */
-    private $creatorAccountId;
-
-    /**
-     * @var string
-     */
-    private $creatorContactId;
-
-    /**
-     * Transfer constructor.
-     * @param string $id
-     * @param string $shortReference
-     * @param string $sourceAccountId
-     * @param string $destinationAccountId
-     * @param string $currency
-     * @param string $amount
-     * @param string $status
-     * @param string $reason
-     * @param DateTime $createdAt
-     * @param DateTime $updatedAt
-     * @param DateTime $completedAt
-     * @param string $creatorAccountId
-     * @param string $creatorContactId
-     */
-    public function __construct($id, $shortReference, $sourceAccountId, $destinationAccountId, $currency, $amount, $status, $reason, $createdAt, $updatedAt, $completedAt, $creatorAccountId, $creatorContactId)
+    public function __construct(?string $id, ?string $shortReference, ?string $sourceAccountId, ?string $destinationAccountId, ?string $currency, ?string $amount, ?string $status, ?string $reason, ?DateTime $createdAt, ?DateTime $updatedAt, ?DateTime $completedAt, ?string $creatorAccountId, ?string $creatorContactId)
     {
         $this->id = $id;
         $this->shortReference = $shortReference;
@@ -104,108 +37,152 @@ class Transfer implements EntityInterface {
         $this->creatorContactId = $creatorContactId;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @return string
-     */
-    public function getSourceAccountId()
+    public function setShortReference(?string $shortReference): self
+    {
+        $this->shortReference = $shortReference;
+
+        return $this;
+    }
+
+    public function getSourceAccountId(): ?string
     {
         return $this->sourceAccountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getDestinationAccountId()
+    public function setSourceAccountId(?string $sourceAccountId): self
+    {
+        $this->sourceAccountId = $sourceAccountId;
+
+        return $this;
+    }
+
+    public function getDestinationAccountId(): ?string
     {
         return $this->destinationAccountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function setDestinationAccountId(?string $destinationAccountId): self
+    {
+        $this->destinationAccountId = $destinationAccountId;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function setAmount(?string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
-    public function getReason()
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getReason(): ?string
     {
         return $this->reason;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function setReason(?string $reason): self
+    {
+        $this->reason = $reason;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function setCreatedAt(?DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCompletedAt()
+    public function setUpdatedAt(?DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCompletedAt(): ?DateTime
     {
         return $this->completedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorAccountId()
+    public function setCompletedAt(?DateTime $completedAt): self
+    {
+        $this->completedAt = $completedAt;
+
+        return $this;
+    }
+
+    public function getCreatorAccountId(): ?string
     {
         return $this->creatorAccountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorContactId()
+    public function setCreatorAccountId(?string $creatorAccountId): self
+    {
+        $this->creatorAccountId = $creatorAccountId;
+
+        return $this;
+    }
+
+    public function getCreatorContactId(): ?string
     {
         return $this->creatorContactId;
     }
 
+    public function setCreatorContactId(?string $creatorContactId): self
+    {
+        $this->creatorContactId = $creatorContactId;
+
+        return $this;
+    }
 }

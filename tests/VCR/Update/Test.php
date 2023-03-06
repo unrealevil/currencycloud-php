@@ -10,7 +10,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Update/does_nothing_if_nothing_has_changed.yaml
      * @test
      */
-    public function doesNothingIfNothingHasChanged()
+    public function doesNothingIfNothingHasChanged(): void
     {
         $client = $this->getAuthenticatedClient();
 
@@ -33,7 +33,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Update/only_updates_changed_records.yaml
      * @test
      */
-    public function onlyUpdatesChangedRecords()
+    public function onlyUpdatesChangedRecords(): void
     {
         $client = $this->getAuthenticatedClient();
 

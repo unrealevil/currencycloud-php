@@ -3,7 +3,6 @@
 namespace CurrencyCloud\Tests\VCR\Settlements;
 
 use CurrencyCloud\Model\Conversion;
-use CurrencyCloud\Model\SettlementEntry;
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
 class Test extends BaseCurrencyCloudVCRTestCase
@@ -13,7 +12,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Settlements/can_add_conversion.yaml
      * @test
      */
-    public function canAddConversion()
+    public function canAddConversion(): void
     {
         $client = $this->getAuthenticatedClient();
 
@@ -55,7 +54,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Settlements/can_release.yaml
      * @test
      */
-    public function canRelease()
+    public function canRelease(): void
     {
         $client = $this->getAuthenticatedClient();
 
@@ -76,7 +75,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Settlements/can_remove_conversion.yaml
      * @test
      */
-    public function canRemoveConversion()
+    public function canRemoveConversion(): void
     {
         $client = $this->getAuthenticatedClient();
 
@@ -96,7 +95,7 @@ class Test extends BaseCurrencyCloudVCRTestCase
      * @vcr Settlements/can_unrelease.yaml
      * @test
      */
-    public function canUnrelease()
+    public function canUnrelease(): void
     {
         $client = $this->getAuthenticatedClient();
 

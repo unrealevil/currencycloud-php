@@ -4,38 +4,21 @@ namespace CurrencyCloud\Model;
 
 class Rate
 {
+    private ?string $bidRate;
+    private ?string $offerRate;
 
-    /**
-     * @var string
-     */
-    private $bidRate;
-    /**
-     * @var string
-     */
-    private $offerRate;
-
-    /**
-     * @param string $bidRate
-     * @param string $offerRate
-     */
-    public function __construct($bidRate, $offerRate)
+    public function __construct(?string $bidRate, ?string $offerRate)
     {
         $this->bidRate = (string) $bidRate;
         $this->offerRate = (string) $offerRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getBidRate()
+    public function getBidRate(): string
     {
         return $this->bidRate;
     }
 
-    /**
-     * @return string
-     */
-    public function getOfferRate()
+    public function getOfferRate(): string
     {
         return $this->offerRate;
     }

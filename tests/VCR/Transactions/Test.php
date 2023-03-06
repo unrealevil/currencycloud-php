@@ -1,14 +1,17 @@
 <?php
-namespace CurrencyCloud\Model;
+
+namespace CurrencyCloud\Tests\VCR\Transactions;
 
 use CurrencyCloud\Tests\BaseCurrencyCloudVCRTestCase;
 
-class Test extends BaseCurrencyCloudVCRTestCase {
+class Test extends BaseCurrencyCloudVCRTestCase
+{
     /**
      * @vcr Transactions/can_retrieve_sender_details.yaml
      * @test
      */
-    public function canRetrieveSenderDetails(){
+    public function canRetrieveSenderDetails(): void
+    {
         $senderDetails = $this->getAuthenticatedClient()->transactions()->retrieveSender('');
 
         $dummy = json_decode(

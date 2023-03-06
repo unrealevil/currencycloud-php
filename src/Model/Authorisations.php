@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
@@ -6,15 +7,14 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class Authorisations implements IteratorAggregate, Countable {
-
+class Authorisations implements IteratorAggregate, Countable
+{
     /**
      * @var Authorisation[]
      */
-    private $authorisations;
+    private array $authorisations;
 
     /**
-     * Authorisations constructor.
      * @param Authorisation[] $authorisations
      */
     public function __construct(array $authorisations)
@@ -25,14 +25,15 @@ class Authorisations implements IteratorAggregate, Countable {
     /**
      * @return Authorisation[]
      */
-    public function getAuthorisations(){
+    public function getAuthorisations(): array
+    {
         return $this->authorisations;
     }
 
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->authorisations);
     }
@@ -40,7 +41,7 @@ class Authorisations implements IteratorAggregate, Countable {
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->authorisations);
     }

@@ -6,44 +6,14 @@ use DateTimeInterface;
 
 class Balance
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
+    private string $accountId;
+    private string $currency;
+    private string $amount;
+    private ?DateTimeInterface $createdAt;
+    private ?DateTimeInterface $updatedAt;
 
-    /**
-     * @var string
-     */
-    private $accountId;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @var string
-     */
-    private $amount;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $updatedAt;
-
-    /**
-     * @param string            $accountId
-     * @param string            $currency
-     * @param string            $amount
-     * @param DateTimeInterface $createdAt
-     * @param DateTimeInterface $updatedAt
-     */
-    public function __construct($accountId, $currency, $amount, DateTimeInterface $createdAt, DateTimeInterface $updatedAt)
+    public function __construct(?string $accountId, ?string $currency, ?string $amount, ?DateTimeInterface $createdAt, ?DateTimeInterface $updatedAt)
     {
         $this->accountId = (string) $accountId;
         $this->currency = (string) $currency;
@@ -52,50 +22,32 @@ class Balance
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): string
     {
         return $this->accountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function getAmount(): string
     {
         return $this->amount;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }

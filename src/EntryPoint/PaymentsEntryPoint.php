@@ -17,16 +17,7 @@ use stdClass;
 
 class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
-
-    /**
-     * @param Payment $payment
-     * @param Payer|null $payer
-     * @param null|string $onBehalfOf
-     *
-     * @return Payment
-     * @throws \Exception
-     */
-    public function create(Payment $payment, Payer $payer = null, $onBehalfOf = null)
+    public function create(Payment $payment, Payer $payer = null, string $onBehalfOf = null): Payment
     {
         if (null === $payer) {
             $payer = new Payer();
@@ -39,13 +30,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
-    /**
-     * @param Payment $payment
-     * @param bool $convertForFind
-     *
-     * @return array
-     */
-    protected function convertPaymentToRequest(Payment $payment, $convertForFind = false)
+    protected function convertPaymentToRequest(Payment $payment, bool $convertForFind = false): array
     {
         $common = [
             'currency' => $payment->getCurrency(),
@@ -66,17 +51,12 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $paymentDate = $payment->getPaymentDate();
         return $common + [
             'reference' => $payment->getReference(),
-            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(DateTime::RFC3339),
+            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(\DateTimeInterface::RFC3339),
             'payment_type' => $payment->getPaymentType()
         ];
     }
 
-    /**
-     * @param Payer $payer
-     *
-     * @return array
-     */
-    protected function convertPayerToRequest(Payer $payer)
+    protected function convertPayerToRequest(Payer $payer): array
     {
         $payerDateOfBirth = $payer->getDateOfBirth();
         return [
@@ -97,12 +77,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         ];
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Payment
-     */
-    private function createPaymentFromResponse(stdClass $response)
+    private function createPaymentFromResponse(stdClass $response): Payment
     {
         $payment = new Payment();
         $payment->setShortReference($response->short_reference)
@@ -111,6 +86,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setAmount($response->amount)
             ->setCurrency($response->currency)
             ->setStatus($response->status)
+            ->setReviewStatus($response->review_status ?? null)
             ->setPaymentType($response->payment_type)
             ->setReference($response->reference)
             ->setReason($response->reason)
@@ -133,28 +109,14 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $payment;
     }
 
-    /**
-     * @param Payment $payment
-     * @param null $onBehalfOf
-     *
-     * @return Payment
-     */
-    public function delete(Payment $payment, $onBehalfOf = null)
+    public function delete(Payment $payment, string $onBehalfOf = null): Payment
     {
         return $this->doDelete(sprintf('payments/%s/delete', $payment->getId()), $payment, function (stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     * @param null|string $withDeleted
-     * @param null|string $purposeCode
-     *
-     * @return Payment
-     */
-    public function retrieve($id, $onBehalfOf = null, $withDeleted = null, $purposeCode = null)
+    public function retrieve(string $id, string $onBehalfOf = null, string $withDeleted = null, string $purposeCode = null): Payment
     {
         $response = $this->request(
             'GET',
@@ -168,14 +130,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $this->createPaymentFromResponse($response);
     }
 
-    /**
-     * @param Payment $payment
-     * @param Payer|null $payer
-     * @param null|string $onBehalfOf
-     *
-     * @return Payment
-     */
-    public function update(Payment $payment, Payer $payer = null, $onBehalfOf = null)
+    public function update(Payment $payment, Payer $payer = null, string $onBehalfOf = null): Payment
     {
         if (null === $payer) {
             $payer = new Payer();
@@ -189,20 +144,13 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
-    /**
-     * @param Payment|null $payment
-     * @param FindPaymentsCriteria $criteria
-     * @param Pagination|null $pagination
-     * @param null|string $onBehalfOf
-     *
-     * @return Payments
-     */
     public function find(
         Payment $payment = null,
         FindPaymentsCriteria $criteria = null,
         Pagination $pagination = null,
-        $onBehalfOf = null
-    ) {
+        string $onBehalfOf = null
+    ): Payments
+    {
         if (null === $payment) {
             $payment = new Payment();
         }
@@ -224,12 +172,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         }, 'payments', $onBehalfOf);
     }
 
-    /**
-     * @param FindPaymentsCriteria $criteria
-     *
-     * @return array
-     */
-    private function convertFindPaymentsCriteriaToRequest(FindPaymentsCriteria $criteria = null)
+    private function convertFindPaymentsCriteriaToRequest(FindPaymentsCriteria $criteria): array
     {
         $createdAtFrom = $criteria->getCreatedAtFrom();
         $createdAtTo = $criteria->getCreatedAtTo();
@@ -240,14 +183,14 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $transferredAtFrom = $criteria->getTransferredAtFrom();
         $transferredAtTo = $criteria->getTransferredAtTo();
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::RFC3339),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::RFC3339),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::RFC3339),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::RFC3339),
-            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(DateTime::RFC3339),
-            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(DateTime::RFC3339),
-            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(DateTime::RFC3339),
-            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(DateTime::RFC3339),
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(\DateTimeInterface::RFC3339),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(\DateTimeInterface::RFC3339),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(\DateTimeInterface::RFC3339),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(\DateTimeInterface::RFC3339),
+            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(\DateTimeInterface::RFC3339),
+            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(\DateTimeInterface::RFC3339),
+            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(\DateTimeInterface::RFC3339),
+            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(\DateTimeInterface::RFC3339),
             'amount_from' => $criteria->getAmountFrom(),
             'amount_to' => $criteria->getAmountTo()
         ];
@@ -255,9 +198,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
     /**
      * @param string[] $paymentIds
-     * @return Authorisations
      */
-    public function authorise($paymentIds){
+    public function authorise(array $paymentIds): Authorisations
+    {
         $response = $this->request(
             'POST',
             'payments/authorise',
@@ -270,11 +213,8 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $this->createAuthorisationsFromResponse($response);
     }
 
-    /**
-     * @param stdClass $object
-     * @return Authorisation
-     */
-    protected function createAuthorisationFromObject($object){
+    protected function createAuthorisationFromObject(stdClass $object): Authorisation
+    {
         return new Authorisation(
             $object->payment_id,
             $object->payment_status,
@@ -286,63 +226,42 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    /**
-     * @param stdClass $response
-     * @return Authorisations
-     */
-    protected function createAuthorisationsFromResponse($response){
+    protected function createAuthorisationsFromResponse(stdClass $response): Authorisations
+    {
         $authorisations = [];
-        foreach($response->authorisations as $key => $value){
-            array_push($authorisations, $this->createAuthorisationFromObject($value));
+        foreach($response->authorisations as $value){
+            $authorisations[] = $this->createAuthorisationFromObject($value);
         }
 
         return new Authorisations($authorisations);
     }
 
-    /**
-     * @param string $id
-     * @param string|null $onBehalfOf
-     * @return PaymentSubmission
-     */
-    public function retrieveSubmission($id, $onBehalfOf = null){
+    public function retrieveSubmission(string $id, string $onBehalfOf = null): PaymentSubmission
+    {
         $response = $this->request('GET', sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
 
         return $this->createPaymentSubmissionFromResponse($response);
     }
 
-    /**
-     * @param stdClass $response
-     * @return PaymentSubmission
-     */
-    protected function createPaymentSubmissionFromResponse($response){
-        $paymentSubmission = new PaymentSubmission(
+    protected function createPaymentSubmissionFromResponse(stdClass $response): PaymentSubmission
+    {
+        return new PaymentSubmission(
             $response->status,
             $response->mt103,
             $response->submission_ref
         );
-
-        return $paymentSubmission;
     }
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return PaymentConfirmation
-     */
-    public function retrieveConfirmation($id, $onBehalfOf = null)
+    public function retrieveConfirmation(string $id, string $onBehalfOf = null): PaymentConfirmation
     {
         return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function (stdClass $response) {
             return $this->createPaymentConfirmationFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param stdClass $response
-     * @return PaymentConfirmation
-     */
-    protected function createPaymentConfirmationFromResponse($response){
-        $paymentConfirmation = new PaymentConfirmation(
+    protected function createPaymentConfirmationFromResponse(stdClass $response): PaymentConfirmation
+    {
+        return new PaymentConfirmation(
             $response->id,
             $response->payment_id,
             $response->account_id,
@@ -353,19 +272,11 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             !empty($response->updatet_at) ? new DateTime($response->updated_at) : null,
             !empty($response->expires_at) ? new DateTime($response->expires_at) : null
         );
-        return $paymentConfirmation;
     }
 
 
-    /**
-     * @param DateTime $paymentDate
-     * @param string $paymentType
-     * @param string $currency
-     * @param string $bankCountry
-     *
-     * @return PaymentDeliveryDate
-     */
-    public function paymentDeliveryDate($paymentDate, $paymentType, $currency, $bankCountry){
+    public function paymentDeliveryDate(DateTime $paymentDate, string $paymentType, string $currency, string $bankCountry): PaymentDeliveryDate
+    {
         $response = $this->request('GET',
             'payments/payment_delivery_date',
             ['payment_date' => $paymentDate->format('Y-m-d'),

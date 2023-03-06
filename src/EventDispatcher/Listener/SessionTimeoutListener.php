@@ -9,31 +9,17 @@ use Exception;
 
 class SessionTimeoutListener
 {
+    private bool $intercepted = false;
+    private AuthenticateEntryPoint $authenticateEntryPoint;
+    private Client $client;
 
-    private $intercepted = false;
-    /**
-     * @var AuthenticateEntryPoint
-     */
-    private $authenticateEntryPoint;
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @param Client $client
-     * @param AuthenticateEntryPoint $authenticateEntryPoint
-     */
     public function __construct(Client $client, AuthenticateEntryPoint $authenticateEntryPoint)
     {
         $this->authenticateEntryPoint = $authenticateEntryPoint;
         $this->client = $client;
     }
 
-    /**
-     * @param ClientHttpErrorEvent $event
-     */
-    public function onClientHttpErrorEvent(ClientHttpErrorEvent $event)
+    public function onClientHttpErrorEvent(ClientHttpErrorEvent $event): void
     {
         //If we already are in intercepted response, don't do it again
         if ($this->intercepted) {
@@ -57,7 +43,7 @@ class SessionTimeoutListener
             );
             $event->setInterceptedResponse($interceptedResponse);
             $event->stopPropagation();
-        } catch (Exception $e) {
+        } catch (Exception) {
             //Ignore any exception that got here
         } finally {
             $this->intercepted = false;

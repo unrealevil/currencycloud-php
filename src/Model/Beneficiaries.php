@@ -6,11 +6,10 @@ use ArrayIterator;
 
 class Beneficiaries extends PaginatedData
 {
-
     /**
      * @var Beneficiary[]
      */
-    private $beneficiaries;
+    private array $beneficiaries;
 
     /**
      * @param Beneficiary[] $beneficiaries
@@ -25,7 +24,7 @@ class Beneficiaries extends PaginatedData
     /**
      * @return Beneficiary[]
      */
-    public function getBeneficiaries()
+    public function getBeneficiaries(): array
     {
         return $this->beneficiaries;
     }
@@ -33,7 +32,7 @@ class Beneficiaries extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->beneficiaries);
     }
@@ -41,7 +40,7 @@ class Beneficiaries extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->beneficiaries);
     }

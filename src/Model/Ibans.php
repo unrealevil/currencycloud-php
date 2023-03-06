@@ -2,22 +2,19 @@
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
-use CurrencyCloud\Model\PaginatedData;
-use CurrencyCloud\Model\Pagination;
 
 class Ibans extends PaginatedData {
 
     /**
      * @var Iban[]
      */
-    private $ibans;
+    private array $ibans;
 
     /**
-     * Ibans constructor.
      * @param Iban[] $ibans
      * @param Pagination $pagination
      */
-    function __construct(array $ibans, Pagination $pagination)
+    public function __construct(array $ibans, Pagination $pagination)
     {
         parent::__construct($pagination);
         $this->ibans = $ibans;
@@ -26,7 +23,7 @@ class Ibans extends PaginatedData {
     /**
      * @return Iban[]
      */
-    public function getIbans()
+    public function getIbans(): array
     {
         return $this->ibans;
     }
@@ -34,15 +31,17 @@ class Ibans extends PaginatedData {
     /**
      * @param Iban[] $ibans
      */
-    public function setIbans($ibans)
+    public function setIbans(array $ibans): self
     {
         $this->ibans = $ibans;
+
+        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->ibans);
     }
@@ -50,7 +49,7 @@ class Ibans extends PaginatedData {
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->ibans);
     }

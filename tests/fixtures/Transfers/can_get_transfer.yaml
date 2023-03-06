@@ -1,5 +1,4 @@
--
-    request:
+-   request:
         method: GET
         url: 'https://devapi.currencycloud.com/v2/transfers/dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a'
         headers:

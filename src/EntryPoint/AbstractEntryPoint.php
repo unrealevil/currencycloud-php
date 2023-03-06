@@ -4,7 +4,6 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Client;
 use CurrencyCloud\Model\Pagination;
-use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use ReflectionClass;
 use stdClass;
@@ -12,51 +11,22 @@ use DateTime;
 
 abstract class AbstractEntryPoint
 {
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
+    public function __construct(private readonly Client $client)
     {
-        $this->client = $client;
     }
 
     /**
-     * @param string$method
-     * @param string$uri
-     * @param array $queryParams
-     * @param array $requestParams
-     * @param array $options
-     * @param bool $secured
-     *
-     * @return array|stdClass
-     * @throws GuzzleException
-     * @throws Exception
+     * @throws GuzzleException|\RuntimeException|\JsonException
      */
-    protected function request(
-        $method,
-        $uri,
-        array $queryParams = [],
-        array $requestParams = [],
-        array $options = [],
-        $secured = true
-    ) {
+    protected function request(string $method, string $uri, array $queryParams = [], array $requestParams = [], array $options = [], bool $secured = true): array|stdClass
+    {
         return $this->client->request($method, $uri, $queryParams, $requestParams, $options, $secured);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Pagination
-     */
-    protected function createPaginationFromResponse(stdClass $response)
+    protected function createPaginationFromResponse(stdClass $response): Pagination
     {
         $pagination = $response->pagination;
+
         return Pagination::create(
             $pagination->total_entries,
             $pagination->total_pages,
@@ -69,12 +39,7 @@ abstract class AbstractEntryPoint
         );
     }
 
-    /**
-     * @param Pagination $pagination
-     *
-     * @return array
-     */
-    protected function convertPaginationToRequest(Pagination $pagination)
+    protected function convertPaginationToRequest(Pagination $pagination): array
     {
         return [
             'page' => $pagination->getCurrentPage(),
@@ -84,12 +49,7 @@ abstract class AbstractEntryPoint
         ];
     }
 
-    /**
-     * @param object $object
-     * @param mixed $value
-     * @param string $propertyName
-     */
-    protected function setIdProperty($object, $value, $propertyName = 'id')
+    protected function setIdProperty(object $object, mixed $value, string $propertyName = 'id'): void
     {
         $reflection = new ReflectionClass($object);
         $property = $reflection->getProperty($propertyName);
@@ -97,12 +57,8 @@ abstract class AbstractEntryPoint
         $property->setValue($object, $value);
     }
 
-    /*
-     * @param string $value
-     * @return DateTime|null
-     */
-    protected function getDateTimeOrNullFromString($value){
-        return (null !== $value) ? new DateTime($value) :
-            null;
+    protected function getDateTimeOrNullFromString(?string $value): ?DateTime
+    {
+        return (null !== $value) ? new DateTime($value) : null;
     }
 }

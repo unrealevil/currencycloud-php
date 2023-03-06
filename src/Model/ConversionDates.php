@@ -6,30 +6,18 @@ use DateTime;
 
 class ConversionDates
 {
-
     /**
      * @var InvalidConversionDate[]
      */
-    private $invalidConversionDates;
-    /**
-     * @var DateTime
-     */
-    private $firstConversionDay;
-    /**
-     * @var DateTime
-     */
-    private $defaultConversionDay;
+    private array $invalidConversionDates;
+    private ?DateTime $firstConversionDay;
+    private ?DateTime $defaultConversionDay;
 
     /**
      * @param InvalidConversionDate[] $invalidConversionDates
-     * @param DateTime $firstConversionDay
-     * @param DateTime $defaultConversionDay
      */
-    public function __construct(
-        array $invalidConversionDates,
-        DateTime $firstConversionDay,
-        DateTime $defaultConversionDay
-    ) {
+    public function __construct(array $invalidConversionDates, ?DateTime $firstConversionDay, ?DateTime $defaultConversionDay)
+    {
         $this->invalidConversionDates = $invalidConversionDates;
         $this->firstConversionDay = $firstConversionDay;
         $this->defaultConversionDay = $defaultConversionDay;
@@ -38,23 +26,17 @@ class ConversionDates
     /**
      * @return InvalidConversionDate[]
      */
-    public function getInvalidConversionDates()
+    public function getInvalidConversionDates(): array
     {
         return $this->invalidConversionDates;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getFirstConversionDate()
+    public function getFirstConversionDate(): ?DateTime
     {
         return $this->firstConversionDay;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDefaultConversionDate()
+    public function getDefaultConversionDate(): ?DateTime
     {
         return $this->defaultConversionDay;
     }

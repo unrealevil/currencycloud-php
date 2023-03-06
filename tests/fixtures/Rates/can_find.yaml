@@ -1,15 +1,14 @@
--
-  request:
-    method: GET
-    url: https://devapi.currencycloud.com/v2/rates/find?currency_pair=GBPUSD%2CEURGBP
-    body: ''
-    headers:
-      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
-  response:
-    status: 200
-    headers:
-      Date: Mon, 27 Apr 2015 20:33:51 GMT
-      Content-Type: application/json
-      Content-Length: '90'
-      X-Request-Id: '2773736887435072763'
-    body: '{"rates":{"EURGBP":["0.71445","0.71508"],"GBPUSD":["1.52264","1.52334"]},"unavailable":[]}'
+-   request:
+        method: GET
+        url: https://devapi.currencycloud.com/v2/rates/find?currency_pair=GBPUSD%2CEURGBP
+        body: ''
+        headers:
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 200
+        headers:
+            Date: Mon, 27 Apr 2015 20:33:51 GMT
+            Content-Type: application/json
+            Content-Length: '90'
+            X-Request-Id: '2773736887435072763'
+        body: '{"rates":{"EURGBP":["0.71445","0.71508"],"GBPUSD":["1.52264","1.52334"]},"unavailable":[]}'

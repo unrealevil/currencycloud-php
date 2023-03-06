@@ -1,6 +1,6 @@
 <?php
-namespace CurrencyCloud\Tests\EntryPoint;
 
+namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\Criteria\FindIbansCriteria;
 use CurrencyCloud\EntryPoint\IbansEntryPoint;
@@ -8,12 +8,14 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
-class IbansEntryPointTest extends BaseCurrencyCloudTestCase {
+class IbansEntryPointTest extends BaseCurrencyCloudTestCase
+{
 
     /**
      * @test
      */
-    public function canFindIbans(){
+    public function canFindIbans(): void
+    {
         $data = '{
             "ibans": [
                 {
@@ -70,7 +72,8 @@ class IbansEntryPointTest extends BaseCurrencyCloudTestCase {
 
         $entryPoint = new IbansEntryPoint(
             new SimpleEntityManager(),
-            $this->getMockedClient(json_decode($data),
+            $this->getMockedClient(
+                json_decode($data),
                 'GET',
                 'ibans/find',
                 [
@@ -81,8 +84,8 @@ class IbansEntryPointTest extends BaseCurrencyCloudTestCase {
                     'per_page' => null,
                     'order' => null,
                     'order_asc_desc' => null,
-                ],
-                [])
+                ]
+            )
         );
 
         $findIbansCriteria = new FindIbansCriteria();

@@ -1,19 +1,19 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 
-class PayerRequirementDetails implements Countable, IteratorAggregate {
-
+class PayerRequirementDetails implements Countable, IteratorAggregate
+{
     /**
      * @var PayerDetails[]
      */
-    private $payerDetails;
+    private array $payerDetails;
 
     /**
-     * PayerRequirementDetails constructor.
      * @param PayerDetails[] $payerDetails
      */
     public function __construct(array $payerDetails)
@@ -21,11 +21,10 @@ class PayerRequirementDetails implements Countable, IteratorAggregate {
         $this->payerDetails = $payerDetails;
     }
 
-
     /**
      * @return PayerDetails[]
      */
-    public function getPayerDetails()
+    public function getPayerDetails(): array
     {
         return $this->payerDetails;
     }
@@ -33,7 +32,7 @@ class PayerRequirementDetails implements Countable, IteratorAggregate {
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->payerDetails);
     }
@@ -41,7 +40,7 @@ class PayerRequirementDetails implements Countable, IteratorAggregate {
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->payerDetails);
     }

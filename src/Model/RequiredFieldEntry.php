@@ -1,37 +1,25 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
-class RequiredFieldEntry {
+class RequiredFieldEntry
+{
+    private ?string $name;
+    private ?string $validationRule;
 
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var string
-     */
-    private $validationRule;
-
-    public function __construct($name, $validationRule)
+    public function __construct(?string $name, ?string $validationRule)
     {
         $this->name = $name;
         $this->validationRule = $validationRule;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidationRule()
+    public function getValidationRule(): ?string
     {
         return $this->validationRule;
     }
-
 }

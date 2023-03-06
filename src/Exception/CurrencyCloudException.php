@@ -8,73 +8,48 @@ use Symfony\Component\Yaml\Dumper;
 
 abstract class CurrencyCloudException extends RuntimeException
 {
+    private ?array $parameters;
+    private string $httpMethod;
+    private string $url;
+    private ?string $compiled = null;
+    private string $apiCode;
 
-    /**
-     * @var string
-     */
-    private $parameters;
-    /**
-     * @var string
-     */
-    private $httpMethod;
-    /**
-     * @var string
-     */
-    private $url;
-    /**
-     * @var string
-     */
-    private $compiled;
-    /**
-     * @var string
-     */
-    private $apiCode;
-
-    /**
-     * CurrencyCloudException constructor.
-     *
-     * @param string $parameters
-     * @param string $httpMethod
-     * @param string $url
-     * @param string $message
-     * @param string $apiCode
-     * @param Exception|null $previous
-     */
     public function __construct(
-        $parameters,
-        $httpMethod,
-        $url,
-        $message = '',
-        $apiCode = '',
+        ?array $parameters,
+        ?string $httpMethod,
+        ?string $url,
+        ?string $message = '',
+        ?string $apiCode = '',
         Exception $previous = null
     ) {
         parent::__construct($message, 0, $previous);
         $this->parameters = $parameters;
-        $this->httpMethod = strtolower($httpMethod);
+        $this->httpMethod = strtolower((string) $httpMethod);
         $this->url = (string) $url;
         $this->apiCode = (string) $apiCode;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiCode()
-    {
-        return $this->apiCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getCompiled();
     }
 
-    /**
-     * @return string
-     */
-    protected function getCompiled()
+    public function getParameters(): ?array
+    {
+        return $this->parameters;
+    }
+
+    public function getHttpMethod(): string
+    {
+        return $this->httpMethod;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getCompiled(): string
     {
         if (null === $this->compiled) {
             $dumper = new Dumper();
@@ -87,42 +62,20 @@ abstract class CurrencyCloudException extends RuntimeException
         return $this->compiled;
     }
 
-    /**
-     * @return array
-     */
-    protected function getCompileProperties()
+    public function getApiCode(): string
+    {
+        return $this->apiCode;
+    }
+
+    protected function getCompileProperties(): array
     {
         return [
-            'platform' => sprintf('PHP %s', phpversion()),
+            'platform' => sprintf('PHP %s', PHP_VERSION),
             'request' => [
                 'parameters' => $this->parameters,
                 'verb' => $this->httpMethod,
                 'url' => $this->url
             ]
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHttpMethod()
-    {
-        return $this->httpMethod;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 }

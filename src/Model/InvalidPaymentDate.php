@@ -6,38 +6,21 @@ use DateTime;
 
 class InvalidPaymentDate
 {
+    private DateTime $date;
+    private string $description;
 
-    /**
-     * @var DateTime
-     */
-    private $date;
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @param DateTime $date
-     * @param string $description
-     */
-    public function __construct(DateTime $date, $description)
+    public function __construct(?DateTime $date, ?string $description)
     {
         $this->date = $date;
         $this->description = (string) $description;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDate()
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }

@@ -3,58 +3,19 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class PaymentConfirmation implements EntityInterface {
+class PaymentConfirmation implements EntityInterface
+{
+    private ?string $id;
+    private ?string $paymentId;
+    private ?string $accountId;
+    private ?string $shortReference;
+    private ?string $status;
+    private ?string $confirmationUrl;
+    private ?DateTime $createdAt;
+    private ?DateTime $updatedAt;
+    private ?DateTime $expiresAt;
 
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $paymentId;
-    /**
-     * @var string
-     */
-    private $accountId;
-    /**
-     * @var string
-     */
-    private $shortReference;
-    /**
-     * @var string
-     */
-    private $status;
-    /**
-     * @var string
-     */
-    private $confirmationUrl;
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-    /**
-     * @var DateTime
-     */
-    private $expiresAt;
-
-    /**
-     * PaymentConfirmation constructor.
-     * @param string $id
-     * @param string $paymentId
-     * @param string $accountId
-     * @param string $shortReference
-     * @param string $status
-     * @param string $confirmationUrl
-     * @param DateTime $createdAt
-     * @param DateTime $updatedAt
-     * @param DateTime $expiresAt
-     */
-    public function __construct($id, $paymentId, $accountId, $shortReference, $status, $confirmationUrl, $createdAt, $updatedAt, $expiresAt)
+    public function __construct(?string $id, ?string $paymentId, ?string $accountId, ?string $shortReference, ?string $status, ?string $confirmationUrl, ?DateTime $createdAt, ?DateTime $updatedAt, ?DateTime $expiresAt)
     {
         $this->id = $id;
         $this->paymentId = $paymentId;
@@ -67,76 +28,48 @@ class PaymentConfirmation implements EntityInterface {
         $this->expiresAt = $expiresAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentId()
+    public function getPaymentId(): ?string
     {
         return $this->paymentId;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
-    public function getConfirmationUrl()
+    public function getConfirmationUrl(): ?string
     {
         return $this->confirmationUrl;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getExpiresAt()
+    public function getExpiresAt(): ?DateTime
     {
         return $this->expiresAt;
     }
-
 }

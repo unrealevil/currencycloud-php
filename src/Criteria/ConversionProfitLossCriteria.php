@@ -1,226 +1,137 @@
 <?php
+
 namespace CurrencyCloud\Criteria;
 
-class ConversionProfitLossCriteria {
+class ConversionProfitLossCriteria
+{
+    private ?string $accountId = null;
+    private ?string $contactId = null;
+    private ?string $conversionId = null;
+    private ?string $eventType = null;
+    private ?string $eventDateTimeFrom = null;
+    private ?string $eventDateTimeTo = null;
+    private ?string $amountFrom = null;
+    private ?string $amountTo = null;
+    private ?string $currency = null;
+    private ?string $scope = null;
 
-    /**
-     * @var string
-     */
-    private $accountId;
-    /**
-     * @var string
-     */
-    private $contactId;
-    /**
-     * @var string
-     */
-    private $conversionId;
-    /**
-     * @var string
-     */
-    private $eventType;
-    /**
-     * @var string
-     */
-    private $eventDateTimeFrom;
-    /**
-     * @var string
-     */
-    private $eventDateTimeTo;
-    /**
-     * @var string
-     */
-    private $amountFrom;
-    /**
-     * @var string
-     */
-    private $amountTo;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $scope;
-
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): static
     {
         $this->accountId = $accountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactId()
+    public function getContactId(): ?string
     {
         return $this->contactId;
     }
 
-    /**
-     * @param string $contactId
-     * @return $this
-     */
-    public function setContactId($contactId)
+    public function setContactId(?string $contactId): static
     {
         $this->contactId = $contactId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @param string $conversionId
-     * @return $this
-     */
-    public function setConversionId($conversionId)
+    public function setConversionId(?string $conversionId): static
     {
         $this->conversionId = $conversionId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventType()
+    public function getEventType(): ?string
     {
         return $this->eventType;
     }
 
-    /**
-     * @param string $eventType
-     * @return $this
-     */
-    public function setEventType($eventType)
+    public function setEventType(?string $eventType): static
     {
         $this->eventType = $eventType;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventDateTimeFrom()
+    public function getEventDateTimeFrom(): ?string
     {
         return $this->eventDateTimeFrom;
     }
 
-    /**
-     * @param string $eventDateTimeFrom
-     * @return $this
-     */
-    public function setEventDateTimeFrom($eventDateTimeFrom)
+    public function setEventDateTimeFrom(?string $eventDateTimeFrom): static
     {
         $this->eventDateTimeFrom = $eventDateTimeFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventDateTimeTo()
+    public function getEventDateTimeTo(): ?string
     {
         return $this->eventDateTimeTo;
     }
 
-    /**
-     * @param string $eventDateTimeTo
-     * @return $this
-     */
-    public function setEventDateTimeTo($eventDateTimeTo)
+    public function setEventDateTimeTo(?string $eventDateTimeTo): static
     {
         $this->eventDateTimeTo = $eventDateTimeTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountFrom()
+    public function getAmountFrom(): ?string
     {
         return $this->amountFrom;
     }
 
-    /**
-     * @param string $amountFrom
-     * @return $this
-     */
-    public function setAmountFrom($amountFrom)
+    public function setAmountFrom(?string $amountFrom): static
     {
         $this->amountFrom = $amountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountTo()
+    public function getAmountTo(): ?string
     {
         return $this->amountTo;
     }
 
-    /**
-     * @param string $amountTo
-     * @return $this
-     */
-    public function setAmountTo($amountTo)
+    public function setAmountTo(?string $amountTo): static
     {
         $this->amountTo = $amountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): static
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @param string $scope
-     * @return $this
-     */
-    public function setScope($scope)
+    public function setScope(?string $scope): static
     {
         $this->scope = $scope;
+
         return $this;
     }
 

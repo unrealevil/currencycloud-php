@@ -5,226 +5,134 @@ use DateTime;
 
 class FindReportsCriteria
 {
-    /*
-     * @var string|null
-     */
-    private $shortReference;
-    /*
-     * @var string|null
-     */
-    private $description;
-    /*
-     * @var string|null
-     */
-    private $accountId;
-    /*
-     * @var string|null
-     */
-    private $contactId;
-    /*
-     * @var DateTime
-     */
-    private $createdAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $createdAtTo;
-    /*
-     * @var DateTime
-     */
-    private $expirationDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $expirationDateTo;
-    /*
-     * @var string|null
-     */
-    private $status;
-    /*
-     * @var string|null
-     */
-    private $reportType;
+    private ?string $shortReference = null;
+    private ?string $description = null;
+    private ?string $accountId = null;
+    private ?string $contactId = null;
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $expirationDateFrom = null;
+    private ?DateTime $expirationDateTo = null;
+    private ?string $status = null;
+    private ?string $reportType = null;
 
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return $this
-     *
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     * @return $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): self
     {
         $this->shortReference = $shortReference;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): self
     {
         $this->accountId = $accountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactId()
+    public function getContactId(): ?string
     {
         return $this->contactId;
     }
 
-    /**
-     * @param string $contactId
-     * @return $this
-     */
-    public function setContactId($contactId)
+    public function setContactId(?string $contactId): self
     {
         $this->contactId = $contactId;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param mixed $createdAtFrom
-     * @return $this
-     */
-    public function setCreatedAtFrom($createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param mixed $createdAtTo
-     * @return $this
-     */
-    public function setCreatedAtTo($createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getExpirationDateFrom()
+    public function getExpirationDateFrom(): ?DateTime
     {
         return $this->expirationDateFrom;
     }
 
-    /**
-     * @param DateTime $expirationDateFrom
-     * @return $this
-     */
-    public function setExpirationDateFrom($expirationDateFrom)
+    public function setExpirationDateFrom(?DateTime $expirationDateFrom): self
     {
         $this->expirationDateFrom = $expirationDateFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getExpirationDateTo()
+    public function getExpirationDateTo(): ?DateTime
     {
         return $this->expirationDateTo;
     }
 
-    /**
-     * @param DateTime $expirationDateTo
-     * @return $this
-     */
-    public function setExpirationDateTo($expirationDateTo)
+    public function setExpirationDateTo(?DateTime $expirationDateTo): self
     {
         $this->expirationDateTo = $expirationDateTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReportType()
+    public function getReportType(): ?string
     {
         return $this->reportType;
     }
 
-    /**
-     * @param string $reportType
-     * @return $this
-     */
-    public function setReportType($reportType)
+    public function setReportType(?string $reportType): self
     {
         $this->reportType = $reportType;
+
         return $this;
     }
-
 }

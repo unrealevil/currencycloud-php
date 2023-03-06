@@ -6,397 +6,224 @@ use DateTime;
 
 class Account implements EntityInterface
 {
+    private ?string $id = null;
+    private ?string $legalEntityType = null;
+    private ?string $accountName = null;
+    private ?string $brand = null;
+    private ?string $yourReference = null;
+    private ?string $status = null;
+    private ?string $street = null;
+    private ?string $city = null;
+    private ?string $stateOrProvince = null;
+    private ?string $country = null;
+    private ?string $postalCode = null;
+    private ?string $spreadTable = null;
+    private ?DateTime $createdAt = null;
+    private ?DateTime $updatedAt = null;
+    private ?string $identificationType = null;
+    private ?string $identificationValue = null;
+    private ?string $shortReference = null;
 
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $legalEntityType;
-    /**
-     * @var string
-     */
-    private $accountName;
-    /**
-     * @var string
-     */
-    private $brand;
-    /**
-     * @var string
-     */
-    private $yourReference;
-    /**
-     * @var string
-     */
-    private $status;
-    /**
-     * @var string
-     */
-    private $street;
-    /**
-     * @var string
-     */
-    private $city;
-    /**
-     * @var string
-     */
-    private $stateOrProvince;
-    /**
-     * @var string
-     */
-    private $country;
-    /**
-     * @var string
-     */
-    private $postalCode;
-    /**
-     * @var string
-     */
-    private $spreadTable;
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-    /**
-     * @var string
-     */
-    private $identificationType;
-    /**
-     * @var string
-     */
-    private $identificationValue;
-    /**
-     * @var string
-     */
-    private $shortReference;
-
-    /**
-     * @param string $accountName
-     * @param string $legalEntityType
-     *
-     * @return Account
-     */
-    public static function create($accountName, $legalEntityType)
+    public static function create(?string $accountName, string $legalEntityType): Account
     {
-        return (new Account())->setAccountName($accountName)
+        return (new self())->setAccountName($accountName)
             ->setLegalEntityType($legalEntityType);
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getLegalEntityType()
+    public function getLegalEntityType(): ?string
     {
         return $this->legalEntityType;
     }
 
-    /**
-     * @param string $legalEntityType
-     *
-     * @return $this
-     */
-    public function setLegalEntityType($legalEntityType)
+    public function setLegalEntityType(?string $legalEntityType): self
     {
-        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
+        $this->legalEntityType = $legalEntityType;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountName()
+    public function getAccountName(): ?string
     {
         return $this->accountName;
     }
 
-    /**
-     * @param string $accountName
-     *
-     * @return $this
-     */
-    public function setAccountName($accountName)
+    public function setAccountName(?string $accountName): self
     {
-        $this->accountName = (null === $accountName) ? null : (string) $accountName;
+        $this->accountName = $accountName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBrand()
+    public function getBrand(): ?string
     {
         return $this->brand;
     }
 
-    /**
-     * @param string $brand
-     *
-     * @return $this
-     */
-    public function setBrand($brand)
+    public function setBrand(?string $brand): self
     {
-        $this->brand = (null === $brand) ? null : (string) $brand;
+        $this->brand = $brand;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getYourReference()
+    public function getYourReference(): ?string
     {
         return $this->yourReference;
     }
 
-    /**
-     * @param string $yourReference
-     *
-     * @return $this
-     */
-    public function setYourReference($yourReference)
+    public function setYourReference(?string $yourReference): self
     {
-        $this->yourReference = (null === $yourReference) ? null : (string) $yourReference;
+        $this->yourReference = $yourReference;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
-        $this->status = (null === $status) ? null : (string) $status;
+        $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    /**
-     * @param string $street
-     *
-     * @return $this
-     */
-    public function setStreet($street)
+    public function setStreet(?string $street): self
     {
-        $this->street = (null === $street) ? null : (string) $street;
+        $this->street = $street;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    /**
-     * @param string $city
-     *
-     * @return $this
-     */
-    public function setCity($city)
+    public function setCity(?string $city): self
     {
-        $this->city = (null === $city) ? null : (string) $city;
+        $this->city = $city;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStateOrProvince()
+    public function getStateOrProvince(): ?string
     {
         return $this->stateOrProvince;
     }
 
-    /**
-     * @param string $stateOrProvince
-     *
-     * @return $this
-     */
-    public function setStateOrProvince($stateOrProvince)
+    public function setStateOrProvince(?string $stateOrProvince): self
     {
-        $this->stateOrProvince = (null === $stateOrProvince) ? null : (string) $stateOrProvince;
+        $this->stateOrProvince = $stateOrProvince;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    /**
-     * @param string $country
-     *
-     * @return $this
-     */
-    public function setCountry($country)
+    public function setCountry(?string $country): self
     {
-        $this->country = (null === $country) ? null : (string) $country;
+        $this->country = $country;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostalCode()
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
-    /**
-     * @param string $postalCode
-     *
-     * @return $this
-     */
-    public function setPostalCode($postalCode)
+    public function setPostalCode(?string $postalCode): self
     {
-        $this->postalCode = (null === $postalCode) ? null : (string) $postalCode;
+        $this->postalCode = $postalCode;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSpreadTable()
+    public function getSpreadTable(): ?string
     {
         return $this->spreadTable;
     }
 
-    /**
-     * @param string $spreadTable
-     *
-     * @return $this
-     */
-    public function setSpreadTable($spreadTable)
+    public function setSpreadTable(?string $spreadTable): self
     {
-        $this->spreadTable = (null === $spreadTable) ? null : (string) $spreadTable;
+        $this->spreadTable = $spreadTable;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime|null $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt(DateTime $createdAt = null)
+    public function setCreatedAt(?DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime|null $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt(DateTime $updatedAt = null)
+    public function setUpdatedAt(?DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentificationType()
+    public function getIdentificationType(): ?string
     {
         return $this->identificationType;
     }
 
-    /**
-     * @param string $identificationType
-     *
-     * @return $this
-     */
-    public function setIdentificationType($identificationType)
+    public function setIdentificationType(?string $identificationType): self
     {
-        $this->identificationType = (null === $identificationType) ? null : (string) $identificationType;
+        $this->identificationType = $identificationType;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentificationValue()
+    public function getIdentificationValue(): ?string
     {
         return $this->identificationValue;
     }
 
-    /**
-     * @param string $identificationValue
-     *
-     * @return $this
-     */
-    public function setIdentificationValue($identificationValue)
+    public function setIdentificationValue(?string $identificationValue): self
     {
-        $this->identificationValue = (null === $identificationValue) ? null : (string) $identificationValue;
+        $this->identificationValue = $identificationValue;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     *
-     * @return $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): self
     {
-        $this->shortReference = (null === $shortReference) ? null : (string) $shortReference;
+        $this->shortReference = $shortReference;
+
         return $this;
     }
 }

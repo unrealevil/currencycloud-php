@@ -10,15 +10,7 @@ use stdClass;
 
 class RatesEntryPoint extends AbstractEntryPoint
 {
-
-    /**
-     * @param string|array $currencyPairs
-     * @param bool $ignoreInvalidPairs
-     * @param null|string $onBehalfOf
-     *
-     * @return Rates
-     */
-    public function multiple($currencyPairs, $ignoreInvalidPairs = null, $onBehalfOf = null)
+    public function multiple(array|string $currencyPairs, bool $ignoreInvalidPairs = null, string $onBehalfOf = null): Rates
     {
         if (!is_array($currencyPairs)) {
             $currencyPairs = [$currencyPairs];
@@ -39,24 +31,15 @@ class RatesEntryPoint extends AbstractEntryPoint
         return new Rates($pairs, $response->unavailable);
     }
 
-    /**
-     * @param string $buyCurrency
-     * @param string $sellCurrency
-     * @param string $fixedSide
-     * @param string $amount
-     * @param DateTime|null $conversionDate
-     * @param null|string $onBehalfOf
-     *
-     * @return DetailedRate
-     */
     public function detailed(
-        $buyCurrency,
-        $sellCurrency,
-        $fixedSide,
-        $amount,
+        string $buyCurrency,
+        string $sellCurrency,
+        string $fixedSide,
+        string $amount,
         DateTime $conversionDate = null,
-        $onBehalfOf = null
-    ) {
+        string $onBehalfOf = null
+    ): DetailedRate
+    {
         $response = $this->request(
             'GET',
             'rates/detailed',
@@ -72,22 +55,12 @@ class RatesEntryPoint extends AbstractEntryPoint
         return $this->createDetailedRateFromResponse($response);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return Rate
-     */
-    private function createRateFromResponse(array $data)
+    private function createRateFromResponse(array $data): Rate
     {
         return new Rate($data[0], $data[1]);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return DetailedRate
-     */
-    protected function createDetailedRateFromResponse(stdClass $response)
+    protected function createDetailedRateFromResponse(stdClass $response): DetailedRate
     {
         return new DetailedRate(
             new DateTime($response->settlement_cut_off_time),

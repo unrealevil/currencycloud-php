@@ -1,6 +1,4 @@
-
--
-    request:
+-   request:
         method: GET
         url: 'https://devapi.currencycloud.com/v2/reports/report_requests/find'
         headers:

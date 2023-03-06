@@ -8,27 +8,16 @@ use CurrencyCloud\Session;
 
 class BeforeClientRequestListener
 {
+    private AuthenticateEntryPoint $authenticateEntryPoint;
+    private Session $session;
 
-    /**
-     * @var AuthenticateEntryPoint
-     */
-    private $authenticateEntryPoint;
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * @param Session $session
-     * @param AuthenticateEntryPoint $authenticateEntryPoint
-     */
     public function __construct(Session $session, AuthenticateEntryPoint $authenticateEntryPoint)
     {
         $this->authenticateEntryPoint = $authenticateEntryPoint;
         $this->session = $session;
     }
 
-    public function onBeforeClientRequestEvent(BeforeClientRequestEvent $event)
+    public function onBeforeClientRequestEvent(BeforeClientRequestEvent $event): void
     {
         if ($event->isSecured()) {
             if (null === $this->session->getAuthToken()) {

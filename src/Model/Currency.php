@@ -4,43 +4,16 @@ namespace CurrencyCloud\Model;
 
 class Currency
 {
+    private string $code;
+    private int $decimalPlaces;
+    private string $name;
+    private bool $onlineTrading;
+    private bool $canBuy;
+    private bool $canSell;
 
-    /**
-     * @var string
-     */
-    private $code;
-    /**
-     * @var int
-     */
-    private $decimalPlaces;
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var bool
-     */
-    private $onlineTrading;
-    /**
-     * @var bool
-     */
-    private $canBuy;
-    /**
-     * @var bool
-     */
-    private $canSell;
-
-    /**
-     * @param string $code
-     * @param int $decimalPlaces
-     * @param string $name
-     * @param bool $onlineTrading
-     * @param bool $canBuy
-     * @param bool $canSell
-     */
-    public function __construct($code, $decimalPlaces, $name, $onlineTrading, $canBuy, $canSell)
+    public function __construct(string $code, ?int $decimalPlaces, ?string $name, ?bool $onlineTrading, ?bool $canBuy, ?bool $canSell)
     {
-        $this->code = strtoupper($code);
+        $this->code = \strtoupper($code);
         $this->decimalPlaces = (int) $decimalPlaces;
         $this->name = (string) $name;
         $this->onlineTrading = (bool) $onlineTrading;
@@ -48,50 +21,32 @@ class Currency
         $this->canSell = (bool) $canSell;
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @return int
-     */
-    public function getDecimalPlaces()
+    public function getDecimalPlaces(): int
     {
         return $this->decimalPlaces;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
-    public function getOnlineTrading()
+    public function getOnlineTrading(): bool
     {
         return $this->onlineTrading;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCanBuy()
+    public function getCanBuy(): bool
     {
         return $this->canBuy;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCanSell()
+    public function getCanSell(): bool
     {
         return $this->canSell;
     }

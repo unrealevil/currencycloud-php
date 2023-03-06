@@ -1,12 +1,12 @@
 <?php
 namespace CurrencyCloud\Model;
 
-class ConversionProfitLossCollection extends PaginatedData {
-
+class ConversionProfitLossCollection extends PaginatedData
+{
     /**
      * @var ConversionProfitLoss[]
      */
-    private $conversionsProfitLoss;
+    private array $conversionsProfitLoss;
 
     /**
      * @param ConversionProfitLoss[] $conversionsProfitLoss
@@ -21,7 +21,7 @@ class ConversionProfitLossCollection extends PaginatedData {
     /**
      * @return ConversionProfitLoss[]
      */
-    public function getConversionsProfitLoss()
+    public function getConversionsProfitLoss(): array
     {
         return $this->conversionsProfitLoss;
     }
@@ -29,15 +29,15 @@ class ConversionProfitLossCollection extends PaginatedData {
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
-        return new ArrayIterator($this->conversionsProfitLoss);
+        return new \ArrayIterator($this->conversionsProfitLoss);
     }
 
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->conversionsProfitLoss);
     }

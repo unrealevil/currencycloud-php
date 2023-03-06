@@ -6,412 +6,222 @@ use DateTimeInterface;
 
 class Payer
 {
-    /**
-     * @var string|null
-     */
-    private $id;
+    private ?string $id = null;
+    private ?string $legalEntityType;
+    private ?string $companyName;
+    private ?string $firstName;
+    private ?string $lastName;
+    private ?array $address;
+    private ?string $city;
+    private ?string $stateOrProvince;
+    private ?string $country;
+    private ?string $identificationType;
+    private ?string $identificationValue;
+    private ?string $postcode;
+    private ?DateTimeInterface $dateOfBirth;
+    private ?DateTimeInterface $createdAt;
+    private ?DateTimeInterface $updatedAt;
 
-    /**
-     * @var null|string
-     */
-    private $legalEntityType;
-
-    /**
-     * @var null|string
-     */
-    private $companyName;
-
-    /**
-     * @var null|string
-     */
-    private $firstName;
-
-    /**
-     * @var null|string
-     */
-    private $lastName;
-
-    /**
-     * @var array|null
-     */
-    private $address;
-
-    /**
-     * @var null|string
-     */
-    private $city;
-
-    /**
-     * @var null|string
-     */
-    private $stateOrProvince;
-
-    /**
-     * @var null|string
-     */
-    private $country;
-
-    /**
-     * @var null|string
-     */
-    private $identificationType;
-
-    /**
-     * @var null|string
-     */
-    private $identificationValue;
-
-    /**
-     * @var null|string
-     */
-    private $postcode;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $dateOfBirth;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $updatedAt;
-
-    /**
-     * @param string|null            $legalEntityType
-     * @param string|null            $companyName
-     * @param string|null            $firstName
-     * @param string|null            $lastName
-     * @param array|null             $address
-     * @param string|null            $city
-     * @param string|null            $stateOrProvince
-     * @param string|null            $country
-     * @param string|null            $identificationType
-     * @param string|null            $identificationValue
-     * @param string|null            $postcode
-     * @param DateTimeInterface|null $dateOfBirth
-     * @param DateTimeInterface|null $createdAt
-     * @param DateTimeInterface|null $updatedAt
-     */
     public function __construct(
-        $legalEntityType = null,
-        $companyName = null,
-        $firstName = null,
-        $lastName = null,
+        string $legalEntityType = null,
+        string $companyName = null,
+        string $firstName = null,
+        string $lastName = null,
         array $address = null,
-        $city = null,
-        $stateOrProvince = null,
-        $country = null,
-        $identificationType = null,
-        $identificationValue = null,
-        $postcode = null,
+        string $city = null,
+        string $stateOrProvince = null,
+        string $country = null,
+        string $identificationType = null,
+        string $identificationValue = null,
+        string $postcode = null,
         DateTimeInterface $dateOfBirth = null,
         DateTimeInterface $createdAt = null,
         DateTimeInterface $updatedAt = null
     )
     {
-        $this->legalEntityType = (null === $legalEntityType) ? null : (string) $legalEntityType;
-        $this->companyName = (null === $companyName) ? null : (string) $companyName;
-        $this->firstName = (null === $firstName) ? null : (string) $firstName;
-        $this->lastName = (null === $lastName) ? null : (string) $lastName;
+        $this->legalEntityType = $legalEntityType;
+        $this->companyName = $companyName;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->address = $address;
-        $this->city = (null === $city) ? null : (string) $city;
-        $this->stateOrProvince = (null === $stateOrProvince) ? null : (string) $stateOrProvince;
-        $this->country = (null === $country) ? null : (string) $country;
-        $this->identificationType = (null === $identificationType) ? null : (string) $identificationType;
-        $this->identificationValue = (null === $identificationValue) ? null : (string) $identificationValue;
-        $this->postcode = (null === $postcode) ? null : (string) $postcode;
+        $this->city = $city;
+        $this->stateOrProvince = $stateOrProvince;
+        $this->country = $country;
+        $this->identificationType = $identificationType;
+        $this->identificationValue = $identificationValue;
+        $this->postcode = $postcode;
         $this->dateOfBirth = $dateOfBirth;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getLegalEntityType()
+    public function getLegalEntityType(): ?string
     {
         return $this->legalEntityType;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCompanyName()
-    {
-        return $this->companyName;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getStateOrProvince()
-    {
-        return $this->stateOrProvince;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getIdentificationType()
-    {
-        return $this->identificationType;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getIdentificationValue()
-    {
-        return $this->identificationValue;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPostcode()
-    {
-        return $this->postcode;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getDateOfBirth()
-    {
-        return $this->dateOfBirth;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param null|string $legalEntityType
-     *
-     * @return $this
-     */
-    public function setLegalEntityType($legalEntityType)
+    public function setLegalEntityType(?string $legalEntityType): self
     {
         $this->legalEntityType = $legalEntityType;
 
         return $this;
     }
 
-    /**
-     * @param null|string $companyName
-     *
-     * @return $this
-     */
-    public function setCompanyName($companyName)
+    public function getCompanyName(): ?string
+    {
+        return $this->companyName;
+    }
+
+    public function setCompanyName(?string $companyName): self
     {
         $this->companyName = $companyName;
 
         return $this;
     }
 
-    /**
-     * @param null|string $firstName
-     *
-     * @return $this
-     */
-    public function setFirstName($firstName)
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    /**
-     * @param null|string $lastName
-     *
-     * @return $this
-     */
-    public function setLastName($lastName)
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * @param array|null $address
-     *
-     * @return $this
-     */
-    public function setAddress($address)
+    public function getAddress(): ?array
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?array $address): self
     {
         $this->address = $address;
 
         return $this;
     }
 
-    /**
-     * @param null|string $city
-     *
-     * @return $this
-     */
-    public function setCity($city)
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @param null|string $stateOrProvince
-     *
-     * @return $this
-     */
-    public function setStateOrProvince($stateOrProvince)
+    public function getStateOrProvince(): ?string
+    {
+        return $this->stateOrProvince;
+    }
+
+    public function setStateOrProvince(?string $stateOrProvince): self
     {
         $this->stateOrProvince = $stateOrProvince;
 
         return $this;
     }
 
-    /**
-     * @param null|string $country
-     *
-     * @return $this
-     */
-    public function setCountry($country)
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
         return $this;
     }
 
-    /**
-     * @param null|string $identificationType
-     *
-     * @return $this
-     */
-    public function setIdentificationType($identificationType)
+    public function getIdentificationType(): ?string
+    {
+        return $this->identificationType;
+    }
+
+    public function setIdentificationType(?string $identificationType): self
     {
         $this->identificationType = $identificationType;
 
         return $this;
     }
 
-    /**
-     * @param null|string $identificationValue
-     *
-     * @return $this
-     */
-    public function setIdentificationValue($identificationValue)
+    public function getIdentificationValue(): ?string
+    {
+        return $this->identificationValue;
+    }
+
+    public function setIdentificationValue(?string $identificationValue): self
     {
         $this->identificationValue = $identificationValue;
 
         return $this;
     }
 
-    /**
-     * @param null|string $postcode
-     *
-     * @return $this
-     */
-    public function setPostcode($postcode)
+    public function getPostcode(): ?string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(?string $postcode): self
     {
         $this->postcode = $postcode;
 
         return $this;
     }
 
-    /**
-     * @param DateTimeInterface|null $dateOfBirth
-     *
-     * @return $this
-     */
-    public function setDateOfBirth($dateOfBirth)
+    public function getDateOfBirth(): ?DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(?DateTimeInterface $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
 
-    /**
-     * @param DateTimeInterface|null $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @param DateTimeInterface|null $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt($updatedAt)
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

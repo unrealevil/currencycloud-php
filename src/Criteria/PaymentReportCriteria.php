@@ -5,446 +5,264 @@ use DateTime;
 
 class PaymentReportCriteria
 {
-    /*
-     * @var string|null
-     */
-    private $onBehalfOf;
-    /*
-     * @var string|null
-     */
-    private $description;
-    /*
-     * @var string|null
-     */
-    private $currency;
-    /*
-     * @var string|null
-     */
-    private $amountFrom;
-    /*
-     * @var string|null
-     */
-    private $amountTo;
-    /*
-     * @var string|null
-     */
-    private $status;
-    /*
-     * @var DateTime
-     */
-    private $paymentDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $paymentDateTo;
-    /*
-     * @var DateTime
-     */
-    private $transferedAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $transferedAtTo;
-    /*
-     * @var DateTime
-     */
-    private $createdAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $createdAtTo;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtTo;
-    /*
-     * @var string|null
-     */
-    private $beneficiaryId;
-    /*
-     * @var string|null
-     */
-    private $conversionId;
-    /*
-     * @var string|null
-     */
-    private $withDeleted;
-    /*
-     * @var string|null
-     */
-    private $paymentGroupId;
-    /*
-     * @var string|null
-     */
-    private $uniqueRequestId;
-    /*
-     * @var string|null
-     */
-    private $scope;
+    private ?string $onBehalfOf = null;
+    private ?string $description = null;
+    private ?string $currency = null;
+    private ?string $amountFrom = null;
+    private ?string $amountTo = null;
+    private ?string $status = null;
+    private ?DateTime $paymentDateFrom = null;
+    private ?DateTime $paymentDateTo = null;
+    private ?DateTime $transferedAtFrom = null;
+    private ?DateTime $transferedAtTo = null;
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $updatedAtFrom = null;
+    private ?DateTime $updatedAtTo = null;
+    private ?string $beneficiaryId = null;
+    private ?string $conversionId = null;
+    private ?string $withDeleted = null;
+    private ?string $paymentGroupId = null;
+    private ?string $uniqueRequestId = null;
+    private ?string $scope = null;
 
-    /**
-     * @return string
-     */
-    public function getOnBehalfOf()
+    public function getOnBehalfOf(): ?string
     {
         return $this->onBehalfOf;
     }
 
-    /**
-     * @param string $onBehalfOf
-     * @return $this
-     */
-    public function setOnBehalfOf($onBehalfOf)
+    public function setOnBehalfOf(?string $onBehalfOf): self
     {
         $this->onBehalfOf = $onBehalfOf;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return $this
-     *
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountFrom()
+    public function getAmountFrom(): ?string
     {
         return $this->amountFrom;
     }
 
-    /**
-     * @param string $amountFrom
-     * @return $this
-     */
-    public function setAmountFrom($amountFrom)
+    public function setAmountFrom(?string $amountFrom): self
     {
         $this->amountFrom = $amountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountTo()
+    public function getAmountTo(): ?string
     {
         return $this->amountTo;
     }
 
-    /**
-     * @param string $amountTo
-     * @return $this
-     */
-    public function setAmountTo($amountTo)
+    public function setAmountTo(?string $amountTo): self
     {
         $this->amountTo = $amountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getPaymentDateFrom()
+    public function getPaymentDateFrom(): ?DateTime
     {
         return $this->paymentDateFrom;
     }
 
-    /**
-     * @param DateTime $paymentDateFrom
-     * @return $this
-     */
-    public function setPaymentDateFrom($paymentDateFrom)
+    public function setPaymentDateFrom(?DateTime $paymentDateFrom): self
     {
         $this->paymentDateFrom = $paymentDateFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getPaymentDateTo()
+    public function getPaymentDateTo(): ?DateTime
     {
         return $this->paymentDateTo;
     }
 
-    /**
-     * @param DateTime $paymentDateTo
-     * @return $this
-     */
-    public function setPaymentDateTo($paymentDateTo)
+    public function setPaymentDateTo(?DateTime $paymentDateTo): self
     {
         $this->paymentDateTo = $paymentDateTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getTransferedAtFrom()
+    public function getTransferedAtFrom(): ?DateTime
     {
         return $this->transferedAtFrom;
     }
 
-    /**
-     * @param DateTime $transferedAtFrom
-     * @return $this
-     */
-    public function setTransferedAtFrom($transferedAtFrom)
+    public function setTransferedAtFrom(?DateTime $transferedAtFrom): self
     {
         $this->transferedAtFrom = $transferedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getTransferedAtTo()
+    public function getTransferedAtTo(): ?DateTime
     {
         return $this->transferedAtTo;
     }
 
-    /**
-     * @param DateTime $transferedAtTo
-     * @return $this
-     */
-    public function setTransferedAtTo($transferedAtTo)
+    public function setTransferedAtTo(?DateTime $transferedAtTo): self
     {
         $this->transferedAtTo = $transferedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param mixed $createdAtFrom
-     * @return $this
-     */
-    public function setCreatedAtFrom($createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param mixed $createdAtTo
-     * @return $this
-     */
-    public function setCreatedAtTo($createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?DateTime
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @param mixed $updatedAtFrom
-     * @return $this
-     */
-    public function setUpdatedAtFrom($updatedAtFrom)
+    public function setUpdatedAtFrom(?DateTime $updatedAtFrom): self
     {
         $this->updatedAtFrom = $updatedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?DateTime
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @param mixed $updatedAtTo
-     * @return $this
-     */
-    public function setUpdatedAtTo($updatedAtTo)
+    public function setUpdatedAtTo(?DateTime $updatedAtTo): self
     {
         $this->updatedAtTo = $updatedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryId()
+    public function getBeneficiaryId(): ?string
     {
         return $this->beneficiaryId;
     }
 
-    /**
-     * @param string $beneficiaryId
-     * @return $this
-     */
-    public function setBeneficiaryId($beneficiaryId)
+    public function setBeneficiaryId(?string $beneficiaryId): self
     {
         $this->beneficiaryId = $beneficiaryId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @param string $conversionId
-     * @return $this
-     */
-    public function setConversionId($conversionId)
+    public function setConversionId(?string $conversionId): self
     {
         $this->conversionId = $conversionId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getWithDeleted()
+    public function getWithDeleted(): ?string
     {
         return $this->withDeleted;
     }
 
-    /**
-     * @param string $withDeleted
-     * @return $this
-     */
-    public function setWithDeleted($withDeleted)
+    public function setWithDeleted(?string $withDeleted): self
     {
         $this->withDeleted = $withDeleted;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentGroupId()
+    public function getPaymentGroupId(): ?string
     {
         return $this->paymentGroupId;
     }
 
-    /**
-     * @param string $paymentGroupId
-     * @return $this
-     */
-    public function setPaymentGroupId($paymentGroupId)
+    public function setPaymentGroupId(?string $paymentGroupId): self
     {
         $this->paymentGroupId = $paymentGroupId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueRequestId()
+    public function getUniqueRequestId(): ?string
     {
         return $this->uniqueRequestId;
     }
 
-    /**
-     * @param string $uniqueRequestId
-     * @return $this
-     */
-    public function setUniqueRequestId($uniqueRequestId)
+    public function setUniqueRequestId(?string $uniqueRequestId): self
     {
         $this->uniqueRequestId = $uniqueRequestId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @param string $scope
-     * @return $this
-     */
-    public function setScope($scope)
+    public function setScope(?string $scope): self
     {
         $this->scope = $scope;
+
         return $this;
     }
-    
 }

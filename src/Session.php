@@ -7,45 +7,23 @@ use LogicException;
 
 class Session
 {
+    public const ENVIRONMENT_PRODUCTION = 'prod';
+    public const ENVIRONMENT_DEMONSTRATION = 'demonstration';
+    public const ENVIRONMENT_UAT = 'uat';
 
-    const ENVIRONMENT_PRODUCTION    = 'prod';
-    const ENVIRONMENT_DEMONSTRATION = 'demonstration';
-    const ENVIRONMENT_UAT           = 'uat';
-
-    private static $urls = [
+    private static array $urls = [
         self::ENVIRONMENT_PRODUCTION => 'https://api.currencycloud.com/v2/',
         self::ENVIRONMENT_DEMONSTRATION => 'https://devapi.currencycloud.com/v2/',
-        self::ENVIRONMENT_UAT => 'https://api-uat1.ccycloud.com'
+        self::ENVIRONMENT_UAT => 'https://api-uat1.ccycloud.com',
     ];
 
-    /**
-     * @var string
-     */
-    private $apiUrl;
+    private string $apiUrl;
+    private ?string $onBehalfOf = null;
+    private string $loginId;
+    private string $apiKey;
+    private ?string $authToken = null;
 
-    /**
-     * @var string
-     */
-    private $onBehalfOf;
-    /**
-     * @var string
-     */
-    private $loginId;
-    /**
-     * @var string
-     */
-    private $apiKey;
-    /**
-     * @var null|string
-     */
-    private $authToken;
-
-    /**
-     * @param string $environment
-     * @param string $loginId
-     * @param string $apiKey
-     */
-    public function __construct($environment, $loginId, $apiKey)
+    public function __construct(?string $environment, ?string $loginId, ?string $apiKey)
     {
         if (!isset(self::$urls[$environment])) {
             throw new InvalidArgumentException(
@@ -63,33 +41,25 @@ class Session
             throw new InvalidArgumentException('API key can not be null');
         }
         $this->apiUrl = self::$urls[$environment];
-        $this->loginId = (string) $loginId;
-        $this->apiKey = (string) $apiKey;
+        $this->loginId = $loginId;
+        $this->apiKey = $apiKey;
     }
 
-    /**
-     *
-     */
-    public function clearOnBehalfOf()
+    public function clearOnBehalfOf(): void
     {
         $this->onBehalfOf = null;
     }
 
-    /**
-     * @return string
-     */
-    public function getOnBehalfOf()
+    public function getOnBehalfOf(): ?string
     {
         return $this->onBehalfOf;
     }
 
     /**
-     * @param string $contactId
-     *
      * @throws InvalidArgumentException When contact ID is not UUID
      * @throws LogicException If already in on-behalf-of call
      */
-    public function setOnBehalfOf($contactId)
+    public function setOnBehalfOf(?string $contactId): void
     {
         $pattern = '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i';
 
@@ -106,46 +76,30 @@ class Session
         $this->onBehalfOf = $contactId;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiUrl()
+    public function getApiUrl(): string
     {
         return $this->apiUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoginId()
+    public function getLoginId(): string
     {
         return $this->loginId;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiKey()
+    public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAuthToken()
+    public function getAuthToken(): ?string
     {
         return $this->authToken;
     }
 
-    /**
-     * @param null|string $authToken
-     *
-     * @return $this
-     */
-    public function setAuthToken($authToken)
+    public function setAuthToken(?string $authToken): static
     {
-        $this->authToken = (null !== $authToken) ? (string) $authToken : null;
+        $this->authToken = $authToken;
+
         return $this;
     }
 }

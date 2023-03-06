@@ -5,11 +5,12 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
+use DateTimeInterface;
 
 class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
 {
 
-    protected $out = [
+    protected array $out = [
         'balances' => [
             [
                 'id' => '18230F1D-648A-406A-AD1F-A09CBC02E9E9',
@@ -18,7 +19,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
                 'amount' => '1000.00',
                 'created_at' => '2014-01-12T12:24:19+00:00',
                 'updated_at' => '2014-01-12T12:24:19+00:00',
-            ]
+            ],
         ],
         'pagination' => [
             'total_entries' => 1,
@@ -28,26 +29,28 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
             'next_page' => -1,
             'per_page' => 25,
             'order' => 'id',
-            'order_asc_desc' => 'asc'
-        ]
+            'order_asc_desc' => 'asc',
+        ],
     ];
 
     /**
      * @test
      */
-    public function canFind()
+    public function canFind(): void
     {
-        $entryPoint = new BalancesEntryPoint($this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'GET',
-            'balances/find',
-            [
-                'on_behalf_of' => null,
-                'amount_from' => null,
-                'amount_to' => null,
-                'as_at_date' => null
-            ] + $this->getDummyPaginationRequest()
-        ));
+        $entryPoint = new BalancesEntryPoint(
+            $this->getMockedClient(
+                json_decode(json_encode($this->out)),
+                'GET',
+                'balances/find',
+                [
+                    'on_behalf_of' => null,
+                    'amount_from' => null,
+                    'amount_to' => null,
+                    'as_at_date' => null,
+                ] + $this->getDummyPaginationRequest()
+            )
+        );
 
         $ret = $entryPoint->find();
 
@@ -57,20 +60,22 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
     /**
      * @test
      */
-    public function canFindWithNonNull()
+    public function canFindWithNonNull(): void
     {
         $date = new DateTime();
-        $entryPoint = new BalancesEntryPoint($this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'GET',
-            'balances/find',
-            [
-                'on_behalf_of' => 't',
-                'amount_from' => '22',
-                'amount_to' => '33',
-                'as_at_date' => $date->format(DateTime::RFC3339)
-            ] + $this->getDummyPaginationRequest()
-        ));
+        $entryPoint = new BalancesEntryPoint(
+            $this->getMockedClient(
+                json_decode(json_encode($this->out)),
+                'GET',
+                'balances/find',
+                [
+                    'on_behalf_of' => 't',
+                    'amount_from' => '22',
+                    'amount_to' => '33',
+                    'as_at_date' => $date->format(DateTimeInterface::RFC3339),
+                ] + $this->getDummyPaginationRequest()
+            )
+        );
 
         $ret = $entryPoint->find('22', '33', $date, null, 't');
 

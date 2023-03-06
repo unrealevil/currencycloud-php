@@ -11,48 +11,28 @@ use SplObjectStorage;
 
 class SimpleEntityManager
 {
+    private SplObjectStorage $storage;
 
-    /**
-     * @var SplObjectStorage
-     */
-    private $storage;
-
-    /**
-     *
-     */
     public function __construct()
     {
         $this->storage = new SplObjectStorage();
     }
 
-    /**
-     * @param EntityInterface $object
-     *
-     * @return $this
-     */
-    public function add(EntityInterface $object)
+    public function add(EntityInterface $object): static
     {
         $this->storage->attach($object, $this->loadObjectsPropertyValues($object));
+
         return $this;
     }
 
-    /**
-     * @param EntityInterface $object
-     *
-     * @return $this
-     */
-    public function remove(EntityInterface $object)
+    public function remove(EntityInterface $object): static
     {
         $this->storage->detach($object);
+
         return $this;
     }
 
-    /**
-     * @param EntityInterface $object
-     *
-     * @return object|null
-     */
-    public function computeChangeSet(EntityInterface $object)
+    public function computeChangeSet(EntityInterface $object): EntityInterface|null
     {
         if (!$this->storage->contains($object)) {
             throw new RuntimeException('Entity is not managed by entity manager and therefore can not be updated');
@@ -100,12 +80,7 @@ class SimpleEntityManager
         return $clone;
     }
 
-    /**
-     * @param EntityInterface $object
-     *
-     * @return array
-     */
-    protected function loadObjectsPropertyValues(EntityInterface $object)
+    protected function loadObjectsPropertyValues(EntityInterface $object): array
     {
         $ret = [];
 
@@ -121,17 +96,16 @@ class SimpleEntityManager
     }
 
     /**
-     * @param EntityInterface $object
-     *
      * @return ReflectionProperty[]
      */
-    protected function getObjectsProperties(EntityInterface $object)
+    protected function getObjectsProperties(EntityInterface $object): array
     {
         $reflectionObject = new ReflectionObject($object);
         $currentProperties = $reflectionObject->getProperties();
 
-        return array_map(function (ReflectionProperty $property) {
+        return array_map(static function(ReflectionProperty $property) {
             $property->setAccessible(true);
+
             return $property;
         }, $currentProperties);
     }

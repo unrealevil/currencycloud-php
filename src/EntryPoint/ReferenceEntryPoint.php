@@ -15,15 +15,15 @@ use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\RequiredFieldEntry;
 use CurrencyCloud\Model\SettlementAccount;
 use DateTime;
+use DateTimeInterface;
 
 class ReferenceEntryPoint extends AbstractEntryPoint
 {
-
     //@todo move to factory methods things from here
     /**
      * @return Currency[]
      */
-    public function availableCurrencies()
+    public function availableCurrencies(): array
     {
         $response = $this->request('GET', 'reference/currencies');
         $ret = [];
@@ -35,18 +35,8 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    /**
-     * @param string|null $currency
-     * @param string|null $bankAccountCountry
-     * @param string|null $beneficiaryCountry
-     *
-     * @return BeneficiaryRequiredDetail[]
-     */
-    public function beneficiaryRequiredDetails(
-        $currency = null,
-        $bankAccountCountry = null,
-        $beneficiaryCountry = null
-    ) {
+    public function beneficiaryRequiredDetails(string $currency = null, string $bankAccountCountry = null, string $beneficiaryCountry = null): array
+    {
         $response = $this->request(
             'GET',
             'reference/beneficiary_required_details',
@@ -63,20 +53,14 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    /**
-     * @param string $conversionPair
-     * @param DateTime|null $startDate
-     *
-     * @return ConversionDates
-     */
-    public function conversionDates($conversionPair, DateTime $startDate = null)
+    public function conversionDates(string $conversionPair, DateTime $startDate = null): ConversionDates
     {
         $response = $this->request(
             'GET',
             'reference/conversion_dates',
             [
                 'conversion_pair' => $conversionPair,
-                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTime::ISO8601)
+                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTimeInterface::ATOM)
             ]
         );
         $invalidDates = [];
@@ -92,20 +76,14 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         );
     }
 
-    /**
-     * @param string $currency
-     * @param DateTime|null $startDate
-     *
-     * @return PaymentDates
-     */
-    public function paymentDates($currency, DateTime $startDate = null)
+    public function paymentDates(string $currency, DateTime $startDate = null): PaymentDates
     {
         $response = $this->request(
             'GET',
             'reference/payment_dates',
             [
                 'currency' => $currency,
-                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTime::ISO8601)
+                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTimeInterface::ATOM)
             ]
         );
         $invalidDates = [];
@@ -116,15 +94,10 @@ class ReferenceEntryPoint extends AbstractEntryPoint
 
         return new PaymentDates(
             $invalidDates, new DateTime($response->first_payment_date)
-        );;
+        );
     }
 
-    /**
-     * @param string|null $currency
-     *
-     * @return SettlementAccount[]
-     */
-    public function settlementAccounts($currency = null)
+    public function settlementAccounts(string $currency = null): array
     {
         $response = $this->request(
             'GET',
@@ -155,14 +128,15 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    public function paymentPurposeCodes($currency, $entity_type = null, $bank_account_country = null) {
+    public function paymentPurposeCodes(string $currency, string $entity_type = null, string $bank_account_country = null): array
+    {
         $response = $this->request(
             'GET',
             'reference/payment_purpose_codes',
             [
                 'currency' => $currency,
                 'entity_type' => $entity_type,
-                'currency' => $bank_account_country
+                'bank_account_country' => $bank_account_country
             ]
         );
 
@@ -178,36 +152,22 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    /**
-     * @param $payerCountry
-     * @param $payerEntityType
-     * @param $paymentType
-     */
-    public function payerRequiredDetails($payerCountry, $payerEntityType = null, $paymentType = null){
+    public function payerRequiredDetails(string $payerCountry, string $payerEntityType = null, string $paymentType = null): PayerRequirementDetails
+    {
         $response = $this->request('GET',
             'reference/payer_required_details',
             [
                 'payer_country' => $payerCountry,
                 'payer_entity_type' => $payerEntityType,
                 'payment_type' => $paymentType
-            ],
-            [],
-            []
+            ]
         );
 
         return $this->convertResponseToPaymentRequiredDetails($response);
     }
 
-    /**
-     * @param string $identifierType
-     * @param string $identifierValue
-     *
-     * @return BankDetails
-     */
-    public function bankDetails(
-        $identifierType,
-        $identifierValue
-    ) {
+    public function bankDetails(string $identifierType, string $identifierValue): BankDetails
+    {
         $response = $this->request(
             'GET',
             'reference/bank_details',
@@ -223,33 +183,29 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             $response->bank_country_ISO, $response->currency);
     }
 
-    /**
-     * @param $response
-     * @return PayerRequirementDetails
-     */
-    protected function convertResponseToPaymentRequiredDetails($response){
+    protected function convertResponseToPaymentRequiredDetails(\stdClass $response): PayerRequirementDetails
+    {
         $payerDetails = [];
-        foreach($response->details as $key => $value){
-            array_push($payerDetails,
-                new PayerDetails(
-                    $value->payer_entity_type,
-                    $value->payment_type,
-                     !empty($value->payer_identification_type) ? $value->payer_identification_type : null,
-                    $this->convertRequiredFieldsArrayToRequiredFieldEntry($value->required_fields)
-                ));
+        foreach($response->details as $value){
+            $payerDetails[] = new PayerDetails(
+                $value->payer_entity_type,
+                $value->payment_type,
+                !empty($value->payer_identification_type) ? $value->payer_identification_type : null,
+                $this->convertRequiredFieldsArrayToRequiredFieldEntry($value->required_fields)
+            );
         }
 
         return new PayerRequirementDetails($payerDetails);
     }
 
     /**
-     * @param $requiredFields
      * @return RequiredFieldEntry[]
      */
-    protected function convertRequiredFieldsArrayToRequiredFieldEntry($requiredFields){
+    protected function convertRequiredFieldsArrayToRequiredFieldEntry(array $requiredFields): array
+    {
         $result = [];
-        foreach($requiredFields as $key => $value){
-            array_push($result, new RequiredFieldEntry($value->name, $value->validation_rule));
+        foreach($requiredFields as $value){
+            $result[] = new RequiredFieldEntry($value->name, $value->validation_rule);
         }
         return $result;
     }

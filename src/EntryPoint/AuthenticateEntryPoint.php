@@ -7,26 +7,15 @@ use CurrencyCloud\Session;
 
 class AuthenticateEntryPoint extends AbstractEntryPoint
 {
+    private Session $session;
 
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * @param Session $session
-     * @param Client $client
-     */
     public function __construct(Session $session, Client $client)
     {
         parent::__construct($client);
         $this->session = $session;
     }
 
-    /**
-     *
-     */
-    public function login()
+    public function login(): void
     {
         $response = $this->request(
             'POST',
@@ -43,10 +32,7 @@ class AuthenticateEntryPoint extends AbstractEntryPoint
         $this->session->setAuthToken($response->auth_token);
     }
 
-    /**
-     *
-     */
-    public function close()
+    public function close(): void
     {
         $this->request('POST', 'authenticate/close_session');
         $this->session->setAuthToken(null);

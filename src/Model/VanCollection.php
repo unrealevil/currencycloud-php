@@ -1,18 +1,18 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
 
-class VanCollection extends PaginatedData {
-
+class VanCollection extends PaginatedData
+{
     /**
      * @var Van[]
      */
-    private $vans;
+    private array $vans;
 
     /**
      * @param Van[] $vans
-     * @param Pagination $pagination
      */
     public function __construct(array $vans, Pagination $pagination)
     {
@@ -23,7 +23,7 @@ class VanCollection extends PaginatedData {
     /**
      * @return Van[]
      */
-    public function getVans()
+    public function getVans(): array
     {
         return $this->vans;
     }
@@ -31,7 +31,7 @@ class VanCollection extends PaginatedData {
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->vans);
     }
@@ -39,7 +39,7 @@ class VanCollection extends PaginatedData {
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->vans);
     }

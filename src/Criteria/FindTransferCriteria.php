@@ -1,372 +1,204 @@
 <?php
+
 namespace CurrencyCloud\Criteria;
 
-use CurrencyCloud\Model\Transfer;
 use DateTime;
 
-class FindTransferCriteria {
+class FindTransferCriteria
+{
+    private ?string $shortReference = null;
+    private ?string $sourceAccountId = null;
+    private ?string $destinationAccountId = null;
+    private ?string $status = null;
+    private ?string $currency = null;
+    private ?string $amountFrom = null;
+    private ?string $amountTo = null;
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $updatedAtFrom = null;
+    private ?DateTime $updatedAtTo = null;
+    private ?DateTime $completedAtFrom = null;
+    private ?DateTime $completedAtTo = null;
+    private ?string $creatorContactId = null;
+    private ?string $creatorAccountId = null;
 
-    /**
-     * @var string
-     */
-    private $shortReference;
-
-    /**
-     * @var string
-     */
-    private $sourceAccountId;
-
-    /**
-     * @var string
-     */
-    private $destinationAccountId;
-
-    /**
-     * @var string
-     */
-    private $status;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @var string
-     */
-    private $amountFrom;
-
-    /**
-     * @var string
-     */
-    private $amountTo;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAtFrom;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAtTo;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAtFrom;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAtTo;
-
-    /**
-     * @var DateTime
-     */
-    private $completedAtFrom;
-
-    /**
-     * @var DateTime
-     */
-    private $completedAtTo;
-
-    /**
-     * @var string
-     */
-    private $creatorContactId;
-
-    /**
-     * @var string
-     */
-    private $creatorAccountId;
-
-    /**
-     * @return string
-     */
-    public function getOnBehalfOf()
-    {
-        return $this->onBehalfOf;
-    }
-
-    /**
-     * @param string $onBehalfOf
-     * @return $this
-     */
-    public function setOnBehalfOf($onBehalfOf)
-    {
-        $this->onBehalfOf = $onBehalfOf;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortReference()
+    public function getShortReference(): ?string
     {
         return $this->shortReference;
     }
 
-    /**
-     * @param string $shortReference
-     * @eturn $this
-     */
-    public function setShortReference($shortReference)
+    public function setShortReference(?string $shortReference): self
     {
         $this->shortReference = $shortReference;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSourceAccountId()
+    public function getSourceAccountId(): ?string
     {
         return $this->sourceAccountId;
     }
 
-    /**
-     * @param string $sourceAccountId
-     * @return $this
-     */
-    public function setSourceAccountId($sourceAccountId)
+    public function setSourceAccountId(?string $sourceAccountId): self
     {
         $this->sourceAccountId = $sourceAccountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDestinationAccountId()
+    public function getDestinationAccountId(): ?string
     {
         return $this->destinationAccountId;
     }
 
-    /**
-     * @param string $destinationAccountId
-     * @return $this
-     */
-    public function setDestinationAccountId($destinationAccountId)
+    public function setDestinationAccountId(?string $destinationAccountId): self
     {
         $this->destinationAccountId = $destinationAccountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     * @return $this
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountFrom()
+    public function getAmountFrom(): ?string
     {
         return $this->amountFrom;
     }
 
-    /**
-     * @param string $amountFrom
-     * @return $this
-     */
-    public function setAmountFrom($amountFrom)
+    public function setAmountFrom(?string $amountFrom): self
     {
         $this->amountFrom = $amountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmountTo()
+    public function getAmountTo(): ?string
     {
         return $this->amountTo;
     }
 
-    /**
-     * @param string $amountTo
-     * @return $this
-     */
-    public function setAmountTo($amountTo)
+    public function setAmountTo(?string $amountTo): self
     {
         $this->amountTo = $amountTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param DateTime $createdAtFrom
-     * @return $this
-     */
-    public function setCreatedAtFrom($createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param DateTime $createdAtTo
-     * @return $this
-     */
-    public function setCreatedAtTo($createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?DateTime
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @param DateTime $updatedAtFrom
-     * @return $this
-     */
-    public function setUpdatedAtFrom($updatedAtFrom)
+    public function setUpdatedAtFrom(?DateTime $updatedAtFrom): self
     {
         $this->updatedAtFrom = $updatedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?DateTime
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @param DateTime $updatedAtTo
-     * @return $this
-     */
-    public function setUpdatedAtTo($updatedAtTo)
+    public function setUpdatedAtTo(?DateTime $updatedAtTo): self
     {
         $this->updatedAtTo = $updatedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCompletedAtFrom()
+    public function getCompletedAtFrom(): ?DateTime
     {
         return $this->completedAtFrom;
     }
 
-    /**
-     * @param DateTime $completedAtFrom
-     * @return $this
-     */
-    public function setCompletedAtFrom($completedAtFrom)
+    public function setCompletedAtFrom(?DateTime $completedAtFrom): self
     {
         $this->completedAtFrom = $completedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCompletedAtTo()
+    public function getCompletedAtTo(): ?DateTime
     {
         return $this->completedAtTo;
     }
 
-    /**
-     * @param DateTime $completedAtTo
-     * @return $this
-     */
-    public function setCompletedAtTo($completedAtTo)
+    public function setCompletedAtTo(?DateTime $completedAtTo): self
     {
         $this->completedAtTo = $completedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorContactId()
+    public function getCreatorContactId(): ?string
     {
         return $this->creatorContactId;
     }
 
-    /**
-     * @param string $creatorContactId
-     * @return $this
-     */
-    public function setCreatorContactId($creatorContactId)
+    public function setCreatorContactId(?string $creatorContactId): self
     {
         $this->creatorContactId = $creatorContactId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatorAccountId()
+    public function getCreatorAccountId(): ?string
     {
         return $this->creatorAccountId;
     }
 
-    /**
-     * @param string $creatorAccountId
-     * @return $this
-     */
-    public function setCreatorAccountId($creatorAccountId)
+    public function setCreatorAccountId(?string $creatorAccountId): self
     {
         $this->creatorAccountId = $creatorAccountId;
+
         return $this;
     }
-
 }

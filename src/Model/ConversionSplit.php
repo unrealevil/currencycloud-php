@@ -2,57 +2,32 @@
 
 namespace CurrencyCloud\Model;
 
-use DateTime;
-use CurrencyCloud\Model\Conversion;
-
 class ConversionSplit
 {
+    private Conversion $parent_conversion;
+    private Conversion $child_conversion;
 
-    /**
-     * @var Conversion
-     */
-    private $parent_conversion;
-
-    /**
-     * @var Conversion
-     */
-    private $child_conversion;
-
-
-    /**
-     * @return \CurrencyCloud\Model\Conversion
-     */
-    public function getParentConversion()
+    public function getParentConversion(): Conversion
     {
         return $this->parent_conversion;
     }
 
-    /**
-     * @param \CurrencyCloud\Model\Conversion $parent_conversion
-     * @return ConversionSplit
-     */
-    public function setParentConversion($parent_conversion)
+    public function setParentConversion(Conversion $parent_conversion): static
     {
         $this->parent_conversion = $parent_conversion;
+
         return $this;
     }
 
-    /**
-     * @return \CurrencyCloud\Model\Conversion
-     */
-    public function getChildConversion()
+    public function getChildConversion(): Conversion
     {
         return $this->child_conversion;
     }
 
-    /**
-     * @param \CurrencyCloud\Model\Conversion $child_conversion
-     * @return ConversionSplit
-     */
-    public function setChildConversion($child_conversion)
+    public function setChildConversion(Conversion $child_conversion): static
     {
         $this->child_conversion = $child_conversion;
+
         return $this;
     }
-
 }

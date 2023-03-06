@@ -1,241 +1,145 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class Iban implements EntityInterface {
+class Iban implements EntityInterface
+{
+    private ?string $id = null;
+    private ?string $accountId = null;
+    private ?string $ibanCode = null;
+    private ?string $currency = null;
+    private ?string $accountHolderName = null;
+    private ?string $bankInstitutionName = null;
+    private ?string $bankInstitutionAddress = null;
+    private ?string $bankInstitutionCountry = null;
+    private ?string $bicSwift = null;
+    private ?DateTime $createdAt = null;
+    private ?DateTime $updatedAt = null;
 
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $accountId;
-    /**
-     * @var string
-     */
-    private $ibanCode;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $accountHolderName;
-    /**
-     * @var string
-     */
-    private $bankInstitutionName;
-    /**
-     * @var string
-     */
-    private $bankInstitutionAddress;
-    /**
-     * @var string
-     */
-    private $bankInstitutionCountry;
-    /**
-     * @var string
-     */
-    private $bicSwift;
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountId()
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    /**
-     * @param string $accountId
-     * @return $this
-     */
-    public function setAccountId($accountId)
+    public function setAccountId(?string $accountId): self
     {
         $this->accountId = $accountId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIbanCode()
+    public function getIbanCode(): ?string
     {
         return $this->ibanCode;
     }
 
-    /**
-     * @param string $ibanCode
-     * @return $this
-     */
-    public function setIbanCode($ibanCode)
+    public function setIbanCode(?string $ibanCode): self
     {
         $this->ibanCode = $ibanCode;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountHolderName()
+    public function getAccountHolderName(): ?string
     {
         return $this->accountHolderName;
     }
 
-    /**
-     * @param string $accountHolderName
-     * @return $this
-     */
-    public function setAccountHolderName($accountHolderName)
+    public function setAccountHolderName(?string $accountHolderName): self
     {
         $this->accountHolderName = $accountHolderName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankInstitutionName()
+    public function getBankInstitutionName(): ?string
     {
         return $this->bankInstitutionName;
     }
 
-    /**
-     * @param string $bankInstitutionName
-     * @return $this
-     */
-    public function setBankInstitutionName($bankInstitutionName)
+    public function setBankInstitutionName(?string $bankInstitutionName): self
     {
         $this->bankInstitutionName = $bankInstitutionName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankInstitutionAddress()
+    public function getBankInstitutionAddress(): ?string
     {
         return $this->bankInstitutionAddress;
     }
 
-    /**
-     * @param string $bankInstitutionAddress
-     * @return $this
-     */
-    public function setBankInstitutionAddress($bankInstitutionAddress)
+    public function setBankInstitutionAddress(?string $bankInstitutionAddress): self
     {
         $this->bankInstitutionAddress = $bankInstitutionAddress;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankInstitutionCountry()
+    public function getBankInstitutionCountry(): ?string
     {
         return $this->bankInstitutionCountry;
     }
 
-    /**
-     * @param string $bankInstitutionCountry
-     * @return $this
-     */
-    public function setBankInstitutionCountry($bankInstitutionCountry)
+    public function setBankInstitutionCountry(?string $bankInstitutionCountry): self
     {
         $this->bankInstitutionCountry = $bankInstitutionCountry;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBicSwift()
+    public function getBicSwift(): ?string
     {
         return $this->bicSwift;
     }
 
-    /**
-     * @param string $bicSwift
-     * @return $this
-     */
-    public function setBicSwift($bicSwift)
+    public function setBicSwift(?string $bicSwift): self
     {
         $this->bicSwift = $bicSwift;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     * @return $this
-     */
-    public function setCreatedAt(DateTime $createdAt = null)
+    public function setCreatedAt(?DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime $updatedAt
-     * @return $this
-     */
-    public function setUpdatedAt(DateTime $updatedAt = null)
+    public function setUpdatedAt(?DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
-
 }

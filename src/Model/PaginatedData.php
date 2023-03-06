@@ -7,24 +7,14 @@ use IteratorAggregate;
 
 abstract class PaginatedData implements Countable, IteratorAggregate
 {
+    private ?Pagination $pagination;
 
-    /**
-     * @var Pagination
-     */
-    private $pagination;
-
-    /**
-     * @param Pagination $pagination
-     */
-    public function __construct(Pagination $pagination)
+    public function __construct(?Pagination $pagination)
     {
         $this->pagination = $pagination;
     }
 
-    /**
-     * @return Pagination
-     */
-    public function getPagination()
+    public function getPagination(): ?Pagination
     {
         return $this->pagination;
     }

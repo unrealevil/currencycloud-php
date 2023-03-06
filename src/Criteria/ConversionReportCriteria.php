@@ -5,535 +5,316 @@ use DateTime;
 
 class ConversionReportCriteria
 {
-    /*
-     * @var string|null
-     */
-    private $onBehalfOf;
-    /*
-     * @var string|null
-     */
-    private $description;
-    /*
-     * @var string|null
-     */
-    private $buyCurrency;
-    /*
-     * @var string|null
-     */
-    private $sellCurrency;
-    /*
-     * @var string|null
-     */
-    private $clientBuyAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $clientBuyAmountTo;
-    /*
-     * @var string|null
-     */
-    private $clientSellAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $clientSellAmountTo;
-    /*
-     * @var string|null
-     */
-    private $partnerBuyAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $partnerBuyAmountTo;
-    /*
-     * @var string|null
-     */
-    private $partnerSellAmountFrom;
-    /*
-     * @var string|null
-     */
-    private $partnerSellAmountTo;
-    /*
-     * @var string|null
-     */
-    private $clientStatus;
-    /*
-     * @var string|null
-     */
-    private $partnerStatus;
-    /*
-     * @var DateTime
-     */
-    private $conversionDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $conversionDateTo;
-    /*
-     * @var DateTime
-     */
-    private $settlementDateFrom;
-    /*
-     * @var DateTime
-     */
-    private $settlementDateTo;
-    /*
-     * @var DateTime
-     */
-    private $createdAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $createdAtTo;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtFrom;
-    /*
-     * @var DateTime
-     */
-    private $updatedAtTo;
-    /*
-     * @var string|null
-     */
-    private $uniqueRequestId;
-    /*
-     * @var string|null
-     */
-    private $scope;
+    private ?string $onBehalfOf = null;
+    private ?string $description = null;
+    private ?string $buyCurrency = null;
+    private ?string $sellCurrency = null;
+    private ?string $clientBuyAmountFrom = null;
+    private ?string $clientBuyAmountTo = null;
+    private ?string $clientSellAmountFrom = null;
+    private ?string $clientSellAmountTo = null;
+    private ?string $partnerBuyAmountFrom = null;
+    private ?string $partnerBuyAmountTo = null;
+    private ?string $partnerSellAmountFrom = null;
+    private ?string $partnerSellAmountTo = null;
+    private ?string $clientStatus = null;
+    private ?string $partnerStatus = null;
+    private ?DateTime $conversionDateFrom = null;
+    private ?DateTime $conversionDateTo = null;
+    private ?DateTime $settlementDateFrom = null;
+    private ?DateTime $settlementDateTo = null;
+    private ?DateTime $createdAtFrom = null;
+    private ?DateTime $createdAtTo = null;
+    private ?DateTime $updatedAtFrom = null;
+    private ?DateTime $updatedAtTo = null;
+    private ?string $uniqueRequestId = null;
+    private ?string $scope = null;
 
-    /**
-     * @return string
-     */
-    public function getOnBehalfOf()
+    public function getOnBehalfOf(): ?string
     {
         return $this->onBehalfOf;
     }
 
-    /**
-     * @param string $onBehalfOf
-     * @return $this
-     */
-    public function setOnBehalfOf($onBehalfOf)
+    public function setOnBehalfOf(?string $onBehalfOf): self
     {
         $this->onBehalfOf = $onBehalfOf;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return $this
-     *
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBuyCurrency()
+    public function getBuyCurrency(): ?string
     {
         return $this->buyCurrency;
     }
 
-    /**
-     * @param string $buyCurrency
-     * @return $this
-     */
-    public function setBuyCurrency($buyCurrency)
+    public function setBuyCurrency(?string $buyCurrency): self
     {
         $this->buyCurrency = $buyCurrency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSellCurrency()
+    public function getSellCurrency(): ?string
     {
         return $this->sellCurrency;
     }
 
-    /**
-     * @param string $sellCurrency
-     * @return $this
-     */
-    public function setSellCurrency($sellCurrency)
+    public function setSellCurrency(?string $sellCurrency): self
     {
         $this->sellCurrency = $sellCurrency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientBuyAmountFrom()
+    public function getClientBuyAmountFrom(): ?string
     {
         return $this->clientBuyAmountFrom;
     }
 
-    /**
-     * @param string $clientBuyAmountFrom
-     * @return $this
-     */
-    public function setClientBuyAmountFrom($clientBuyAmountFrom)
+    public function setClientBuyAmountFrom(?string $clientBuyAmountFrom): self
     {
         $this->clientBuyAmountFrom = $clientBuyAmountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientBuyAmountTo()
+    public function getClientBuyAmountTo(): ?string
     {
         return $this->clientBuyAmountTo;
     }
 
-    /**
-     * @param string $clientBuyAmountTo
-     * @return $this
-     */
-    public function setClientBuyAmountTo($clientBuyAmountTo)
+    public function setClientBuyAmountTo(?string $clientBuyAmountTo): self
     {
         $this->clientBuyAmountTo = $clientBuyAmountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSellAmountFrom()
+    public function getClientSellAmountFrom(): ?string
     {
         return $this->clientSellAmountFrom;
     }
 
-    /**
-     * @param string $clientSellAmountFrom
-     * @return $this
-     */
-    public function setClientSellAmountFrom($clientSellAmountFrom)
+    public function setClientSellAmountFrom(?string $clientSellAmountFrom): self
     {
         $this->clientSellAmountFrom = $clientSellAmountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSellAmountTo()
+    public function getClientSellAmountTo(): ?string
     {
         return $this->clientSellAmountTo;
     }
 
-    /**
-     * @param string $clientSellAmountTo
-     * @return $this
-     */
-    public function setClientSellAmountTo($clientSellAmountTo)
+    public function setClientSellAmountTo(?string $clientSellAmountTo): self
     {
         $this->clientSellAmountTo = $clientSellAmountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerBuyAmountFrom()
+    public function getPartnerBuyAmountFrom(): ?string
     {
         return $this->partnerBuyAmountFrom;
     }
 
-    /**
-     * @param string $partnerBuyAmountFrom
-     * @return $this
-     */
-    public function setPartnerBuyAmountFrom($partnerBuyAmountFrom)
+    public function setPartnerBuyAmountFrom(?string $partnerBuyAmountFrom): self
     {
         $this->partnerBuyAmountFrom = $partnerBuyAmountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerBuyAmountTo()
+    public function getPartnerBuyAmountTo(): ?string
     {
         return $this->partnerBuyAmountTo;
     }
 
-    /**
-     * @param string $partnerBuyAmountTo
-     * @return $this
-     */
-    public function setPartnerBuyAmountTo($partnerBuyAmountTo)
+    public function setPartnerBuyAmountTo(?string $partnerBuyAmountTo): self
     {
         $this->partnerBuyAmountTo = $partnerBuyAmountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerSellAmountFrom()
+    public function getPartnerSellAmountFrom(): ?string
     {
         return $this->partnerSellAmountFrom;
     }
 
-    /**
-     * @param string $partnerSellAmountFrom
-     * @return $this
-     */
-    public function setPartnerSellAmountFrom($partnerSellAmountFrom)
+    public function setPartnerSellAmountFrom(?string $partnerSellAmountFrom): self
     {
         $this->partnerSellAmountFrom = $partnerSellAmountFrom;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerSellAmountTo()
+    public function getPartnerSellAmountTo(): ?string
     {
         return $this->partnerSellAmountTo;
     }
 
-    /**
-     * @param string $partnerSellAmountTo
-     * @return $this
-     */
-    public function setPartnerSellAmountTo($partnerSellAmountTo)
+    public function setPartnerSellAmountTo(?string $partnerSellAmountTo): self
     {
         $this->partnerSellAmountTo = $partnerSellAmountTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientStatus()
+    public function getClientStatus(): ?string
     {
         return $this->clientStatus;
     }
 
-    /**
-     * @param string $clientStatus
-     * @return $this
-     */
-    public function setClientStatus($clientStatus)
+    public function setClientStatus(?string $clientStatus): self
     {
         $this->clientStatus = $clientStatus;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerStatus()
+    public function getPartnerStatus(): ?string
     {
         return $this->partnerStatus;
     }
 
-    /**
-     * @param string $partnerStatus
-     * @return $this
-     */
-    public function setPartnerStatus($partnerStatus)
+    public function setPartnerStatus(?string $partnerStatus): self
     {
         $this->partnerStatus = $partnerStatus;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getConversionDateFrom()
+    public function getConversionDateFrom(): ?DateTime
     {
         return $this->conversionDateFrom;
     }
 
-    /**
-     * @param mixed $conversionDateFrom
-     * @return $this
-     */
-    public function setConversionDateFrom($conversionDateFrom)
+    public function setConversionDateFrom(?DateTime $conversionDateFrom): self
     {
         $this->conversionDateFrom = $conversionDateFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getConversionDateTo()
+    public function getConversionDateTo(): ?DateTime
     {
         return $this->conversionDateTo;
     }
 
-    /**
-     * @param mixed $conversionDateTo
-     * @return $this
-     *
-     */
-    public function setConversionDateTo($conversionDateTo)
+    public function setConversionDateTo(?DateTime $conversionDateTo): self
     {
         $this->conversionDateTo = $conversionDateTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getSettlementDateFrom()
+    public function getSettlementDateFrom(): ?DateTime
     {
         return $this->settlementDateFrom;
     }
 
-    /**
-     * @param mixed $settlementDateFrom
-     * @return $this
-     */
-    public function setSettlementDateFrom($settlementDateFrom)
+    public function setSettlementDateFrom(?DateTime $settlementDateFrom): self
     {
         $this->settlementDateFrom = $settlementDateFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getSettlementDateTo()
+    public function getSettlementDateTo(): ?DateTime
     {
         return $this->settlementDateTo;
     }
 
-    /**
-     * @param mixed $settlementDateTo
-     * @return $this
-     */
-    public function setSettlementDateTo($settlementDateTo)
+    public function setSettlementDateTo(?DateTime $settlementDateTo): self
     {
         $this->settlementDateTo = $settlementDateTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtFrom()
+    public function getCreatedAtFrom(): ?DateTime
     {
         return $this->createdAtFrom;
     }
 
-    /**
-     * @param mixed $createdAtFrom
-     * @return $this
-     */
-    public function setCreatedAtFrom($createdAtFrom)
+    public function setCreatedAtFrom(?DateTime $createdAtFrom): self
     {
         $this->createdAtFrom = $createdAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getCreatedAtTo()
+    public function getCreatedAtTo(): ?DateTime
     {
         return $this->createdAtTo;
     }
 
-    /**
-     * @param mixed $createdAtTo
-     * @return $this
-     */
-    public function setCreatedAtTo($createdAtTo)
+    public function setCreatedAtTo(?DateTime $createdAtTo): self
     {
         $this->createdAtTo = $createdAtTo;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtFrom()
+    public function getUpdatedAtFrom(): ?DateTime
     {
         return $this->updatedAtFrom;
     }
 
-    /**
-     * @param mixed $updatedAtFrom
-     * @return $this
-     */
-    public function setUpdatedAtFrom($updatedAtFrom)
+    public function setUpdatedAtFrom(?DateTime $updatedAtFrom): self
     {
         $this->updatedAtFrom = $updatedAtFrom;
+
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getUpdatedAtTo()
+    public function getUpdatedAtTo(): ?DateTime
     {
         return $this->updatedAtTo;
     }
 
-    /**
-     * @param mixed $updatedAtTo
-     * @return $this
-     */
-    public function setUpdatedAtTo($updatedAtTo)
+    public function setUpdatedAtTo(?DateTime $updatedAtTo): self
     {
         $this->updatedAtTo = $updatedAtTo;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUniqueRequestId()
+    public function getUniqueRequestId(): ?string
     {
         return $this->uniqueRequestId;
     }
 
-    /**
-     * @param string $uniqueRequestId
-     * @return $this
-     */
-    public function setUniqueRequestId($uniqueRequestId)
+    public function setUniqueRequestId(?string $uniqueRequestId): self
     {
         $this->uniqueRequestId = $uniqueRequestId;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getScope()
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @param string $scope
-     * @return $this
-     */
-    public function setScope($scope)
+    public function setScope(?string $scope): self
     {
         $this->scope = $scope;
+
         return $this;
     }
-    
 }

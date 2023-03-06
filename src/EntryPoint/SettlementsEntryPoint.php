@@ -8,32 +8,22 @@ use CurrencyCloud\Model\Settlement;
 use CurrencyCloud\Model\SettlementEntry;
 use CurrencyCloud\Model\Settlements;
 use DateTime;
+use DateTimeInterface;
 use stdClass;
 
 class SettlementsEntryPoint extends AbstractEntityEntryPoint
 {
 
-    /**
-     * @param null|string $type
-     * @param null|string $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function create($type = null, $onBehalfOf = null)
+    public function create(string $type = null, string $onBehalfOf = null): Settlement
     {
-        return $this->doCreate('settlements/create', $type, function ($type) {
+        return $this->doCreate('settlements/create', $type, function($type) {
             return ['type' => $type];
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createSettlementFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Settlement
-     */
-    protected function createSettlementFromResponse(stdClass $response)
+    protected function createSettlementFromResponse(stdClass $response): Settlement
     {
         $entries = [];
         foreach ($response->entries as $temp) {
@@ -47,7 +37,7 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
         $settlement = new Settlement();
         $settlement->setShortReference($response->short_reference)
             ->setStatus($response->status)
-            ->setType(isset($response->type) ? $response->type : null)
+            ->setType($response->type ?? null)
             ->setConversionIds($response->conversion_ids)
             ->setEntries($entries)
             ->setCreatedAt(new DateTime($response->created_at))
@@ -55,43 +45,25 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
             ->setReleasedAt($response->released_at ? new DateTime($response->released_at) : null);
 
         $this->setIdProperty($settlement, $response->id);
+
         return $settlement;
     }
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Settlement
     {
-        return $this->doRetrieve(sprintf('settlements/%s', $id), function (stdClass $response) {
+        return $this->doRetrieve(sprintf('settlements/%s', $id), function(stdClass $response) {
             return $this->createSettlementFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param Settlement $settlement
-     * @param null|string $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function delete(Settlement $settlement, $onBehalfOf = null)
+    public function delete(Settlement $settlement, string $onBehalfOf = null): Settlement
     {
-        return $this->doDelete(sprintf('settlements/%s/delete', $settlement->getId()), $settlement, function (stdClass $response) {
+        return $this->doDelete(sprintf('settlements/%s/delete', $settlement->getId()), $settlement, function(stdClass $response) {
             return $this->createSettlementFromResponse($response);
         }, $onBehalfOf);
     }
 
-    /**
-     * @param string $settlementId
-     * @param string $conversionId
-     * @param null $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function addConversion($settlementId, $conversionId, $onBehalfOf = null)
+    public function addConversion(string $settlementId, string $conversionId, string $onBehalfOf = null): Settlement
     {
         $response = $this->request(
             'POST',
@@ -99,21 +71,14 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
             [],
             [
                 'conversion_id' => $conversionId,
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createSettlementFromResponse($response);
     }
 
-    /**
-     * @param string $settlementId
-     * @param string $conversionId
-     * @param null $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function removeConversion($settlementId, $conversionId, $onBehalfOf = null)
+    public function removeConversion(string $settlementId, string $conversionId, string $onBehalfOf = null): Settlement
     {
         $response = $this->request(
             'POST',
@@ -121,94 +86,70 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
             [],
             [
                 'conversion_id' => $conversionId,
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createSettlementFromResponse($response);
     }
 
-    /**
-     * @param string $id
-     * @param null $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function release($id, $onBehalfOf = null)
+    public function release(string $id, string $onBehalfOf = null): Settlement
     {
         $response = $this->request(
             'POST',
             sprintf('settlements/%s/release', $id),
             [],
             [
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createSettlementFromResponse($response);
     }
 
-    /**
-     * @param string $id
-     * @param null $onBehalfOf
-     *
-     * @return Settlement
-     */
-    public function unRelease($id, $onBehalfOf = null)
+    public function unRelease(string $id, string $onBehalfOf = null): Settlement
     {
         $response = $this->request(
             'POST',
             sprintf('settlements/%s/unrelease', $id),
             [],
             [
-                'on_behalf_of' => $onBehalfOf
+                'on_behalf_of' => $onBehalfOf,
             ]
         );
 
         return $this->createSettlementFromResponse($response);
     }
 
-    /**
-     * @param null|string $shortReference
-     * @param null|string $status
-     * @param FindSettlementsCriteria|null $criteria
-     * @param Pagination|null $pagination
-     * @param null $onBehalfOf
-     *
-     * @return Settlements
-     */
     public function find(
-        $shortReference = null,
-        $status = null,
+        string $shortReference = null,
+        string $status = null,
         FindSettlementsCriteria $criteria = null,
         Pagination $pagination = null,
         $onBehalfOf = null
-    ) {
+    ): Settlements
+    {
         if (null === $criteria) {
             $criteria = new FindSettlementsCriteria();
         }
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('settlements/find', $criteria, $pagination, function ($criteria, $onBehalfOf) use ($shortReference, $status) {
+
+        return $this->doFind('settlements/find', $criteria, $pagination, function($criteria, $onBehalfOf) use ($shortReference, $status) {
             return $this->convertFindSettlementsCriteriaToRequest($criteria) + [
-                'short_reference' => $shortReference,
-                'status' => $status,
-                'on_behalf_of' => $onBehalfOf
-            ];
-        }, function (stdClass $response) {
+                    'short_reference' => $shortReference,
+                    'status' => $status,
+                    'on_behalf_of' => $onBehalfOf,
+                ];
+        }, function(stdClass $response) {
             return $this->createSettlementFromResponse($response);
-        }, function ($items, $pagination) {
+        }, function($items, $pagination) {
             return new Settlements($items, $pagination);
         }, 'settlements', $onBehalfOf);
     }
 
-    /**
-     * @param FindSettlementsCriteria $criteria
-     *
-     * @return array
-     */
-    private function convertFindSettlementsCriteriaToRequest(FindSettlementsCriteria $criteria)
+    private function convertFindSettlementsCriteriaToRequest(FindSettlementsCriteria $criteria): array
     {
         $createdAtFrom = $criteria->getCreatedAtFrom();
         $createdAtTo = $criteria->getCreatedAtTo();
@@ -216,13 +157,14 @@ class SettlementsEntryPoint extends AbstractEntityEntryPoint
         $updatedAtTo = $criteria->getUpdatedAtTo();
         $releasedAtFrom = $criteria->getReleasedAtFrom();
         $releasedAtTo = $criteria->getReleasedAtTo();
+
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTime::ISO8601),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTime::ISO8601),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTime::ISO8601),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTime::ISO8601),
-            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTime::ISO8601),
-            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTime::ISO8601)
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTimeInterface::ATOM),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTimeInterface::ATOM),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTimeInterface::ATOM),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTimeInterface::ATOM),
+            'released_at_from' => (null === $releasedAtFrom) ? null : $releasedAtFrom->format(DateTimeInterface::ATOM),
+            'released_at_to' => (null === $releasedAtTo) ? null : $releasedAtTo->format(DateTimeInterface::ATOM),
         ];
     }
 }

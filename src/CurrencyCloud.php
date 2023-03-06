@@ -26,102 +26,30 @@ use CurrencyCloud\EntryPoint\VansEntryPoint;
 use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
-use InvalidArgumentException;
-use LogicException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CurrencyCloud
 {
-    /**
-     * @var ReferenceEntryPoint
-     */
-    private $referenceEntryPoint;
-    /**
-     * @var Session
-     */
-    private $session;
-    /**
-     * @var AuthenticateEntryPoint
-     */
-    private $authenticateEntryPoint;
-    /**
-     * @var AccountsEntryPoint
-     */
-    private $accountsEntryPoint;
-    /**
-     * @var BalancesEntryPoint
-     */
-    private $balancesEntryPoint;
-    /**
-     * @var BeneficiariesEntryPoint
-     */
-    private $beneficiariesEntryPoint;
-    /**
-     * @var TransactionsEntryPoint
-     */
-    private $transactionsEntryPoint;
-    /**
-     * @var RatesEntryPoint
-     */
-    private $ratesEntryPoint;
-    /**
-     * @var PayersEntryPoint
-     */
-    private $payersEntryPoint;
-    /**
-     * @var IbansEntryPoint
-     */
-    private $ibansEntryPoint;
-    /**
-     * @var ConversionsEntryPoint
-     */
-    private $conversionsEntryPoint;
-    /**
-     * @var ContactsEntryPoint
-     */
-    private $contactsEntryPoint;
-    /**
-     * @var PaymentsEntryPoint
-     */
-    private $paymentsEntryPoint;
-    /**
-     * @var ReportsEntryPoint
-     */
-    private $reportsEntryPoint;
-    /**
-     * @var SettlementsEntryPoint
-     */
-    private $settlementsEntryPoint;
-    /**
-     * @var TransfersEntryPoint
-     */
-    private $transfersEntryPoint;
-    /**
-     * @var VansEntryPoint
-     */
-    private $vansEntryPoint;
+    private ReferenceEntryPoint $referenceEntryPoint;
+    private Session $session;
+    private AuthenticateEntryPoint $authenticateEntryPoint;
+    private AccountsEntryPoint $accountsEntryPoint;
+    private BalancesEntryPoint $balancesEntryPoint;
+    private BeneficiariesEntryPoint $beneficiariesEntryPoint;
+    private TransactionsEntryPoint $transactionsEntryPoint;
+    private RatesEntryPoint $ratesEntryPoint;
+    private PayersEntryPoint $payersEntryPoint;
+    private IbansEntryPoint $ibansEntryPoint;
+    private ConversionsEntryPoint $conversionsEntryPoint;
+    private ContactsEntryPoint $contactsEntryPoint;
+    private PaymentsEntryPoint $paymentsEntryPoint;
+    private ReportsEntryPoint $reportsEntryPoint;
+    private SettlementsEntryPoint $settlementsEntryPoint;
+    private TransfersEntryPoint $transfersEntryPoint;
+    private VansEntryPoint $vansEntryPoint;
 
-    public static $SDK_VERSION = "1.5.2";
+    public static string $SDK_VERSION = "1.5.2";
 
-    /**
-     * @param Session $session
-     * @param AuthenticateEntryPoint $authenticateEntryPoint
-     * @param AccountsEntryPoint $accountsEntryPoint
-     * @param BalancesEntryPoint $balancesEntryPoint
-     * @param BeneficiariesEntryPoint $beneficiariesEntryPoint
-     * @param ContactsEntryPoint $contactsEntryPoint
-     * @param ConversionsEntryPoint $conversionsEntryPoint
-     * @param PayersEntryPoint $payersEntryPoint
-     * @param IbansEntryPoint $ibansEntryPoint
-     * @param PaymentsEntryPoint $paymentsEntryPoint
-     * @param ReferenceEntryPoint $referenceEntryPoint
-     * @param ReportsEntryPoint $reportsEntryPoint
-     * @param RatesEntryPoint $ratesEntryPoint
-     * @param SettlementsEntryPoint $settlementsEntryPoint
-     * @param TransactionsEntryPoint $transactionsEntryPoint
-     * @param TransfersEntryPoint $transfersEntryPoint
-     * @param VansEntryPoint $vanEntryPoint
-     */
     public function __construct(
         Session $session,
         AuthenticateEntryPoint $authenticateEntryPoint,
@@ -160,13 +88,7 @@ class CurrencyCloud
         $this->vansEntryPoint = $vanEntryPoint;
     }
 
-    /**
-     * @param Session $session
-     * @param Client|null $client
-     *
-     * @return CurrencyCloud
-     */
-    public static function createDefault(Session $session, Client $client = null)
+    public static function createDefault(Session $session, Client $client = null): CurrencyCloud
     {
         if (null === $client) {
             $eventDispatcher = new EventDispatcher();
@@ -214,156 +136,98 @@ class CurrencyCloud
         );
     }
 
-    /**
-     * @return AuthenticateEntryPoint
-     */
-    public function authenticate()
+    public function authenticate(): AuthenticateEntryPoint
     {
         return $this->authenticateEntryPoint;
     }
 
-    /**
-     * @return AccountsEntryPoint
-     */
-    public function accounts()
+    public function accounts(): AccountsEntryPoint
     {
         return $this->accountsEntryPoint;
     }
 
-    /**
-     * @return BalancesEntryPoint
-     */
-    public function balances()
+    public function balances(): BalancesEntryPoint
     {
         return $this->balancesEntryPoint;
     }
 
-    /**
-     * @return BeneficiariesEntryPoint
-     */
-    public function beneficiaries()
+    public function beneficiaries(): BeneficiariesEntryPoint
     {
         return $this->beneficiariesEntryPoint;
     }
 
-    /**
-     * @return ContactsEntryPoint
-     */
-    public function contacts()
+    public function contacts(): ContactsEntryPoint
     {
         return $this->contactsEntryPoint;
     }
 
-    /**
-     * @return ConversionsEntryPoint
-     */
-    public function conversions()
+    public function conversions(): ConversionsEntryPoint
     {
         return $this->conversionsEntryPoint;
     }
 
-    /**
-     * @return PayersEntryPoint
-     */
-    public function payers()
+    public function payers(): PayersEntryPoint
     {
         return $this->payersEntryPoint;
     }
 
-    /**
-     * @return IbansEntryPoint
-     */
-    public function ibans()
+    public function ibans(): IbansEntryPoint
     {
         return $this->ibansEntryPoint;
     }
 
-    /**
-     * @return PaymentsEntryPoint
-     */
-    public function payments()
+    public function payments(): PaymentsEntryPoint
     {
         return $this->paymentsEntryPoint;
     }
 
-    /**
-     * @return ReferenceEntryPoint
-     */
-    public function reference()
+    public function reference(): ReferenceEntryPoint
     {
         return $this->referenceEntryPoint;
     }
 
-    /**
-     * @return ReportsEntryPoint
-     */
-    public function reports()
+    public function reports(): ReportsEntryPoint
     {
         return $this->reportsEntryPoint;
     }
 
-    /**
-     * @return RatesEntryPoint
-     */
-    public function rates()
+    public function rates(): RatesEntryPoint
     {
         return $this->ratesEntryPoint;
     }
 
-    /**
-     * @return SettlementsEntryPoint
-     */
-    public function settlements()
+    public function settlements(): SettlementsEntryPoint
     {
         return $this->settlementsEntryPoint;
     }
 
-    /**
-     * @return TransactionsEntryPoint
-     */
-    public function transactions()
+    public function transactions(): TransactionsEntryPoint
     {
         return $this->transactionsEntryPoint;
     }
 
-    /**
-     * @return TransfersEntryPoint
-     */
-    public function transfers()
+    public function transfers(): TransfersEntryPoint
     {
         return $this->transfersEntryPoint;
     }
 
-    /**
-     * @return VansEntryPoint
-     */
-    public function vans()
+    public function vans(): VansEntryPoint
     {
         return $this->vansEntryPoint;
     }
 
-    /**
-     * @param $contactId
-     * @param callable $callable
-     *
-     * @throws InvalidArgumentException When contact ID is not UUID
-     * @throws LogicException If already in on-behalf-of call
-     */
-    public function onBehalfOf($contactId, callable $callable)
+    public function onBehalfOf(string $contactId, callable $callable): void
     {
         $this->session->setOnBehalfOf($contactId);
 
         try {
-            call_user_func($callable, $this);
+            $callable($this);
         } finally {
             $this->session->clearOnBehalfOf();
         }
     }
 
-    /**
-     * @return Session
-     */
-    public function getSession()
+    public function getSession(): Session
     {
         return $this->session;
     }

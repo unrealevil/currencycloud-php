@@ -6,870 +6,451 @@ use DateTimeInterface;
 
 class Beneficiary implements EntityInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private ?string $id = null;
+    private ?array $paymentTypes = null;
+    private ?string $bankCountry = null;
+    private ?string $bankName = null;
+    private ?string $currency = null;
+    private ?string $accountNumber = null;
+    private ?string $iban = null;
+    private ?array $bankAddress = null;
+    private ?string $bicSwift = null;
+    private ?string $creatorContactId = null;
+    private ?string $bankAccountType = null;
+    private ?string $beneficiaryCountry = null;
+    private ?string $beneficiaryEntityType = null;
+    private ?string $beneficiaryCompanyName = null;
+    private ?string $beneficiaryFirstName = null;
+    private ?string $beneficiaryLastName = null;
+    private ?string $beneficiaryCity = null;
+    private ?string $beneficiaryPostCode = null;
+    private ?string $beneficiaryStateOrProvince = null;
+    private ?DateTimeInterface $beneficiaryDateOfBirth = null;
+    private ?string $beneficiaryIdentificationType = null;
+    private ?string $beneficiaryIdentificationValue = null;
+    private ?string $beneficiaryExternalReference = null;
+    private ?bool $isDefaultBeneficiary = null;
+    private ?string $routingCodeType1 = null;
+    private ?string $routingCodeValue1 = null;
+    private ?string $routingCodeType2 = null;
+    private ?string $routingCodeValue2 = null;
+    private ?string $beneficiaryAddress = null;
+    private ?string $bankAccountHolderName = null;
+    private ?string $name = null;
+    private ?string $email = null;
+    private ?DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var array
-     */
-    private $paymentTypes;
-
-    /**
-     * @var string
-     */
-    private $bankCountry;
-
-    /**
-     * @var string
-     */
-    private $bankName;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @var string
-     */
-    private $accountNumber;
-
-    /**
-     * @var string
-     */
-    private $iban;
-
-    /**
-     * @var array
-     */
-    private $bankAddress;
-
-    /**
-     * @var string
-     */
-    private $bicSwift;
-
-    /**
-     * @var string
-     */
-    private $creatorContactId;
-
-    /**
-     * @var string
-     */
-    private $bankAccountType;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryCountry;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryEntityType;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryCompanyName;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryFirstName;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryLastName;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryCity;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryPostCode;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryStateOrProvince;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $beneficiaryDateOfBirth;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryIdentificationType;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryIdentificationValue;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryExternalReference;
-
-    /**
-     * @var boolean
-     */
-    private $isDefaultBeneficiary;
-
-    /**
-     * @var string
-     */
-    private $routingCodeType1;
-
-    /**
-     * @var string
-     */
-    private $routingCodeValue1;
-
-    /**
-     * @var string
-     */
-    private $routingCodeType2;
-
-    /**
-     * @var string
-     */
-    private $routingCodeValue2;
-
-    /**
-     * @var string
-     */
-    private $beneficiaryAddress;
-
-    /**
-     * @var string
-     */
-    private $bankAccountHolderName;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $updatedAt;
-
-    /**
-     * Since PHP can not have two distinct constructors, this is easy to implement variant using static method
-     *
-     * @param string $bankCountry
-     * @param string $currency
-     * @param string $beneficiaryCountry
-     *
-     * @return Beneficiary
-     */
-    public static function createForValidate($bankCountry, $currency, $beneficiaryCountry)
+    public static function createForValidate(string $bankCountry, string $currency, string $beneficiaryCountry): Beneficiary
     {
-        return (new Beneficiary())->setBankCountry($bankCountry)
+        return (new self())->setBankCountry($bankCountry)
             ->setCurrency($currency)
             ->setBeneficiaryCountry($beneficiaryCountry);
     }
 
-    /**
-     * @param $bankAccountHolderName
-     * @param $bankCountry
-     * @param $currency
-     * @param $name
-     *
-     * @return Beneficiary
-     */
-    public static function create($bankAccountHolderName, $bankCountry, $currency, $name)
+    public static function create(?string $bankAccountHolderName, ?string $bankCountry, ?string $currency, ?string $name): Beneficiary
     {
-        return (new Beneficiary())->setBankAccountHolderName($bankAccountHolderName)
+        return (new self())->setBankAccountHolderName($bankAccountHolderName)
             ->setBankCountry($bankCountry)
             ->setCurrency($currency)
             ->setName($name);
     }
 
-    /**
-     * @return array
-     */
-    public function getPaymentTypes()
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getPaymentTypes(): ?array
     {
         return $this->paymentTypes;
     }
 
-    /**
-     * @param array $paymentTypes
-     *
-     * @return $this
-     */
-    public function setPaymentTypes(array $paymentTypes)
+    public function setPaymentTypes(?array $paymentTypes): self
     {
         $this->paymentTypes = $paymentTypes;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountry()
+    public function getBankCountry(): ?string
     {
         return $this->bankCountry;
     }
 
-    /**
-     * @param string $bankCountry
-     *
-     * @return $this
-     */
-    public function setBankCountry($bankCountry)
+    public function setBankCountry(?string $bankCountry): self
     {
-        $this->bankCountry = (string) $bankCountry;
+        $this->bankCountry = $bankCountry;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankName()
+    public function getBankName(): ?string
     {
         return $this->bankName;
     }
 
-    /**
-     * @param string $bankName
-     *
-     * @return $this
-     */
-    public function setBankName($bankName)
+    public function setBankName(?string $bankName): self
     {
-        $this->bankName = (string) $bankName;
+        $this->bankName = $bankName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     *
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(?string $currency): self
     {
-        $this->currency = (string) $currency;
+        $this->currency = $currency;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
-    /**
-     * @param string $accountNumber
-     *
-     * @return $this
-     */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(?string $accountNumber): self
     {
-        $this->accountNumber = (string) $accountNumber;
+        $this->accountNumber = $accountNumber;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIban()
+    public function getIban(): ?string
     {
         return $this->iban;
     }
 
-    /**
-     * @param string $iban
-     *
-     * @return $this
-     */
-    public function setIban($iban)
+    public function setIban(?string $iban): self
     {
-        $this->iban = (string) $iban;
+        $this->iban = $iban;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getBankAddress()
+    public function getBankAddress(): ?array
     {
         return $this->bankAddress;
     }
 
-    /**
-     * @param array $bankAddress
-     *
-     * @return $this
-     */
-    public function setBankAddress(array $bankAddress = null)
+    public function setBankAddress(?array $bankAddress): self
     {
         $this->bankAddress = $bankAddress;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBicSwift()
+    public function getBicSwift(): ?string
     {
         return $this->bicSwift;
     }
 
-    /**
-     * @param string $bicSwift
-     *
-     * @return $this
-     */
-    public function setBicSwift($bicSwift)
+    public function setBicSwift(?string $bicSwift): self
     {
-        $this->bicSwift = (string) $bicSwift;
+        $this->bicSwift = $bicSwift;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankAccountType()
+    public function getCreatorContactId(): ?string
+    {
+        return $this->creatorContactId;
+    }
+
+    public function setCreatorContactId(?string $creatorContactId): self
+    {
+        $this->creatorContactId = $creatorContactId;
+
+        return $this;
+    }
+
+    public function getBankAccountType(): ?string
     {
         return $this->bankAccountType;
     }
 
-    /**
-     * @param string $bankAccountType
-     *
-     * @return $this
-     */
-    public function setBankAccountType($bankAccountType)
+    public function setBankAccountType(?string $bankAccountType): self
     {
-        $this->bankAccountType = (string) $bankAccountType;
+        $this->bankAccountType = $bankAccountType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryCountry()
+    public function getBeneficiaryCountry(): ?string
     {
         return $this->beneficiaryCountry;
     }
 
-    /**
-     * @param string $beneficiaryCountry
-     *
-     * @return $this
-     */
-    public function setBeneficiaryCountry($beneficiaryCountry)
+    public function setBeneficiaryCountry(?string $beneficiaryCountry): self
     {
-        $this->beneficiaryCountry = (string) $beneficiaryCountry;
+        $this->beneficiaryCountry = $beneficiaryCountry;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryEntityType()
+    public function getBeneficiaryEntityType(): ?string
     {
         return $this->beneficiaryEntityType;
     }
 
-    /**
-     * @param string $beneficiaryEntityType
-     *
-     * @return $this
-     */
-    public function setBeneficiaryEntityType($beneficiaryEntityType)
+    public function setBeneficiaryEntityType(?string $beneficiaryEntityType): self
     {
-        $this->beneficiaryEntityType = (string) $beneficiaryEntityType;
+        $this->beneficiaryEntityType = $beneficiaryEntityType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryCompanyName()
+    public function getBeneficiaryCompanyName(): ?string
     {
         return $this->beneficiaryCompanyName;
     }
 
-    /**
-     * @param string $beneficiaryCompanyName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryCompanyName($beneficiaryCompanyName)
+    public function setBeneficiaryCompanyName(?string $beneficiaryCompanyName): self
     {
-        $this->beneficiaryCompanyName = (string) $beneficiaryCompanyName;
+        $this->beneficiaryCompanyName = $beneficiaryCompanyName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryFirstName()
+    public function getBeneficiaryFirstName(): ?string
     {
         return $this->beneficiaryFirstName;
     }
 
-    /**
-     * @param string $beneficiaryFirstName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryFirstName($beneficiaryFirstName)
+    public function setBeneficiaryFirstName(?string $beneficiaryFirstName): self
     {
-        $this->beneficiaryFirstName = (string) $beneficiaryFirstName;
+        $this->beneficiaryFirstName = $beneficiaryFirstName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryLastName()
+    public function getBeneficiaryLastName(): ?string
     {
         return $this->beneficiaryLastName;
     }
 
-    /**
-     * @param string $beneficiaryLastName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryLastName($beneficiaryLastName)
+    public function setBeneficiaryLastName(?string $beneficiaryLastName): self
     {
-        $this->beneficiaryLastName = (string) $beneficiaryLastName;
+        $this->beneficiaryLastName = $beneficiaryLastName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryCity()
+    public function getBeneficiaryCity(): ?string
     {
         return $this->beneficiaryCity;
     }
 
-    /**
-     * @param string $beneficiaryCity
-     *
-     * @return $this
-     */
-    public function setBeneficiaryCity($beneficiaryCity)
+    public function setBeneficiaryCity(?string $beneficiaryCity): self
     {
-        $this->beneficiaryCity = (string) $beneficiaryCity;
+        $this->beneficiaryCity = $beneficiaryCity;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryPostCode()
+    public function getBeneficiaryPostCode(): ?string
     {
         return $this->beneficiaryPostCode;
     }
 
-    /**
-     * @param string $beneficiaryPostCode
-     *
-     * @return $this
-     */
-    public function setBeneficiaryPostCode($beneficiaryPostCode)
+    public function setBeneficiaryPostCode(?string $beneficiaryPostCode): self
     {
-        $this->beneficiaryPostCode = (string) $beneficiaryPostCode;
+        $this->beneficiaryPostCode = $beneficiaryPostCode;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryStateOrProvince()
+    public function getBeneficiaryStateOrProvince(): ?string
     {
         return $this->beneficiaryStateOrProvince;
     }
 
-    /**
-     * @param string $beneficiaryStateOrProvince
-     *
-     * @return $this
-     */
-    public function setBeneficiaryStateOrProvince($beneficiaryStateOrProvince)
+    public function setBeneficiaryStateOrProvince(?string $beneficiaryStateOrProvince): self
     {
-        $this->beneficiaryStateOrProvince = (string) $beneficiaryStateOrProvince;
+        $this->beneficiaryStateOrProvince = $beneficiaryStateOrProvince;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getBeneficiaryDateOfBirth()
+    public function getBeneficiaryDateOfBirth(): ?DateTimeInterface
     {
         return $this->beneficiaryDateOfBirth;
     }
 
-    /**
-     * @param DateTimeInterface|null $beneficiaryDateOfBirth
-     *
-     * @return $this
-     */
-    public function setBeneficiaryDateOfBirth(DateTimeInterface $beneficiaryDateOfBirth = null)
+    public function setBeneficiaryDateOfBirth(?DateTimeInterface $beneficiaryDateOfBirth): self
     {
         $this->beneficiaryDateOfBirth = $beneficiaryDateOfBirth;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryIdentificationType()
+    public function getBeneficiaryIdentificationType(): ?string
     {
         return $this->beneficiaryIdentificationType;
     }
 
-    /**
-     * @param string $beneficiaryIdentificationType
-     *
-     * @return $this
-     */
-    public function setBeneficiaryIdentificationType($beneficiaryIdentificationType)
+    public function setBeneficiaryIdentificationType(?string $beneficiaryIdentificationType): self
     {
-        $this->beneficiaryIdentificationType = (string) $beneficiaryIdentificationType;
+        $this->beneficiaryIdentificationType = $beneficiaryIdentificationType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryIdentificationValue()
+    public function getBeneficiaryIdentificationValue(): ?string
     {
         return $this->beneficiaryIdentificationValue;
     }
 
-    /**
-     * @param string $beneficiaryIdentificationValue
-     *
-     * @return $this
-     */
-    public function setBeneficiaryIdentificationValue($beneficiaryIdentificationValue)
+    public function setBeneficiaryIdentificationValue(?string $beneficiaryIdentificationValue): self
     {
-        $this->beneficiaryIdentificationValue = (string) $beneficiaryIdentificationValue;
+        $this->beneficiaryIdentificationValue = $beneficiaryIdentificationValue;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryExternalReference()
+    public function getBeneficiaryExternalReference(): ?string
     {
         return $this->beneficiaryExternalReference;
     }
 
-    /**
-     * @param string $beneficiaryExternalReference
-     *
-     * @return $this
-     */
-    public function setBeneficiaryExternalReference($beneficiaryExternalReference)
+    public function setBeneficiaryExternalReference(?string $beneficiaryExternalReference): self
     {
-        $this->beneficiaryExternalReference = (string) $beneficiaryExternalReference;
+        $this->beneficiaryExternalReference = $beneficiaryExternalReference;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeType1()
+    public function isDefaultBeneficiary(): ?bool
+    {
+        return $this->isDefaultBeneficiary;
+    }
+
+    public function setIsDefaultBeneficiary(?bool $isDefaultBeneficiary): self
+    {
+        $this->isDefaultBeneficiary = $isDefaultBeneficiary;
+
+        return $this;
+    }
+
+    public function getRoutingCodeType1(): ?string
     {
         return $this->routingCodeType1;
     }
 
-    /**
-     * @param string $routingCodeType1
-     *
-     * @return $this
-     */
-    public function setRoutingCodeType1($routingCodeType1)
+    public function setRoutingCodeType1(?string $routingCodeType1): self
     {
-        $this->routingCodeType1 = (string) $routingCodeType1;
+        $this->routingCodeType1 = $routingCodeType1;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeValue1()
+    public function getRoutingCodeValue1(): ?string
     {
         return $this->routingCodeValue1;
     }
 
-    /**
-     * @param string $routingCodeValue1
-     *
-     * @return $this
-     */
-    public function setRoutingCodeValue1($routingCodeValue1)
+    public function setRoutingCodeValue1(?string $routingCodeValue1): self
     {
-        $this->routingCodeValue1 = (string) $routingCodeValue1;
+        $this->routingCodeValue1 = $routingCodeValue1;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeType2()
+    public function getRoutingCodeType2(): ?string
     {
         return $this->routingCodeType2;
     }
 
-    /**
-     * @param string $routingCodeType2
-     *
-     * @return $this
-     */
-    public function setRoutingCodeType2($routingCodeType2)
+    public function setRoutingCodeType2(?string $routingCodeType2): self
     {
-        $this->routingCodeType2 = (string) $routingCodeType2;
+        $this->routingCodeType2 = $routingCodeType2;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeValue2()
+    public function getRoutingCodeValue2(): ?string
     {
         return $this->routingCodeValue2;
     }
 
-    /**
-     * @param string $routingCodeValue2
-     *
-     * @return $this
-     */
-    public function setRoutingCodeValue2($routingCodeValue2)
+    public function setRoutingCodeValue2(?string $routingCodeValue2): self
     {
-        $this->routingCodeValue2 = (string) $routingCodeValue2;
+        $this->routingCodeValue2 = $routingCodeValue2;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryAddress()
+    public function getBeneficiaryAddress(): ?string
     {
         return $this->beneficiaryAddress;
     }
 
-    /**
-     * @param string $beneficiaryAddress
-     *
-     * @return $this
-     */
-    public function setBeneficiaryAddress($beneficiaryAddress = null)
+    public function setBeneficiaryAddress(?string $beneficiaryAddress): self
     {
         $this->beneficiaryAddress = $beneficiaryAddress;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBankAccountHolderName()
+    public function getBankAccountHolderName(): ?string
     {
         return $this->bankAccountHolderName;
     }
 
-    /**
-     * @param string $bankAccountHolderName
-     *
-     * @return $this
-     */
-    public function setBankAccountHolderName($bankAccountHolderName)
+    public function setBankAccountHolderName(?string $bankAccountHolderName): self
     {
-        $this->bankAccountHolderName = (string) $bankAccountHolderName;
+        $this->bankAccountHolderName = $bankAccountHolderName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
-        $this->name = (string) $name;
+        $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
-        $this->email = (string) $email;
+        $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @param boolean $isDefaultBeneficiary
-     *
-     * @return $this
-     */
-    public function setIsDefaultBeneficiary($isDefaultBeneficiary)
-    {
-        $this->isDefaultBeneficiary = (boolean) $isDefaultBeneficiary;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDefaultBeneficiary()
-    {
-        return $this->isDefaultBeneficiary;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatorContactId()
-    {
-        return $this->creatorContactId;
-    }
-
-    /**
-     * @param string $creatorContactId
-     *
-     * @return $this
-     */
-    public function setCreatorContactId($creatorContactId)
-    {
-        $this->creatorContactId = (string) $creatorContactId;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTimeInterface $createdAt
-     *
-     * @return $this
-     */
-    public function setCreatedAt(DateTimeInterface $createdAt)
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTimeInterface $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt(DateTimeInterface $updatedAt)
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

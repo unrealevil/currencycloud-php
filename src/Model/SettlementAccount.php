@@ -4,95 +4,36 @@ namespace CurrencyCloud\Model;
 
 class SettlementAccount
 {
+    private ?string $bankAccountHolderName;
+    private string|array|null $beneficiaryAddress;
+    private ?string $beneficiaryCountry;
+    private ?string $bankName;
+    private ?array $bankAddress;
+    private ?string $bankCountry;
+    private ?string $currency;
+    private ?string $bicSwift;
+    private ?string $iban;
+    private ?string $accountNumber;
+    private ?string $routingCodeType1;
+    private ?string $routingCodeValue1;
+    private ?string $routingCodeType2;
+    private ?string $routingCodeValue2;
 
-    /**
-     * @var string
-     */
-    private $bankAccountHolderName;
-    /**
-     * @var array
-     */
-    private $beneficiaryAddress;
-    /**
-     * @var string
-     */
-    private $beneficiaryCountry;
-    /**
-     * @var string
-     */
-    private $bankName;
-    /**
-     * @var array
-     */
-    private $bankAddress;
-    /**
-     * @var string
-     */
-    private $bankCountry;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $bicSwift;
-    /**
-     * @var string
-     */
-    private $iban;
-    /**
-     * @var string
-     */
-    private $accountNumber;
-    /**
-     * @var string
-     */
-    private $routingCodeType1;
-    /**
-     * @var string
-     */
-    private $routingCodeValue1;
-    /**
-     * @var string
-     */
-    private $routingCodeType2;
-    /**
-     * @var string
-     */
-    private $routingCodeValue2;
-
-    /**
-     * @param string $bankAccountHolderName
-     * @param string $beneficiaryAddress
-     * @param string $beneficiaryCountry
-     * @param string $bankName
-     * @param array $bankAddress
-     * @param string $bankCountry
-     * @param string $currency
-     * @param string $bicSwift
-     * @param string $iban
-     * @param string $accountNumber
-     * @param string $routingCodeType1
-     * @param string $routingCodeValue1
-     * @param string $routingCodeType2
-     * @param string $routingCodeValue2
-     */
     public function __construct(
-        $bankAccountHolderName,
-        $beneficiaryAddress,
-        $beneficiaryCountry,
-        $bankName,
-        array $bankAddress,
-        $bankCountry,
-        $currency,
-        $bicSwift,
-        $iban,
-        $accountNumber,
-        $routingCodeType1,
-        $routingCodeValue1,
-        $routingCodeType2,
-        $routingCodeValue2
+        ?string $bankAccountHolderName,
+        string|array|null $beneficiaryAddress,
+        ?string $beneficiaryCountry,
+        ?string $bankName,
+        ?array $bankAddress,
+        ?string $bankCountry,
+        ?string $currency,
+        ?string $bicSwift,
+        ?string $iban,
+        ?string $accountNumber,
+        ?string $routingCodeType1,
+        ?string $routingCodeValue1,
+        ?string $routingCodeType2,
+        ?string $routingCodeValue2
     ) {
         $this->bankAccountHolderName = (string) $bankAccountHolderName;
         $this->beneficiaryAddress = (string) $beneficiaryAddress;
@@ -110,114 +51,72 @@ class SettlementAccount
         $this->routingCodeValue2 = (string) $routingCodeValue2;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankAccountHolderName()
+    public function getBankAccountHolderName(): ?string
     {
         return $this->bankAccountHolderName;
     }
 
-    /**
-     * @return array
-     */
-    public function getBeneficiaryAddress()
+    public function getBeneficiaryAddress(): array|string|null
     {
         return $this->beneficiaryAddress;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryCountry()
+    public function getBeneficiaryCountry(): ?string
     {
         return $this->beneficiaryCountry;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankName()
+    public function getBankName(): ?string
     {
         return $this->bankName;
     }
 
-    /**
-     * @return array
-     */
-    public function getBankAddress()
+    public function getBankAddress(): ?array
     {
         return $this->bankAddress;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountry()
+    public function getBankCountry(): ?string
     {
         return $this->bankCountry;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getBicSwift()
+    public function getBicSwift(): ?string
     {
         return $this->bicSwift;
     }
 
-    /**
-     * @return string
-     */
-    public function getIban()
+    public function getIban(): ?string
     {
         return $this->iban;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeType1()
+    public function getRoutingCodeType1(): ?string
     {
         return $this->routingCodeType1;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeValue1()
+    public function getRoutingCodeValue1(): ?string
     {
         return $this->routingCodeValue1;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeType2()
+    public function getRoutingCodeType2(): ?string
     {
         return $this->routingCodeType2;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeValue2()
+    public function getRoutingCodeValue2(): ?string
     {
         return $this->routingCodeValue2;
     }

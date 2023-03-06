@@ -6,15 +6,13 @@ use ArrayIterator;
 
 class Reports extends PaginatedData
 {
-
     /**
      * @var Report[]
      */
-    private $reports;
+    private array $reports;
 
     /**
      * @param Report[] $reports
-     * @param Pagination $pagination
      */
     public function __construct(array $reports, Pagination $pagination)
     {
@@ -25,7 +23,7 @@ class Reports extends PaginatedData
     /**
      * @return Report[]
      */
-    public function getReports()
+    public function getReports(): array
     {
         return $this->reports;
     }
@@ -33,7 +31,7 @@ class Reports extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->reports);
     }
@@ -41,7 +39,7 @@ class Reports extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function count()
+    public function count(): int
     {
         return count($this->reports);
     }

@@ -6,21 +6,16 @@ use OutOfBoundsException;
 
 class Rates
 {
-
     /**
      * @var Rate[]
      */
-    private $rates;
-    /**
-     * @var array
-     */
-    private $unavailable;
+    private array $rates;
+    private array $unavailable;
 
     /**
      * @param Rate[] $rates
-     * @param array $unavailable
      */
-    public function __construct(array $rates, $unavailable = [])
+    public function __construct(array $rates, array $unavailable = [])
     {
         $this->rates = $rates;
         //For faster search
@@ -30,36 +25,22 @@ class Rates
     /**
      * @return Rate[]
      */
-    public function getRates()
+    public function getRates(): array
     {
         return $this->rates;
     }
 
-    /**
-     * @return array
-     */
-    public function getUnavailable()
+    public function getUnavailable(): array
     {
         return $this->unavailable;
     }
 
-    /**
-     * @param string $pair
-     *
-     * @return bool
-     */
-    public function isRateUnavailable($pair)
+    public function isRateUnavailable(string $pair): bool
     {
         return isset($this->unavailable[$pair]);
     }
 
-    /**
-     * @param string $pair
-     *
-     * @return Rate
-     * @throws OutOfBoundsException
-     */
-    public function getRate($pair)
+    public function getRate(string $pair): Rate
     {
         if (!$this->isAvailable($pair)) {
             throw new OutOfBoundsException(sprintf('Pair "%s" not found', $pair));
@@ -67,12 +48,7 @@ class Rates
         return $this->rates[$pair];
     }
 
-    /**
-     * @param string $pair
-     *
-     * @return bool
-     */
-    public function isAvailable($pair)
+    public function isAvailable(string $pair): bool
     {
         return isset($this->rates[$pair]);
     }

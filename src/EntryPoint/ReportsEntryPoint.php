@@ -4,23 +4,15 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Criteria\ConversionReportCriteria;
 use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Criteria\FindReportsCriteria;
-use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Report;
 use CurrencyCloud\Model\Reports;
 use CurrencyCloud\Model\ReportSearchParams;
-use DateTime;
 use stdClass;
 
 class ReportsEntryPoint extends AbstractEntityEntryPoint
 {
-    /**
-     * @param ConversionReportCriteria $conversionReportCriteria
-     * @param null|string $onBehalfOf
-     *
-     * @return Report
-     */
-    public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, $onBehalfOf = null)
+    public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, string $onBehalfOf = null): Report
     {
         return $this->doCreate('reports/conversions/create', $conversionReportCriteria, function ($conversionReportCriteria) {
             return $this->convertConversionReportCriteriaToRequest($conversionReportCriteria);
@@ -29,14 +21,9 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
-    /**
-     * @param ConversionReportCriteria $conversionReportCriteria
-     *
-     * @return array
-     */
-    protected function convertConversionReportCriteriaToRequest(ConversionReportCriteria $conversionReportCriteria)
+    protected function convertConversionReportCriteriaToRequest(ConversionReportCriteria $conversionReportCriteria): array
     {
-        $common = [
+        return [
             'on_behalf_of' => $conversionReportCriteria->getOnBehalfOf(),
             'description' => $conversionReportCriteria->getDescription(),
             'buy_currency' => $conversionReportCriteria->getBuyCurrency(),
@@ -62,17 +49,9 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'unique_request_id' => $conversionReportCriteria->getUniqueRequestId(),
             'scope' => $conversionReportCriteria->getScope()
         ];
-
-        return $common;
     }
 
-    /**
-     * @param PaymentReportCriteria $paymentReportCriteria
-     * @param null|string $onBehalfOf
-     *
-     * @return Report
-     */
-    public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, $onBehalfOf = null)
+    public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, string $onBehalfOf = null): Report
     {
         return $this->doCreate('reports/payments/create', $paymentReportCriteria, function ($paymentReportCriteria) {
             return $this->convertPaymentReportCriteriaToRequest($paymentReportCriteria);
@@ -81,14 +60,9 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
-    /**
-     * @param PaymentReportCriteria $paymentReportCriteria
-     *
-     * @return array
-     */
-    protected function convertPaymentReportCriteriaToRequest(PaymentReportCriteria $paymentReportCriteria)
+    protected function convertPaymentReportCriteriaToRequest(PaymentReportCriteria $paymentReportCriteria): array
     {
-        $common = [
+        return [
             'on_behalf_of' => $paymentReportCriteria->getOnBehalfOf(),
             'description' => $paymentReportCriteria->getDescription(),
             'currency' => $paymentReportCriteria->getCurrency(),
@@ -110,24 +84,15 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'unique_request_id' => $paymentReportCriteria->getUniqueRequestId(),
             'scope' => $paymentReportCriteria->getScope()
         ];
-
-        return $common;
     }
 
-    /**
-     * @param FindReportsCriteria $findReportsCriteria
-     * @param PAgination $pagination
-     * @param null|string $onBehalfOf
-     *
-     * @return Reports
-     */
     public function findReports(
-        FindReportsCriteria $findReportsCriteria,
-        Pagination $pagination,
-        $onBehalfOf = null)
+        ?FindReportsCriteria $findReportsCriteria,
+        ?Pagination $pagination,
+        string $onBehalfOf = null): Reports
     {
         if (null === $findReportsCriteria) {
-            $report = new FindReportsCriteria();
+            $findReportsCriteria = new FindReportsCriteria();
         }
         if (null === $pagination) {
             $pagination = new Pagination();
@@ -141,14 +106,9 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         }, 'report_requests',$onBehalfOf);
     }
 
-    /**
-     * @param FindReportsCriteria $findReportsCriteria
-     *
-     * @return array
-     */
-    protected function convertFindReportsCriteriaToRequest(FindReportsCriteria $findReportsCriteria)
+    protected function convertFindReportsCriteriaToRequest(FindReportsCriteria $findReportsCriteria): array
     {
-        $common = [
+        return [
             'short_reference' => $findReportsCriteria->getShortReference(),
             'description' => $findReportsCriteria->getDescription(),
             'account_id' => $findReportsCriteria->getAccountId(),
@@ -160,17 +120,9 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'status' => $findReportsCriteria->getStatus(),
             'report_type' => $findReportsCriteria->getReportType()
         ];
-
-        return $common;
     }
 
-    /**
-     * @param string $id
-     * @param null|string $onBehalfOf
-     *
-     * @return Report
-     */
-    public function retrieve($id, $onBehalfOf = null)
+    public function retrieve(string $id, string $onBehalfOf = null): Report
     {
         return $this->doRetrieve(sprintf('reports/report_requests/%s', $id),
             function ($response) {
@@ -178,12 +130,7 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         }, $onBehalfOf);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return Report
-     */
-    protected function createReportFromResponse(stdClass $response)
+    protected function createReportFromResponse(stdClass $response): Report
     {
         $report = new Report();
 

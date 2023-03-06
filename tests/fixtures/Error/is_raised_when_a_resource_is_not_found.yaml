@@ -1,15 +1,14 @@
--
-  request:
-    method: GET
-    url: http://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
-    headers:
-      Host: devapi.currencycloud.com
-      X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
-  response:
-    status: 404
-    headers:
-      Date: Sat, 25 Apr 2015 11:16:53 GMT
-      Content-Type: application/json
-      Content-Length: '159'
-      X-Request-Id: '2772007003121723883'
-    body: '{"error_code":"beneficiary_not_found","error_messages":{"id":[{"code":"beneficiary_not_found","message":"Beneficiary was not found for this id","params":{}}]}}'
+-   request:
+        method: GET
+        url: http://devapi.currencycloud.com/v2/beneficiaries/081596c9-02de-483e-9f2a-4cf55dcdf98c
+        headers:
+            Host: devapi.currencycloud.com
+            X-Auth-Token: 038022bcd2f372cac7bab448db7b5c3b
+    response:
+        status: 404
+        headers:
+            Date: Sat, 25 Apr 2015 11:16:53 GMT
+            Content-Type: application/json
+            Content-Length: '159'
+            X-Request-Id: '2772007003121723883'
+        body: '{"error_code":"beneficiary_not_found","error_messages":{"id":[{"code":"beneficiary_not_found","message":"Beneficiary was not found for this id","params":{}}]}}'

@@ -4,196 +4,104 @@ namespace CurrencyCloud\Model;
 
 class BankDetails
 {
+    private ?string $identifierValue;
+    private ?string $identifierType;
+    private ?string $accountNumber;
+    private ?string $bicSwift;
+    private ?string $bankName;
+    private ?string $bankBranch;
+    private ?string $bankAddress;
+    private ?string $bankCity;
+    private ?string $bankState;
+    private ?string $bankPostCode;
+    private ?string $bankCountry;
+    private ?string $bankCountryISO;
+    private ?string $currency;
 
-    /**
-     * @var string
-     */
-    private $identifierValue;
-    /**
-     * @var string
-     */
-    private $identifierType;
-    /**
-     * @var string
-     */
-    private $accountNumber;
-    /**
-     * @var string
-     */
-    private $bicSwift;
-    /**
-     * @var string
-     */
-    private $bankName;
-    /**
-     * @var string
-     */
-    private $bankBranch;
-    /**
-     * @var string
-    */
-    private $bankAddress;
-    /**
-     * @var string
-     */
-    private $bankCity;
-    /**
-     * @var string
-     */
-    private $bankState;
-    /**
-     * @var string
-     */
-    private $bankPostCode;
-    /**
-     * @var string
-     */
-    private $bankCountry;
-    /**
-     * @var string
-     */
-    private $bankCountryISO;
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @param string $identifierValue
-     * @param string $identifierType
-     * @param string $accountNumber
-     * @param string $bicSwift
-     * @param string $bankName
-     * @param string $bankBranch
-     * @param string $bankAddress
-     * @param string $bankCity
-     * @param string $bankState
-     * @param string $bankPostCode
-     * @param string $bankCountry
-     * @param string $bankCountryISO
-     * @param string $currency
-     */
-    public function __construct($identifierValue, $identifierType, $accountNumber, $bicSwift, $bankName, $bankBranch,
-                                $bankAddress, $bankCity, $bankState, $bankPostCode, $bankCountry, $bankCountryISO, $currency)
+    public function __construct(
+        ?string $identifierValue,
+        ?string $identifierType, ?string $accountNumber, ?string $bicSwift, ?string $bankName, ?string $bankBranch,
+        ?string $bankAddress, ?string $bankCity, ?string $bankState, ?string $bankPostCode, ?string $bankCountry,
+        ?string $bankCountryISO, ?string $currency
+    )
     {
-        $this->identifierValue = (string)$identifierValue;
-        $this->identifierType = (string)$identifierType;
-        $this->accountNumber = (string)$accountNumber;
-        $this->bicSwift = (string)$bicSwift;
-        $this->bankName = (string)$bankName;
-        $this->bankBranch = (string)$bankBranch;
-        $this->bankAddress = (string)$bankAddress;
-        $this->bankCity = (string)$bankCity;
-        $this->bankState = (string)$bankState;
-        $this->bankPostCode = (string)$bankPostCode;
-        $this->bankCountry = (string)$bankCountry;
-        $this->bankCountryISO = (string)$bankCountryISO;
-        $this->currency = (string)$currency;
+        $this->identifierValue = (string) $identifierValue;
+        $this->identifierType = (string) $identifierType;
+        $this->accountNumber = (string) $accountNumber;
+        $this->bicSwift = (string) $bicSwift;
+        $this->bankName = (string) $bankName;
+        $this->bankBranch = (string) $bankBranch;
+        $this->bankAddress = (string) $bankAddress;
+        $this->bankCity = (string) $bankCity;
+        $this->bankState = (string) $bankState;
+        $this->bankPostCode = (string) $bankPostCode;
+        $this->bankCountry = (string) $bankCountry;
+        $this->bankCountryISO = (string) $bankCountryISO;
+        $this->currency = (string) $currency;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifierValue()
+    public function getIdentifierValue(): string
     {
         return $this->identifierValue;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifierType()
+    public function getIdentifierType(): string
     {
         return $this->identifierType;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): string
     {
         return $this->accountNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getBicSwift()
+    public function getBicSwift(): string
     {
         return $this->bicSwift;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankName()
+    public function getBankName(): string
     {
         return $this->bankName;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankBranch()
+    public function getBankBranch(): string
     {
         return $this->bankBranch;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankAddress()
+    public function getBankAddress(): string
     {
         return $this->bankAddress;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCity()
+    public function getBankCity(): string
     {
         return $this->bankCity;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankState()
+    public function getBankState(): string
     {
         return $this->bankState;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankPostCode()
+    public function getBankPostCode(): string
     {
         return $this->bankPostCode;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountry()
+    public function getBankCountry(): string
     {
         return $this->bankCountry;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountryISO()
+    public function getBankCountryISO(): string
     {
         return $this->bankCountryISO;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
-
-
 }

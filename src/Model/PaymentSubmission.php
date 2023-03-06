@@ -1,56 +1,31 @@
 <?php
 namespace CurrencyCloud\Model;
 
-class PaymentSubmission {
+class PaymentSubmission
+{
+    private ?string $status;
+    private ?string $mt103;
+    private ?string $submission_ref;
 
-    /**
-     * @var string
-     */
-    private $status;
-    /**
-     * @var string
-     */
-    private $mt103;
-    /**
-     * @var string
-     */
-    private $submission_ref;
-
-    /**
-     * PaymentSubmission constructor.
-     * @param string $status
-     * @param string $mt103
-     * @param string $submission_ref
-     */
-    public function __construct($status, $mt103, $submission_ref)
+    public function __construct(?string $status, ?string $mt103, ?string $submission_ref)
     {
         $this->status = $status;
         $this->mt103 = $mt103;
         $this->submission_ref = $submission_ref;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
-    public function getMt103()
+    public function getMt103(): ?string
     {
         return $this->mt103;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubmissionRef()
+    public function getSubmissionRef(): ?string
     {
         return $this->submission_ref;
     }
-
 }

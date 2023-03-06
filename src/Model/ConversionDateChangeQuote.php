@@ -1,55 +1,21 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class ConversionDateChangeQuote {
+class ConversionDateChangeQuote
+{
+    private ?string $conversionId;
+    private ?string $amount;
+    private ?string $currency;
+    private ?DateTime $newConversionDate;
+    private ?DateTime $newSettlementDate;
+    private ?DateTime $oldConversionDate;
+    private ?DateTime $oldSettlementDate;
+    private ?DateTime $eventDateTime;
 
-    /**
-     * @var string
-     */
-    private $conversionId;
-    /**
-     * @var string
-     */
-    private $amount;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var DateTime
-     */
-    private $newConversionDate;
-    /**
-     * @var DateTime
-     */
-    private $newSettlementDate;
-    /**
-     * @var DateTime
-     */
-    private $oldConversionDate;
-    /**
-     * @var DateTime
-     */
-    private $oldSettlementDate;
-    /**
-     * @var DateTime
-     */
-    private $eventDateTime;
-
-    /**
-     * ConversionDateChangeQuote constructor.
-     * @param string $conversionId
-     * @param string $amount
-     * @param string $currency
-     * @param DateTime $newConversionDate
-     * @param DateTime $newSettlementDate
-     * @param DateTime $oldConversionDate
-     * @param DateTime $oldSettlementDate
-     * @param DateTime $eventDateTime
-     */
-    public function __construct($conversionId, $amount, $currency, DateTime $newConversionDate, DateTime $newSettlementDate, DateTime $oldConversionDate, DateTime $oldSettlementDate, DateTime $eventDateTime)
+    public function __construct(?string $conversionId, ?string $amount, ?string $currency, ?DateTime $newConversionDate, ?DateTime $newSettlementDate, ?DateTime $oldConversionDate, ?DateTime $oldSettlementDate, ?DateTime $eventDateTime)
     {
         $this->conversionId = $conversionId;
         $this->amount = $amount;
@@ -61,67 +27,99 @@ class ConversionDateChangeQuote {
         $this->eventDateTime = $eventDateTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getConversionId()
+    public function getConversionId(): ?string
     {
         return $this->conversionId;
     }
 
-    /**
-     * @return string
-     */
-    public function getAmount()
+    public function setConversionId(?string $conversionId): self
+    {
+        $this->conversionId = $conversionId;
+
+        return $this;
+    }
+
+    public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function setAmount(?string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getNewConversionDate()
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getNewConversionDate(): ?DateTime
     {
         return $this->newConversionDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getNewSettlementDate()
+    public function setNewConversionDate(?DateTime $newConversionDate): self
+    {
+        $this->newConversionDate = $newConversionDate;
+
+        return $this;
+    }
+
+    public function getNewSettlementDate(): ?DateTime
     {
         return $this->newSettlementDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getOldConversionDate()
+    public function setNewSettlementDate(?DateTime $newSettlementDate): self
+    {
+        $this->newSettlementDate = $newSettlementDate;
+
+        return $this;
+    }
+
+    public function getOldConversionDate(): ?DateTime
     {
         return $this->oldConversionDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getOldSettlementDate()
+    public function setOldConversionDate(?DateTime $oldConversionDate): self
+    {
+        $this->oldConversionDate = $oldConversionDate;
+
+        return $this;
+    }
+
+    public function getOldSettlementDate(): ?DateTime
     {
         return $this->oldSettlementDate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getEventDateTime()
+    public function setOldSettlementDate(?DateTime $oldSettlementDate): self
+    {
+        $this->oldSettlementDate = $oldSettlementDate;
+
+        return $this;
+    }
+
+    public function getEventDateTime(): ?DateTime
     {
         return $this->eventDateTime;
+    }
+
+    public function setEventDateTime(?DateTime $eventDateTime): self
+    {
+        $this->eventDateTime = $eventDateTime;
+
+        return $this;
     }
 }

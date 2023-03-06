@@ -18,8 +18,8 @@ use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\ReportsEntryPoint;
 use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
-use CurrencyCloud\EntryPoint\VansEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
+use CurrencyCloud\EntryPoint\VansEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
@@ -34,41 +34,43 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
 {
-
-    /**
-     * @param string $loginId
-     * @param string $apiKey
-     *
-     * @return CurrencyCloud
-     */
     protected function getClient(
-        $loginId = 'rjnienaber@gmail.com',
-        $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
-    ) {
+        string $loginId = 'rjnienaber@gmail.com',
+        string $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
+    ): CurrencyCloud
+    {
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
         $eventDispatcher = new EventDispatcher();
 
-        $client = new Client($session, new \GuzzleHttp\Client([
+        $client = new Client(
+            $session, new \GuzzleHttp\Client([
             'sync' => true,
-            'handler' => HandlerStack::create(new CurlHandler([
-                'handle_factory' => new CurlFactory(0)
-            ]))
-        ]), $eventDispatcher);
+            'handler' => HandlerStack::create(
+                new CurlHandler([
+                    'handle_factory' => new CurlFactory(0),
+                ])
+            ),
+        ]), $eventDispatcher
+        );
 
         $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);
 
         $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
-            new ClientHttpErrorListener(), 'onClientHttpErrorEvent'
+            new ClientHttpErrorListener(),
+            'onClientHttpErrorEvent',
         ], -255);
         $eventDispatcher->addListener(ClientHttpErrorEvent::NAME, [
-            new SessionTimeoutListener($client, $authenticateEntryPoint), 'onClientHttpErrorEvent'
+            new SessionTimeoutListener($client, $authenticateEntryPoint),
+            'onClientHttpErrorEvent',
         ], -254);
         $eventDispatcher->addListener(BeforeClientRequestEvent::NAME, [
-            new BeforeClientRequestListener($session, $authenticateEntryPoint), 'onBeforeClientRequestEvent'
+            new BeforeClientRequestListener($session, $authenticateEntryPoint),
+            'onBeforeClientRequestEvent',
         ], -255);
         $entityManager = new SimpleEntityManager();
+
         return new CurrencyCloud(
             $session,
             $authenticateEntryPoint,
@@ -90,15 +92,11 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
         );
     }
 
-    /**
-     * @param string $authToken
-     *
-     * @return CurrencyCloud
-     */
-    protected function getAuthenticatedClient($authToken = '038022bcd2f372cac7bab448db7b5c3b')
+    protected function getAuthenticatedClient(string $authToken = '038022bcd2f372cac7bab448db7b5c3b'): CurrencyCloud
     {
         $client = $this->getClient();
         $client->getSession()->setAuthToken($authToken);
+
         return $client;
     }
 }

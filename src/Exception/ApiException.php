@@ -6,47 +6,21 @@ use Exception;
 
 class ApiException extends CurrencyCloudException
 {
-    /**
-     * @var int
-     */
-    private $date;
-    /**
-     * @var string
-     */
-    private $requestId;
-    /**
-     * @var null|array
-     */
-    private $errors;
-    /**
-     * @var string
-     */
-    private $statusCode;
+    private string $date;
+    private string $requestId;
+    private ?array $errors;
+    private int $statusCode;
 
-    /**
-     * ApiException constructor.
-     *
-     * @param int $statusCode
-     * @param string $date
-     * @param string $requestId
-     * @param array|null $errors
-     * @param string $parameters
-     * @param string $httpMethod
-     * @param string $url
-     * @param string $message
-     * @param int $code
-     * @param Exception|null $previous
-     */
     public function __construct(
-        $statusCode,
-        $date,
-        $requestId,
-        $errors,
-        $parameters,
-        $httpMethod,
-        $url,
-        $message = '',
-        $code = 0,
+        int $statusCode,
+        string $date,
+        string $requestId,
+        ?array $errors,
+        ?array $parameters,
+        string $httpMethod,
+        string $url,
+        string $message = '',
+        int $code = 0,
         Exception $previous = null
     ) {
         parent::__construct(
@@ -57,13 +31,13 @@ class ApiException extends CurrencyCloudException
             $code,
             $previous
         );
-        $this->date = (string) $date;
-        $this->requestId = (string) $requestId;
+        $this->date = $date;
+        $this->requestId = $requestId;
         $this->errors = $errors;
-        $this->statusCode = (int) $statusCode;
+        $this->statusCode = $statusCode;
     }
 
-    protected function getCompileProperties()
+    protected function getCompileProperties(): array
     {
         $temp = [
             'response' => [
@@ -78,34 +52,22 @@ class ApiException extends CurrencyCloudException
         return parent::getCompileProperties() + $temp;
     }
 
-    /**
-     * @return string
-     */
-    public function getDate()
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
-    public function getRequestId()
+    public function getRequestId(): ?string
     {
         return $this->requestId;
     }
 
-    /**
-     * @return null|array
-     */
-    public function getErrors()
+    public function getErrors(): ?array
     {
         return $this->errors;
     }
 
-    /**
-     * @return int
-     */
-    public function getStatusCode()
+    public function getStatusCode(): ?int
     {
         return $this->statusCode;
     }
