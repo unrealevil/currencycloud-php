@@ -34,7 +34,7 @@ class Beneficiary implements EntityInterface
     private ?string $routingCodeValue1 = null;
     private ?string $routingCodeType2 = null;
     private ?string $routingCodeValue2 = null;
-    private ?string $beneficiaryAddress = null;
+    private ?array $beneficiaryAddress = null;
     private ?string $bankAccountHolderName = null;
     private ?string $name = null;
     private ?string $email = null;
@@ -385,12 +385,12 @@ class Beneficiary implements EntityInterface
         return $this;
     }
 
-    public function getBeneficiaryAddress(): ?string
+    public function getBeneficiaryAddress(): ?array
     {
         return $this->beneficiaryAddress;
     }
 
-    public function setBeneficiaryAddress(?string $beneficiaryAddress): self
+    public function setBeneficiaryAddress(?array $beneficiaryAddress): self
     {
         $this->beneficiaryAddress = $beneficiaryAddress;
 
