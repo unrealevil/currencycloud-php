@@ -148,9 +148,9 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new ContactsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
             json_decode($data),
-            'GET',
+            'POST',
             'contacts/find',
-            [
+            request: [
                 'account_id' => null,
                 'first_name' => null,
                 'last_name' => null,
@@ -182,9 +182,9 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new ContactsEntryPoint(
             new SimpleEntityManager(), $this->getMockedClient(
             json_decode($data),
-            'GET',
+            'POST',
             'contacts/find',
-            [
+            request: [
                 'account_id' => 'A',
                 'first_name' => 'B',
                 'last_name' => 'C',
