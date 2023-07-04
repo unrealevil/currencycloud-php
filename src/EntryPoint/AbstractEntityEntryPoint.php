@@ -92,6 +92,34 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         return $collectionConverter($beneficiaries, $this->createPaginationFromResponse($response));
     }
 
+    protected function doFindWithPost(
+        string $entryPoint,
+        mixed $searchModel,
+        Pagination $pagination,
+        callable $converterToRequest,
+        callable $converterFromResponse,
+        callable $collectionConverter,
+        string $property,
+        string $onBehalfOf = null
+    ): PaginatedData
+    {
+
+        $response = $this->request(
+            'POST',
+            $entryPoint,
+            requestParams: \call_user_func($converterToRequest, $searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
+                $pagination
+            )
+        );
+        $beneficiaries = [];
+        foreach ($response->$property as $model) {
+            $entity = $converterFromResponse($model);
+            $this->entityManager->add($entity);
+            $beneficiaries[] = $entity;
+        }
+        return $collectionConverter($beneficiaries, $this->createPaginationFromResponse($response));
+    }
+
     protected function doUpdate(
         string $entryPoint,
         EntityInterface $entity,

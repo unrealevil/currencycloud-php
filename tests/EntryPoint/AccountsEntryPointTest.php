@@ -172,9 +172,9 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                     ]
                 )
             ),
-            'GET',
+            'POST',
             'accounts/find',
-            $in
+            request: $in
         )
         );
 

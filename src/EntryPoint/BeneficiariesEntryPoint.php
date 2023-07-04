@@ -79,7 +79,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             $pagination = new Pagination();
         }
 
-        return $this->doFind(
+        return $this->doFindWithPost(
             'beneficiaries/find',
             $beneficiary,
             $pagination,

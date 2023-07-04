@@ -169,9 +169,9 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     public function bankDetails(string $identifierType, string $identifierValue): BankDetails
     {
         $response = $this->request(
-            'GET',
-            'reference/bank_details',
-            [
+            'POST',
+            'reference/bank_details/find',
+            requestParams: [
                 'identifier_type' => $identifierType,
                 'identifier_value' => $identifierValue
             ]
