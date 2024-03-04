@@ -1,7 +1,6 @@
 <?php
 
 use CurrencyCloud\Tests\FormDataExtractor;
-use VCR\Request;
 
 $parametersMatcher = function($first, $second) {
     //process and check data sent as form-data via POST
@@ -63,30 +62,3 @@ $filterHeadersInWhitelist = function(array $headers) {
 
     return $result;
 };
-
-\VCR\VCR::configure()
-    ->setCassettePath(__DIR__.'/fixtures/')
-    ->enableRequestMatchers(['url', 'body', 'headers'])
-    ->addRequestMatcher(
-        'body',
-        function(Request $first, Request $second) use ($parametersMatcher) {
-            return $parametersMatcher($first->getBody(), $second->getBody());
-        }
-    )
-    ->addRequestMatcher(
-        'query_string',
-        function(Request $first, Request $second) use ($parametersMatcher) {
-            return $parametersMatcher($first->getQuery(), $second->getQuery());
-        }
-    )
-    ->addRequestMatcher(
-        'headers',
-        function(Request $first, Request $second) use ($filterHeadersInWhitelist) {
-            $secondHeaders = $second->getHeaders();
-            $firstHeaders = $first->getHeaders();
-            $firstHeaders = $filterHeadersInWhitelist($firstHeaders);
-            $secondHeaders = $filterHeadersInWhitelist($secondHeaders);
-
-            return array_filter($firstHeaders) == array_filter($secondHeaders);
-        }
-    );
