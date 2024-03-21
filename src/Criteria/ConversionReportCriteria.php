@@ -18,7 +18,6 @@ class ConversionReportCriteria
     private ?string $partnerSellAmountFrom = null;
     private ?string $partnerSellAmountTo = null;
     private ?string $clientStatus = null;
-    private ?string $partnerStatus = null;
     private ?DateTime $conversionDateFrom = null;
     private ?DateTime $conversionDateTo = null;
     private ?DateTime $settlementDateFrom = null;
@@ -182,18 +181,6 @@ class ConversionReportCriteria
     public function setClientStatus(?string $clientStatus): self
     {
         $this->clientStatus = $clientStatus;
-
-        return $this;
-    }
-
-    public function getPartnerStatus(): ?string
-    {
-        return $this->partnerStatus;
-    }
-
-    public function setPartnerStatus(?string $partnerStatus): self
-    {
-        $this->partnerStatus = $partnerStatus;
 
         return $this;
     }

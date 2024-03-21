@@ -4,13 +4,11 @@ namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\Model\Transaction;
-use CurrencyCloud\Model\Transactions;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 
 class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
     /**
      * @test
      */
@@ -105,7 +103,6 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $transactions = $entryPoint->find();
 
-        $this->assertInstanceOf(Transactions::class, $transactions);
         $list = $transactions->getTransactions();
 
         $this->assertArrayHasKey(0, $list);
@@ -195,7 +192,6 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
             $dateTimes[7]
         );
 
-        $this->assertInstanceOf(Transactions::class, $transactions);
         $list = $transactions->getTransactions();
 
         $this->assertArrayHasKey(0, $list);

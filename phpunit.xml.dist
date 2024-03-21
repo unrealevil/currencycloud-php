@@ -3,10 +3,10 @@
 
     <testsuites>
         <testsuite name="EntryPoint">
-            <directory>./tests/EntryPoint</directory>>
+            <directory>./tests/EntryPoint</directory>
         </testsuite>
         <testsuite name="Core">
-            <directory>./tests/Core</directory>>
+            <directory>./tests/Core</directory>
         </testsuite>
     </testsuites>
 

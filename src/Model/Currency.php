@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use function strtoupper;
+
 class Currency
 {
     private string $code;
@@ -13,7 +15,7 @@ class Currency
 
     public function __construct(string $code, ?int $decimalPlaces, ?string $name, ?bool $onlineTrading, ?bool $canBuy, ?bool $canSell)
     {
-        $this->code = \strtoupper($code);
+        $this->code = strtoupper($code);
         $this->decimalPlaces = (int) $decimalPlaces;
         $this->name = (string) $name;
         $this->onlineTrading = (bool) $onlineTrading;

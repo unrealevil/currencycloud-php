@@ -1,6 +1,8 @@
 <?php
 namespace CurrencyCloud\Model;
 
+use ArrayIterator;
+
 class ConversionProfitLossCollection extends PaginatedData
 {
     /**
@@ -31,7 +33,7 @@ class ConversionProfitLossCollection extends PaginatedData
      */
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->conversionsProfitLoss);
+        return new ArrayIterator($this->conversionsProfitLoss);
     }
 
     /**

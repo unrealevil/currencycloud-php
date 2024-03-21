@@ -5,7 +5,6 @@ namespace CurrencyCloud\Tests\EntryPoint;
 use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
 use CurrencyCloud\Criteria\FindConversionsCriteria;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
-use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\ConversionDateChanged;
 use CurrencyCloud\Model\ConversionSplit;
@@ -16,13 +15,12 @@ use DateTimeInterface;
 
 class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
     /**
      * @test
      */
     public function canFindWhenAllParamsAreNull(): void
     {
-        $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","partner_status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
+        $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
@@ -32,7 +30,6 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 [
                     'short_reference' => null,
                     'status' => null,
-                    'partner_status' => null,
                     'buy_currency' => null,
                     'sell_currency' => null,
                     'conversion_ids' => null,
@@ -51,6 +48,10 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                     'sell_amount_to' => null,
                     'on_behalf_of' => null,
                     'unique_request_id' => null,
+                    'page' => null,
+                    'per_page' => null,
+                    'order' => null,
+                    'order_asc_desc' => null,
                 ]
             )
         );
@@ -66,7 +67,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
      */
     public function canFindWhenAllParamsAreNonNull(): void
     {
-        $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","partner_status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
+        $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
 
         $createdAtFrom = (new DateTime())->modify('-1 hour');
         $createdAtTo = (new DateTime())->modify('-2 hour');
@@ -94,6 +95,11 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setSellAmountFrom('N')
             ->setSellAmountTo('O');
 
+        $pagination = (new Pagination())
+            ->setCurrentPage(1)
+            ->setPerPage(25)
+            ->setOrderAscDesc('asc')
+            ->setOrder('buy_currency');
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
                 json_decode($data),
@@ -102,7 +108,6 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 [
                     'short_reference' => 'A',
                     'status' => 'P',
-                    'partner_status' => 'B',
                     'buy_currency' => 'C',
                     'sell_currency' => 'D',
                     'conversion_ids' => 'E,F',
@@ -121,10 +126,14 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                     'sell_amount_to' => 'O',
                     'on_behalf_of' => null,
                     'unique_request_id' => null,
+                    'page' => 1,
+                    'per_page' => 25,
+                    'order' => 'buy_currency',
+                    'order_asc_desc' => 'asc',
                 ]
             )
         );
-        $entryPoint->find($criteria);
+        $entryPoint->find($criteria, null, $pagination);
     }
 
     /**
@@ -132,7 +141,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
      */
     public function canRetrieve(): void
     {
-        $data = '{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","partner_status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
+        $data = '{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
@@ -172,7 +181,6 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $conversionCancellation = $entryPoint->cancel('0ff0ea60-d976-4c7f-ad7f-3eb94da68452', 'Cancelduetoveryimportantreason');
 
-        $this->assertInstanceOf(CancelledConversion::class, $conversionCancellation);
         $this->assertSame($dummyData['account_id'], $conversionCancellation->getAccountId());
         $this->assertSame($dummyData['contact_id'], $conversionCancellation->getContactId());
         $this->assertSame($dummyData['event_account_id'], $conversionCancellation->getEventAccountId());
@@ -575,5 +583,73 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $this->assertSame($dummy['amount'], $conversionConversionCancellationQuote->getAmount());
         $this->assertSame($dummy['currency'], $conversionConversionCancellationQuote->getCurrency());
+    }
+
+    /**
+     * @test
+     */
+    public function canCreateConversionWithConversionDatePreference(): void
+    {
+        $data = '{
+               "id": "d56d7553-19ab-4cde-b44b-79cac86989cb",
+               "settlement_date": "2020-05-19T13:30:00+00:00",
+               "conversion_date": "2020-05-19T00:00:00+00:00",
+               "short_reference": "20200519-XYLXJL",
+               "creator_contact_id": "42a6af4a-65b8-4721-43d9-7f395da2551e",
+               "account_id": "3f22044f-ae21-42a1-bc4f-cd0370b008a5",
+               "currency_pair": "EURGBP",
+               "status": "awaiting_funds",
+               "buy_currency": "EUR",
+               "sell_currency": "GBP",
+               "client_buy_amount": "1000.00",
+               "client_sell_amount": "805.90",
+               "fixed_side": "buy",
+               "core_rate": "0.8059",
+               "partner_rate": "",
+               "partner_buy_amount": "0.00",
+               "partner_sell_amount": "0.00",
+               "client_rate": "0.8059",
+               "deposit_required": false,
+               "deposit_amount": "0.00",
+               "deposit_currency": "",
+               "deposit_status": "not_required",
+               "deposit_required_at": "",
+               "payment_ids": [],
+               "unallocated_funds": "1000.00",
+               "unique_request_id": null,
+               "created_at": "2020-05-19T12:31:43+00:00",
+               "updated_at": "2020-05-19T12:31:43+00:00",
+               "mid_market_rate": "0.8058"
+           }';
+
+        $entryPoint = new ConversionsEntryPoint(
+            $this->getMockedClient(
+                json_decode($data),
+                'POST',
+                'conversions/create',
+                [],
+                [
+                    'buy_currency' => 'EUR',
+                    'sell_currency' => 'GBP',
+                    'fixed_side' => 'buy',
+                    'amount' => '1000',
+                    'term_agreement' => 'true',
+                    'conversion_date_preference' => 'earliest',
+                    'reason' => null,
+                    'conversion_date' => null,
+                    'client_buy_amount' => null,
+                    'client_sell_amount' => null,
+                    'unique_request_id' => null,
+                    'on_behalf_of' => null,
+
+                ]
+            )
+        );
+
+        $conversion = Conversion::create('EUR', 'GBP', 'buy')->setConversionDatePreference('earliest');
+        $createdConversion = $entryPoint->create($conversion, 1000, null, true);
+
+        $this->assertSame('805.90', $createdConversion->getClientSellAmount());
+        $this->assertSame('2020-05-19T13:30:00+00:00', $createdConversion->getSettlementDate()->format(DateTimeInterface::RFC3339));
     }
 }

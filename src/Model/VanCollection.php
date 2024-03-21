@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
+use Traversable;
 
 class VanCollection extends PaginatedData
 {
@@ -31,7 +32,7 @@ class VanCollection extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->vans);
     }

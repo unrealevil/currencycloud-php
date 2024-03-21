@@ -33,7 +33,7 @@ class Authorisations implements IteratorAggregate, Countable
     /**
      * @inheritdoc
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->authorisations);
     }

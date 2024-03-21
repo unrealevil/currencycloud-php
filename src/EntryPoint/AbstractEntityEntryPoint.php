@@ -107,7 +107,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         $response = $this->request(
             'POST',
             $entryPoint,
-            requestParams: \call_user_func($converterToRequest, $searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
+            requestParams: $converterToRequest($searchModel, $onBehalfOf) + $this->convertPaginationToRequest(
                 $pagination
             )
         );

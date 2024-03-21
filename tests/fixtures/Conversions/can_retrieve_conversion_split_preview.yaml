@@ -1,4 +1,5 @@
--   request:
+-
+    request:
         method: GET
         url: 'https://devapi.currencycloud.com/v2/conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/split_preview?amount=35.46'
         headers:

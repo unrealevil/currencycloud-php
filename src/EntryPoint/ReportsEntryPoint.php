@@ -1,22 +1,24 @@
 <?php
+
 namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\ConversionReportCriteria;
-use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Criteria\FindReportsCriteria;
+use CurrencyCloud\Criteria\PaymentReportCriteria;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Report;
 use CurrencyCloud\Model\Reports;
 use CurrencyCloud\Model\ReportSearchParams;
 use stdClass;
+use function sprintf;
 
 class ReportsEntryPoint extends AbstractEntityEntryPoint
 {
     public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, string $onBehalfOf = null): Report
     {
-        return $this->doCreate('reports/conversions/create', $conversionReportCriteria, function ($conversionReportCriteria) {
+        return $this->doCreate('reports/conversions/create', $conversionReportCriteria, function($conversionReportCriteria) {
             return $this->convertConversionReportCriteriaToRequest($conversionReportCriteria);
-        }, function ($response) {
+        }, function($response) {
             return $this->createReportFromResponse($response);
         }, $onBehalfOf);
     }
@@ -37,7 +39,6 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'partner_sell_amount_from' => $conversionReportCriteria->getPartnerSellAmountFrom(),
             'partner_sell_amount_to' => $conversionReportCriteria->getPartnerSellAmountTo(),
             'client_status' => $conversionReportCriteria->getClientStatus(),
-            'partner_status' => $conversionReportCriteria->getPartnerStatus(),
             'conversion_date_from' => $conversionReportCriteria->getConversionDateFrom(),
             'conversion_date_to' => $conversionReportCriteria->getConversionDateTo(),
             'settlement_date_from' => $conversionReportCriteria->getSettlementDateFrom(),
@@ -47,15 +48,15 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'updated_at_from' => $conversionReportCriteria->getUpdatedAtFrom(),
             'updated_at_to' => $conversionReportCriteria->getUpdatedAtTo(),
             'unique_request_id' => $conversionReportCriteria->getUniqueRequestId(),
-            'scope' => $conversionReportCriteria->getScope()
+            'scope' => $conversionReportCriteria->getScope(),
         ];
     }
 
     public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, string $onBehalfOf = null): Report
     {
-        return $this->doCreate('reports/payments/create', $paymentReportCriteria, function ($paymentReportCriteria) {
+        return $this->doCreate('reports/payments/create', $paymentReportCriteria, function($paymentReportCriteria) {
             return $this->convertPaymentReportCriteriaToRequest($paymentReportCriteria);
-        }, function ($response) {
+        }, function($response) {
             return $this->createReportFromResponse($response);
         }, $onBehalfOf);
     }
@@ -82,14 +83,15 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             'with_deleted' => $paymentReportCriteria->getWithDeleted(),
             'payment_group_id' => $paymentReportCriteria->getPaymentGroupId(),
             'unique_request_id' => $paymentReportCriteria->getUniqueRequestId(),
-            'scope' => $paymentReportCriteria->getScope()
+            'scope' => $paymentReportCriteria->getScope(),
         ];
     }
 
     public function findReports(
         ?FindReportsCriteria $findReportsCriteria,
         ?Pagination $pagination,
-        string $onBehalfOf = null): Reports
+        string $onBehalfOf = null
+    ): Reports
     {
         if (null === $findReportsCriteria) {
             $findReportsCriteria = new FindReportsCriteria();
@@ -97,13 +99,14 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('reports/report_requests/find', $findReportsCriteria, $pagination, function ($findReportsCriteria) {
+
+        return $this->doFind('reports/report_requests/find', $findReportsCriteria, $pagination, function($findReportsCriteria) {
             return $this->convertFindReportsCriteriaToRequest($findReportsCriteria);
-        }, function ($response) {
+        }, function($response) {
             return $this->createReportFromResponse($response);
-        }, function (array $entities, Pagination $pagination) {
+        }, function(array $entities, Pagination $pagination) {
             return new Reports($entities, $pagination);
-        }, 'report_requests',$onBehalfOf);
+        }, 'report_requests', $onBehalfOf);
     }
 
     protected function convertFindReportsCriteriaToRequest(FindReportsCriteria $findReportsCriteria): array
@@ -111,23 +114,24 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         return [
             'short_reference' => $findReportsCriteria->getShortReference(),
             'description' => $findReportsCriteria->getDescription(),
-            'account_id' => $findReportsCriteria->getAccountId(),
-            'contact_id' => $findReportsCriteria->getContactId(),
             'created_at_from' => $findReportsCriteria->getCreatedAtFrom(),
             'created_at_to' => $findReportsCriteria->getCreatedAtTo(),
             'expiration_date_from' => $findReportsCriteria->getExpirationDateFrom(),
             'expiration_date_to' => $findReportsCriteria->getExpirationDateTo(),
             'status' => $findReportsCriteria->getStatus(),
-            'report_type' => $findReportsCriteria->getReportType()
+            'report_type' => $findReportsCriteria->getReportType(),
         ];
     }
 
     public function retrieve(string $id, string $onBehalfOf = null): Report
     {
-        return $this->doRetrieve(sprintf('reports/report_requests/%s', $id),
-            function ($response) {
+        return $this->doRetrieve(
+            sprintf('reports/report_requests/%s', $id),
+            function($response) {
                 return $this->createReportFromResponse($response);
-        }, $onBehalfOf);
+            },
+            $onBehalfOf
+        );
     }
 
     protected function createReportFromResponse(stdClass $response): Report

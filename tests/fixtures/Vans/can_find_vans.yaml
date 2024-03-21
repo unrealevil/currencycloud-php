@@ -1,4 +1,5 @@
--   request:
+-
+    request:
         method: GET
         url: 'https://devapi.currencycloud.com/v2/virtual_accounts/find'
         headers:

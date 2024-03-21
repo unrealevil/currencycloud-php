@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
+use Traversable;
 
 class Accounts extends PaginatedData
 {
@@ -32,7 +33,7 @@ class Accounts extends PaginatedData
     /**
      * @inheritdoc
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->accounts);
     }

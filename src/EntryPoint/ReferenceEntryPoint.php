@@ -11,11 +11,13 @@ use CurrencyCloud\Model\InvalidPaymentDate;
 use CurrencyCloud\Model\PayerDetails;
 use CurrencyCloud\Model\PayerRequirementDetails;
 use CurrencyCloud\Model\PaymentDates;
+use CurrencyCloud\Model\PaymentFeeRule;
 use CurrencyCloud\Model\PurposeCode;
 use CurrencyCloud\Model\RequiredFieldEntry;
 use CurrencyCloud\Model\SettlementAccount;
 use DateTime;
 use DateTimeInterface;
+use stdClass;
 
 class ReferenceEntryPoint extends AbstractEntryPoint
 {
@@ -32,6 +34,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
                 $currency->code, $currency->decimal_places, $currency->name, $currency->online_trading, $currency->can_buy, $currency->can_sell
             );
         }
+
         return $ret;
     }
 
@@ -43,13 +46,14 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             [
                 'currency' => $currency,
                 'bank_account_country' => $bankAccountCountry,
-                'beneficiary_country' => $beneficiaryCountry
+                'beneficiary_country' => $beneficiaryCountry,
             ]
         );
         $ret = [];
         foreach ($response->details as $detail) {
             $ret[] = new BeneficiaryRequiredDetail((array) $detail);
         }
+
         return $ret;
     }
 
@@ -60,7 +64,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'reference/conversion_dates',
             [
                 'conversion_pair' => $conversionPair,
-                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTimeInterface::ATOM)
+                'start_date' => (null === $startDate) ? null : $startDate->format(DateTimeInterface::ATOM),
             ]
         );
         $invalidDates = [];
@@ -72,7 +76,10 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return new ConversionDates(
             $invalidDates,
             new DateTime($response->first_conversion_date),
-            new DateTime($response->default_conversion_date)
+            new DateTime($response->default_conversion_date),
+            new DateTime($response->first_conversion_cutoff_datetime),
+            new DateTime($response->optimize_liquidity_conversion_date),
+            new DateTime($response->next_day_conversion_date)
         );
     }
 
@@ -83,7 +90,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'reference/payment_dates',
             [
                 'currency' => $currency,
-                'start_date' => (null === $startDate) ? null  : $startDate->format(DateTimeInterface::ATOM)
+                'start_date' => (null === $startDate) ? null : $startDate->format(DateTimeInterface::ATOM),
             ]
         );
         $invalidDates = [];
@@ -103,7 +110,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'GET',
             'reference/settlement_accounts',
             [
-                'currency' => $currency
+                'currency' => $currency,
             ]
         );
         $ret = [];
@@ -125,6 +132,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
                 $settlementAccount->routing_code_value_2
             );
         }
+
         return $ret;
     }
 
@@ -136,7 +144,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             [
                 'currency' => $currency,
                 'entity_type' => $entity_type,
-                'bank_account_country' => $bank_account_country
+                'bank_account_country' => $bank_account_country,
             ]
         );
 
@@ -149,17 +157,19 @@ class ReferenceEntryPoint extends AbstractEntryPoint
                 $purpose_code->purpose_description
             );
         }
+
         return $ret;
     }
 
     public function payerRequiredDetails(string $payerCountry, string $payerEntityType = null, string $paymentType = null): PayerRequirementDetails
     {
-        $response = $this->request('GET',
+        $response = $this->request(
+            'GET',
             'reference/payer_required_details',
             [
                 'payer_country' => $payerCountry,
                 'payer_entity_type' => $payerEntityType,
-                'payment_type' => $paymentType
+                'payment_type' => $paymentType,
             ]
         );
 
@@ -173,20 +183,50 @@ class ReferenceEntryPoint extends AbstractEntryPoint
             'reference/bank_details/find',
             requestParams: [
                 'identifier_type' => $identifierType,
-                'identifier_value' => $identifierValue
+                'identifier_value' => $identifierValue,
             ]
         );
 
-        return new BankDetails($response->identifier_value, $response->identifier_type, $response->account_number,
-            $response->bic_swift, $response->bank_name, $response->bank_branch,$response->bank_address,
+        return new BankDetails(
+            $response->identifier_value, $response->identifier_type, $response->account_number,
+            $response->bic_swift, $response->bank_name, $response->bank_branch, $response->bank_address,
             $response->bank_city, $response->bank_state, $response->bank_post_code, $response->bank_country,
-            $response->bank_country_ISO, $response->currency);
+            $response->bank_country_ISO, $response->currency
+        );
     }
 
-    protected function convertResponseToPaymentRequiredDetails(\stdClass $response): PayerRequirementDetails
+    /**
+     * @return PaymentFeeRule[]
+     */
+    public function paymentFeeRules(?string $accountId = null, ?string $paymentType = null, ?string $chargeType = null): array
+    {
+        $response = $this->request(
+            'GET',
+            'reference/payment_fee_rules',
+            [
+                'account_id' => $accountId,
+                'payment_type' => $paymentType,
+                'charge_type' => $chargeType,
+            ]
+        );
+
+        $ret = [];
+        foreach ($response->payment_fee_rules as $payment_fee_rule) {
+            $ret[] = new PaymentFeeRule(
+                $payment_fee_rule->payment_type,
+                $payment_fee_rule->charge_type,
+                $payment_fee_rule->fee_amount,
+                $payment_fee_rule->fee_currency
+            );
+        }
+
+        return $ret;
+    }
+
+    protected function convertResponseToPaymentRequiredDetails(stdClass $response): PayerRequirementDetails
     {
         $payerDetails = [];
-        foreach($response->details as $value){
+        foreach ($response->details as $value) {
             $payerDetails[] = new PayerDetails(
                 $value->payer_entity_type,
                 $value->payment_type,
@@ -204,9 +244,10 @@ class ReferenceEntryPoint extends AbstractEntryPoint
     protected function convertRequiredFieldsArrayToRequiredFieldEntry(array $requiredFields): array
     {
         $result = [];
-        foreach($requiredFields as $value){
+        foreach ($requiredFields as $value) {
             $result[] = new RequiredFieldEntry($value->name, $value->validation_rule);
         }
+
         return $result;
     }
 }

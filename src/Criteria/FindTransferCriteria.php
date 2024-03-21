@@ -6,6 +6,7 @@ use DateTime;
 
 class FindTransferCriteria
 {
+    private ?string $onBehalfOf = null;
     private ?string $shortReference = null;
     private ?string $sourceAccountId = null;
     private ?string $destinationAccountId = null;
@@ -21,6 +22,19 @@ class FindTransferCriteria
     private ?DateTime $completedAtTo = null;
     private ?string $creatorContactId = null;
     private ?string $creatorAccountId = null;
+    private ?string $uniqueRequestId = null;
+
+    public function getOnBehalfOf(): ?string
+    {
+        return $this->onBehalfOf;
+    }
+
+    public function setOnBehalfOf(?string $onBehalfOf): self
+    {
+        $this->onBehalfOf = $onBehalfOf;
+
+        return $this;
+    }
 
     public function getShortReference(): ?string
     {
@@ -198,6 +212,18 @@ class FindTransferCriteria
     public function setCreatorAccountId(?string $creatorAccountId): self
     {
         $this->creatorAccountId = $creatorAccountId;
+
+        return $this;
+    }
+
+    public function getUniqueRequestId(): ?string
+    {
+        return $this->uniqueRequestId;
+    }
+
+    public function setUniqueRequestId(?string $uniqueRequestId): self
+    {
+        $this->uniqueRequestId = $uniqueRequestId;
 
         return $this;
     }

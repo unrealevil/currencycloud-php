@@ -41,23 +41,9 @@ class Van implements EntityInterface
         return $this->account_id;
     }
 
-    public function setAccountId(?string $account_id): self
-    {
-        $this->account_id = $account_id;
-
-        return $this;
-    }
-
     public function getVirtualAccountNumber(): ?string
     {
         return $this->virtualAccountNumber;
-    }
-
-    public function setVirtualAccountNumber(?string $virtualAccountNumber): self
-    {
-        $this->virtualAccountNumber = $virtualAccountNumber;
-
-        return $this;
     }
 
     public function getAccountHolderName(): ?string
@@ -65,23 +51,9 @@ class Van implements EntityInterface
         return $this->accountHolderName;
     }
 
-    public function setAccountHolderName(?string $accountHolderName): self
-    {
-        $this->accountHolderName = $accountHolderName;
-
-        return $this;
-    }
-
     public function getBankInstitutionName(): ?string
     {
         return $this->bankInstitutionName;
-    }
-
-    public function setBankInstitutionName(?string $bankInstitutionName): self
-    {
-        $this->bankInstitutionName = $bankInstitutionName;
-
-        return $this;
     }
 
     public function getBankInstitutionAddress(): ?string
@@ -89,23 +61,10 @@ class Van implements EntityInterface
         return $this->bankInstitutionAddress;
     }
 
-    public function setBankInstitutionAddress(?string $bankInstitutionAddress): self
-    {
-        $this->bankInstitutionAddress = $bankInstitutionAddress;
-
-        return $this;
-    }
 
     public function getBankInstitutionCountry(): ?string
     {
         return $this->bankInstitutionCountry;
-    }
-
-    public function setBankInstitutionCountry(?string $bankInstitutionCountry): self
-    {
-        $this->bankInstitutionCountry = $bankInstitutionCountry;
-
-        return $this;
     }
 
     public function getRoutingCode(): ?string
@@ -113,34 +72,13 @@ class Van implements EntityInterface
         return $this->routingCode;
     }
 
-    public function setRoutingCode(?string $routingCode): self
-    {
-        $this->routingCode = $routingCode;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?DateTime $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 }

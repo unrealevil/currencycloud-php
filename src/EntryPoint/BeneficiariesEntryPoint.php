@@ -7,6 +7,8 @@ use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
+use function implode;
+use function sprintf;
 
 class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 {
@@ -44,7 +46,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
     public function retrieve(string $id, string $onBehalfOf = null): Beneficiary
     {
         return $this->doRetrieve(
-            \sprintf('beneficiaries/%s', $id),
+            sprintf('beneficiaries/%s', $id),
             function ($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
@@ -55,7 +57,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
     public function update(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         return $this->doUpdate(
-            \sprintf(
+            sprintf(
                 'beneficiaries/%s',
                 $beneficiary->getId()
             ),
@@ -100,7 +102,7 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
     public function delete(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
     {
         return $this->doDelete(
-            \sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
+            sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
             $beneficiary,
             function ($response) {
                 return $this->createBeneficiaryFromResponse($response);
@@ -123,14 +125,14 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'routing_code_value_2' => $beneficiary->getRoutingCodeValue2(),
             'bic_swift' => $beneficiary->getBicSwift(),
             'iban' => $beneficiary->getIban(),
-            'bank_address' => \implode(', ', $beneficiary->getBankAddress() ?: []),
+            'bank_address' => implode(', ', $beneficiary->getBankAddress() ?: []),
             'bank_name' => $beneficiary->getBankName(),
             'default_beneficiary' => (null === $isDefaultBeneficiary) ? null :
                 ($isDefaultBeneficiary ? 'true' : 'false'),
             'bank_account_type' => $beneficiary->getBankAccountType(),
             'beneficiary_entity_type' => $beneficiary->getBeneficiaryEntityType(),
             'beneficiary_company_name' => $beneficiary->getBeneficiaryCompanyName(),
-            'beneficiary_address' => \implode(', ', $beneficiary->getBeneficiaryAddress() ?: []),
+            'beneficiary_address' => implode(', ', $beneficiary->getBeneficiaryAddress() ?: []),
             'beneficiary_first_name' => $beneficiary->getBeneficiaryFirstName(),
             'beneficiary_last_name' => $beneficiary->getBeneficiaryLastName(),
             'beneficiary_city' => $beneficiary->getBeneficiaryCity(),

@@ -10,16 +10,16 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
+use CurrencyCloud\EntryPoint\FundingEntryPoint;
 use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\ReportsEntryPoint;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
-use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EntryPoint\VansEntryPoint;
+use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
 use CurrencyCloud\EventDispatcher\Event\ClientHttpErrorEvent;
 use CurrencyCloud\EventDispatcher\Listener\BeforeClientRequestListener;
@@ -85,10 +85,10 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
             new ReferenceEntryPoint($client),
             new ReportsEntryPoint($entityManager, $client),
             new RatesEntryPoint($client),
-            new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
-            new VansEntryPoint($entityManager, $client)
+            new VansEntryPoint($entityManager, $client),
+            new FundingEntryPoint($client)
         );
     }
 
