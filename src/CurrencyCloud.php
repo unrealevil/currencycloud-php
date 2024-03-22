@@ -8,13 +8,13 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\EntryPoint\BeneficiariesEntryPoint;
 use CurrencyCloud\EntryPoint\ContactsEntryPoint;
 use CurrencyCloud\EntryPoint\ConversionsEntryPoint;
+use CurrencyCloud\EntryPoint\FundingEntryPoint;
 use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\EntryPoint\PaymentsEntryPoint;
 use CurrencyCloud\EntryPoint\RatesEntryPoint;
 use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\EntryPoint\ReportsEntryPoint;
-use CurrencyCloud\EntryPoint\SettlementsEntryPoint;
 use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\EventDispatcher\Event\BeforeClientRequestEvent;
@@ -30,8 +30,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CurrencyCloud
 {
-    private ReferenceEntryPoint $referenceEntryPoint;
     private Session $session;
+    private ReferenceEntryPoint $referenceEntryPoint;
     private AuthenticateEntryPoint $authenticateEntryPoint;
     private AccountsEntryPoint $accountsEntryPoint;
     private BalancesEntryPoint $balancesEntryPoint;
@@ -44,11 +44,11 @@ class CurrencyCloud
     private ContactsEntryPoint $contactsEntryPoint;
     private PaymentsEntryPoint $paymentsEntryPoint;
     private ReportsEntryPoint $reportsEntryPoint;
-    private SettlementsEntryPoint $settlementsEntryPoint;
     private TransfersEntryPoint $transfersEntryPoint;
     private VansEntryPoint $vansEntryPoint;
+    private FundingEntryPoint $fundingEntryPoint;
 
-    public static string $SDK_VERSION = "1.5.2";
+    public static string $SDK_VERSION = '1.5.2';
 
     public function __construct(
         Session $session,
@@ -64,10 +64,10 @@ class CurrencyCloud
         ReferenceEntryPoint $referenceEntryPoint,
         ReportsEntryPoint $reportsEntryPoint,
         RatesEntryPoint $ratesEntryPoint,
-        SettlementsEntryPoint $settlementsEntryPoint,
         TransactionsEntryPoint $transactionsEntryPoint,
         TransfersEntryPoint $transfersEntryPoint,
-        VansEntryPoint $vanEntryPoint
+        VansEntryPoint $vanEntryPoint,
+        FundingEntryPoint $fundingEntryPoint
     ) {
         $this->referenceEntryPoint = $referenceEntryPoint;
         $this->session = $session;
@@ -83,9 +83,9 @@ class CurrencyCloud
         $this->contactsEntryPoint = $contactsEntryPoint;
         $this->paymentsEntryPoint = $paymentsEntryPoint;
         $this->reportsEntryPoint = $reportsEntryPoint;
-        $this->settlementsEntryPoint = $settlementsEntryPoint;
         $this->transfersEntryPoint = $transfersEntryPoint;
         $this->vansEntryPoint = $vanEntryPoint;
+        $this->fundingEntryPoint = $fundingEntryPoint;
     }
 
     public static function createDefault(Session $session, Client $client = null): CurrencyCloud
@@ -129,10 +129,10 @@ class CurrencyCloud
             new ReferenceEntryPoint($client),
             new ReportsEntryPoint($entityManager, $client),
             new RatesEntryPoint($client),
-            new SettlementsEntryPoint($entityManager, $client),
             new TransactionsEntryPoint($client),
             new TransfersEntryPoint($entityManager, $client),
-            new VansEntryPoint($entityManager, $client)
+            new VansEntryPoint($entityManager, $client),
+            new FundingEntryPoint($client)
         );
     }
 
@@ -196,11 +196,6 @@ class CurrencyCloud
         return $this->ratesEntryPoint;
     }
 
-    public function settlements(): SettlementsEntryPoint
-    {
-        return $this->settlementsEntryPoint;
-    }
-
     public function transactions(): TransactionsEntryPoint
     {
         return $this->transactionsEntryPoint;
@@ -214,6 +209,11 @@ class CurrencyCloud
     public function vans(): VansEntryPoint
     {
         return $this->vansEntryPoint;
+    }
+
+    public function funding(): FundingEntryPoint
+    {
+        return $this->fundingEntryPoint;
     }
 
     public function onBehalfOf(string $contactId, callable $callable): void

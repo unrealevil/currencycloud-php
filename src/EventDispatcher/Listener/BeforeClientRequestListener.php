@@ -19,10 +19,8 @@ class BeforeClientRequestListener
 
     public function onBeforeClientRequestEvent(BeforeClientRequestEvent $event): void
     {
-        if ($event->isSecured()) {
-            if (null === $this->session->getAuthToken()) {
-                $this->authenticateEntryPoint->login();
-            }
+        if ($event->isSecured() && null === $this->session->getAuthToken()) {
+            $this->authenticateEntryPoint->login();
         }
     }
 }

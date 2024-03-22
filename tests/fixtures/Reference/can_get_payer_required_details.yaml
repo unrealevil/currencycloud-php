@@ -1,4 +1,5 @@
--   request:
+-
+    request:
         method: GET
         url: 'https://devapi.currencycloud.com/v2/reference/payer_required_details?payer_country=GB'
         headers:

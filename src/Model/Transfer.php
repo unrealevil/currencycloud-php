@@ -19,8 +19,9 @@ class Transfer implements EntityInterface
     private ?DateTime $completedAt;
     private ?string $creatorAccountId;
     private ?string $creatorContactId;
+    private ?string $uniqueRequestId;
 
-    public function __construct(?string $id, ?string $shortReference, ?string $sourceAccountId, ?string $destinationAccountId, ?string $currency, ?string $amount, ?string $status, ?string $reason, ?DateTime $createdAt, ?DateTime $updatedAt, ?DateTime $completedAt, ?string $creatorAccountId, ?string $creatorContactId)
+    public function __construct(?string $id, ?string $shortReference, ?string $sourceAccountId, ?string $destinationAccountId, ?string $currency, ?string $amount, ?string $status, ?string $reason, ?DateTime $createdAt, ?DateTime $updatedAt, ?DateTime $completedAt, ?string $creatorAccountId, ?string $creatorContactId, ?string $uniqueRequestId)
     {
         $this->id = $id;
         $this->shortReference = $shortReference;
@@ -35,6 +36,7 @@ class Transfer implements EntityInterface
         $this->completedAt = $completedAt;
         $this->creatorAccountId = $creatorAccountId;
         $this->creatorContactId = $creatorContactId;
+        $this->uniqueRequestId = $uniqueRequestId;
     }
 
     public function getId(): ?string
@@ -47,23 +49,9 @@ class Transfer implements EntityInterface
         return $this->shortReference;
     }
 
-    public function setShortReference(?string $shortReference): self
-    {
-        $this->shortReference = $shortReference;
-
-        return $this;
-    }
-
     public function getSourceAccountId(): ?string
     {
         return $this->sourceAccountId;
-    }
-
-    public function setSourceAccountId(?string $sourceAccountId): self
-    {
-        $this->sourceAccountId = $sourceAccountId;
-
-        return $this;
     }
 
     public function getDestinationAccountId(): ?string
@@ -71,23 +59,9 @@ class Transfer implements EntityInterface
         return $this->destinationAccountId;
     }
 
-    public function setDestinationAccountId(?string $destinationAccountId): self
-    {
-        $this->destinationAccountId = $destinationAccountId;
-
-        return $this;
-    }
-
     public function getCurrency(): ?string
     {
         return $this->currency;
-    }
-
-    public function setCurrency(?string $currency): self
-    {
-        $this->currency = $currency;
-
-        return $this;
     }
 
     public function getAmount(): ?string
@@ -95,23 +69,9 @@ class Transfer implements EntityInterface
         return $this->amount;
     }
 
-    public function setAmount(?string $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
     public function getStatus(): ?string
     {
         return $this->status;
-    }
-
-    public function setStatus(?string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getReason(): ?string
@@ -119,23 +79,9 @@ class Transfer implements EntityInterface
         return $this->reason;
     }
 
-    public function setReason(?string $reason): self
-    {
-        $this->reason = $reason;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(?DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getUpdatedAt(): ?DateTime
@@ -143,23 +89,9 @@ class Transfer implements EntityInterface
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTime $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     public function getCompletedAt(): ?DateTime
     {
         return $this->completedAt;
-    }
-
-    public function setCompletedAt(?DateTime $completedAt): self
-    {
-        $this->completedAt = $completedAt;
-
-        return $this;
     }
 
     public function getCreatorAccountId(): ?string
@@ -167,22 +99,13 @@ class Transfer implements EntityInterface
         return $this->creatorAccountId;
     }
 
-    public function setCreatorAccountId(?string $creatorAccountId): self
-    {
-        $this->creatorAccountId = $creatorAccountId;
-
-        return $this;
-    }
-
     public function getCreatorContactId(): ?string
     {
         return $this->creatorContactId;
     }
 
-    public function setCreatorContactId(?string $creatorContactId): self
+    public function getUniqueRequestId(): ?string
     {
-        $this->creatorContactId = $creatorContactId;
-
-        return $this;
+        return $this->uniqueRequestId;
     }
 }

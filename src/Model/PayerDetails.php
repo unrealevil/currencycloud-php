@@ -28,23 +28,9 @@ class PayerDetails
         return $this->payerEntityType;
     }
 
-    public function setPayerEntityType(?string $payerEntityType): self
-    {
-        $this->payerEntityType = $payerEntityType;
-
-        return $this;
-    }
-
     public function getPaymentType(): ?string
     {
         return $this->paymentType;
-    }
-
-    public function setPaymentType(?string $paymentType): self
-    {
-        $this->paymentType = $paymentType;
-
-        return $this;
     }
 
     /**
@@ -55,22 +41,8 @@ class PayerDetails
         return $this->requiredFields;
     }
 
-    public function setRequiredFields(?array $requiredFields): self
-    {
-        $this->requiredFields = $requiredFields;
-
-        return $this;
-    }
-
     public function getPayerIdentificationType(): ?string
     {
         return $this->payerIdentificationType;
-    }
-
-    public function setPayerIdentificationType(?string $payerIdentificationType): self
-    {
-        $this->payerIdentificationType = $payerIdentificationType;
-
-        return $this;
     }
 }

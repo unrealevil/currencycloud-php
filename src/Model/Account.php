@@ -23,6 +23,10 @@ class Account implements EntityInterface
     private ?string $identificationType = null;
     private ?string $identificationValue = null;
     private ?string $shortReference = null;
+    private ?bool $termsAndConditionsAccepted = null;
+    private ?bool $apiTrading = null;
+    private ?bool $onlineTrading = null;
+    private ?bool $phoneTrading = null;
 
     public static function create(?string $accountName, string $legalEntityType): Account
     {
@@ -223,6 +227,54 @@ class Account implements EntityInterface
     public function setShortReference(?string $shortReference): self
     {
         $this->shortReference = $shortReference;
+
+        return $this;
+    }
+
+    public function isTermsAndConditionsAccepted(): ?bool
+    {
+        return $this->termsAndConditionsAccepted;
+    }
+
+    public function setTermsAndConditionsAccepted(?bool $termsAndConditionsAccepted): self
+    {
+        $this->termsAndConditionsAccepted = $termsAndConditionsAccepted;
+
+        return $this;
+    }
+
+    public function isApiTrading(): ?bool
+    {
+        return $this->apiTrading;
+    }
+
+    public function setApiTrading(?bool $apiTrading): self
+    {
+        $this->apiTrading = $apiTrading;
+
+        return $this;
+    }
+
+    public function isOnlineTrading(): ?bool
+    {
+        return $this->onlineTrading;
+    }
+
+    public function setOnlineTrading(?bool $onlineTrading): self
+    {
+        $this->onlineTrading = $onlineTrading;
+
+        return $this;
+    }
+
+    public function isPhoneTrading(): ?bool
+    {
+        return $this->phoneTrading;
+    }
+
+    public function setPhoneTrading(?bool $phoneTrading): self
+    {
+        $this->phoneTrading = $phoneTrading;
 
         return $this;
     }

@@ -32,23 +32,9 @@ class ConversionDateChangeQuote
         return $this->conversionId;
     }
 
-    public function setConversionId(?string $conversionId): self
-    {
-        $this->conversionId = $conversionId;
-
-        return $this;
-    }
-
     public function getAmount(): ?string
     {
         return $this->amount;
-    }
-
-    public function setAmount(?string $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
     }
 
     public function getCurrency(): ?string
@@ -56,23 +42,9 @@ class ConversionDateChangeQuote
         return $this->currency;
     }
 
-    public function setCurrency(?string $currency): self
-    {
-        $this->currency = $currency;
-
-        return $this;
-    }
-
     public function getNewConversionDate(): ?DateTime
     {
         return $this->newConversionDate;
-    }
-
-    public function setNewConversionDate(?DateTime $newConversionDate): self
-    {
-        $this->newConversionDate = $newConversionDate;
-
-        return $this;
     }
 
     public function getNewSettlementDate(): ?DateTime
@@ -80,23 +52,9 @@ class ConversionDateChangeQuote
         return $this->newSettlementDate;
     }
 
-    public function setNewSettlementDate(?DateTime $newSettlementDate): self
-    {
-        $this->newSettlementDate = $newSettlementDate;
-
-        return $this;
-    }
-
     public function getOldConversionDate(): ?DateTime
     {
         return $this->oldConversionDate;
-    }
-
-    public function setOldConversionDate(?DateTime $oldConversionDate): self
-    {
-        $this->oldConversionDate = $oldConversionDate;
-
-        return $this;
     }
 
     public function getOldSettlementDate(): ?DateTime
@@ -104,22 +62,8 @@ class ConversionDateChangeQuote
         return $this->oldSettlementDate;
     }
 
-    public function setOldSettlementDate(?DateTime $oldSettlementDate): self
-    {
-        $this->oldSettlementDate = $oldSettlementDate;
-
-        return $this;
-    }
-
     public function getEventDateTime(): ?DateTime
     {
         return $this->eventDateTime;
-    }
-
-    public function setEventDateTime(?DateTime $eventDateTime): self
-    {
-        $this->eventDateTime = $eventDateTime;
-
-        return $this;
     }
 }

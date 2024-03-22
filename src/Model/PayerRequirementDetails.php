@@ -5,6 +5,7 @@ namespace CurrencyCloud\Model;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 class PayerRequirementDetails implements Countable, IteratorAggregate
 {
@@ -32,7 +33,7 @@ class PayerRequirementDetails implements Countable, IteratorAggregate
     /**
      * @inheritdoc
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->payerDetails);
     }

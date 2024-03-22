@@ -2,6 +2,8 @@
 
 namespace CurrencyCloud\Model;
 
+use DateTimeInterface;
+
 class Payment implements EntityInterface
 {
     private ?string $id = null;
@@ -26,9 +28,9 @@ class Payment implements EntityInterface
 
     private ?string $reason = null;
 
-    private ?\DateTimeInterface $paymentDate = null;
+    private ?DateTimeInterface $paymentDate = null;
 
-    private ?\DateTimeInterface $transferredAt = null;
+    private ?DateTimeInterface $transferredAt = null;
 
     private ?string $authorisationStepsRequired = null;
 
@@ -42,9 +44,9 @@ class Payment implements EntityInterface
 
     private ?string $payerId = null;
 
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     private ?string $uniqueRequestId = null;
 
@@ -53,6 +55,14 @@ class Payment implements EntityInterface
     private ?string $purposeCode = null;
 
     private ?string $chargeType = null;
+
+    private ?string $feeAmount = null;
+
+    private ?string $feeCurrency = null;
+
+    private ?string $invoiceNumber = null;
+
+    private ?string $invoiceDate = null;
 
     public static function create(?string $currency, ?string $beneficiaryId, ?string $amount, ?string $reason, ?string $reference): self
     {
@@ -196,24 +206,24 @@ class Payment implements EntityInterface
         return $this;
     }
 
-    public function getPaymentDate(): ?\DateTimeInterface
+    public function getPaymentDate(): ?DateTimeInterface
     {
         return $this->paymentDate;
     }
 
-    public function setPaymentDate(?\DateTimeInterface $paymentDate): self
+    public function setPaymentDate(?DateTimeInterface $paymentDate): self
     {
         $this->paymentDate = $paymentDate;
 
         return $this;
     }
 
-    public function getTransferredAt(): ?\DateTimeInterface
+    public function getTransferredAt(): ?DateTimeInterface
     {
         return $this->transferredAt;
     }
 
-    public function setTransferredAt(?\DateTimeInterface $transferredAt): self
+    public function setTransferredAt(?DateTimeInterface $transferredAt): self
     {
         $this->transferredAt = $transferredAt;
 
@@ -292,24 +302,24 @@ class Payment implements EntityInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -360,6 +370,54 @@ class Payment implements EntityInterface
     public function setChargeType(?string $chargeType): self
     {
         $this->chargeType = $chargeType;
+
+        return $this;
+    }
+
+    public function getFeeCurrency(): ?string
+    {
+        return $this->feeCurrency;
+    }
+
+    public function setFeeCurrency(?string $feeCurrency): self
+    {
+        $this->feeCurrency = $feeCurrency;
+
+        return $this;
+    }
+
+    public function getFeeAmount(): ?string
+    {
+        return $this->feeAmount;
+    }
+
+    public function setFeeAmount(?string $feeAmount): self
+    {
+        $this->feeAmount = $feeAmount;
+
+        return $this;
+    }
+
+    public function getInvoiceNumber(): ?string
+    {
+        return $this->invoiceNumber;
+    }
+
+    public function setInvoiceNumber(?string $invoiceNumber): self
+    {
+        $this->invoiceNumber = $invoiceNumber;
+
+        return $this;
+    }
+
+    public function getInvoiceDate(): ?string
+    {
+        return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate(?string $invoiceDate): self
+    {
+        $this->invoiceDate = $invoiceDate;
 
         return $this;
     }

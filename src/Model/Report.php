@@ -2,6 +2,7 @@
 namespace CurrencyCloud\Model;
 
 use DateTime;
+use DateTimeInterface;
 
 class Report implements EntityInterface
 {
@@ -12,7 +13,7 @@ class Report implements EntityInterface
     private ?string $reportType = null;
     private ?string $status = null;
     private ?string $failureReason = null;
-    private ?\DateTimeInterface $expirationDate = null;
+    private ?DateTimeInterface $expirationDate = null;
     private ?string $reportUrl = null;
     private ?string $accountId = null;
     private ?string $contactId = null;
@@ -96,12 +97,12 @@ class Report implements EntityInterface
         return $this;
     }
 
-    public function getExpirationDate(): ?\DateTimeInterface
+    public function getExpirationDate(): ?DateTimeInterface
     {
         return $this->expirationDate;
     }
 
-    public function setExpirationDate(?\DateTimeInterface $expirationDate): self
+    public function setExpirationDate(?DateTimeInterface $expirationDate): self
     {
         $this->expirationDate = $expirationDate;
 

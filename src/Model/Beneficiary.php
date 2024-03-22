@@ -40,6 +40,8 @@ class Beneficiary implements EntityInterface
     private ?string $email = null;
     private ?DateTimeInterface $createdAt = null;
     private ?DateTimeInterface $updatedAt = null;
+    private ?string $companyWebsite = null;
+    private ?string $businessNature = null;
 
     public static function createForValidate(string $bankCountry, string $currency, string $beneficiaryCountry): Beneficiary
     {
@@ -453,6 +455,30 @@ class Beneficiary implements EntityInterface
     public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCompanyWebsite(): ?string
+    {
+        return $this->companyWebsite;
+    }
+
+    public function setCompanyWebsite(?string $companyWebsite): self
+    {
+        $this->companyWebsite = $companyWebsite;
+
+        return $this;
+    }
+
+    public function getBusinessNature(): ?string
+    {
+        return $this->businessNature;
+    }
+
+    public function setBusinessNature(?string $businessNature): self
+    {
+        $this->businessNature = $businessNature;
 
         return $this;
     }

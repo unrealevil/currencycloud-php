@@ -10,6 +10,11 @@ use CurrencyCloud\Exception\ForbiddenException;
 use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
+use function array_is_list;
+use function current;
+use function implode;
+use function is_array;
+use function json_decode;
 
 class ClientHttpErrorListener
 {
@@ -39,14 +44,24 @@ class ClientHttpErrorListener
             $errors = [];
             $messages = [];
             foreach ($decoded['error_messages'] as $field => $messageContexts) {
-                foreach ($messageContexts as $messageContext) {
+                if(array_is_list($messageContexts)) {
+                    foreach ($messageContexts as $messageContext) {
+                        $errors[] = [
+                            'field' => $field,
+                            'code' => $messageContext['code'],
+                            'message' => $messageContext['message'],
+                            'params' => $messageContext['params']
+                        ];
+                        $messages['message'] = $messageContext['message'];
+                    }
+                } else {
                     $errors[] = [
                         'field' => $field,
-                        'code' => $messageContext['code'],
-                        'message' => $messageContext['message'],
-                        'params' => $messageContext['params']
+                        'code' => $messageContexts['code'],
+                        'message' => $messageContexts['message'],
+                        'params' => $messageContexts['params']
                     ];
-                    $messages['message'] = $messageContext['message'];
+                    $messages['message'] = $messageContexts['message'];
                 }
             }
             $message = implode('; ', $messages);

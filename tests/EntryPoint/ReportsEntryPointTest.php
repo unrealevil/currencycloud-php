@@ -12,7 +12,6 @@ use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
 class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
     /**
      * @test
      */
@@ -43,8 +42,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
             json_decode($data),
             'POST',
             'reports/conversions/create',
-            [],
-            [
+            request: [
                 'buy_currency' => 'EUR',
                 'sell_currency' => 'GBP',
                 'scope' => null,
@@ -59,7 +57,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
                 'partner_sell_amount_from' => null,
                 'partner_sell_amount_to' => null,
                 'client_status' => null,
-                'partner_status' => null,
                 'conversion_date_from' => null,
                 'conversion_date_to' => null,
                 'settlement_date_from' => null,
@@ -74,15 +71,15 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         );
 
         $conversionReportCriteria = new ConversionReportCriteria();
-        $conversionReportCriteria->setBuyCurrency("EUR")
-            ->setSellCurrency("GBP");
+        $conversionReportCriteria->setBuyCurrency('EUR')
+            ->setSellCurrency('GBP');
         $report = $reportsEntryPoint->createConversionReport($conversionReportCriteria);
 
-        $this->assertSame("ea8da492-b03d-4330-b279-b5e4a25804a0", $report->getId());
-        $this->assertSame("processing", $report->getStatus());
-        $this->assertSame("RP-3256961-MLEPRN", $report->getShortReference());
-        $this->assertSame("conversion", $report->getReportType());
-        $this->assertSame("Test report for Conversion", $report->getDescription());
+        $this->assertSame('ea8da492-b03d-4330-b279-b5e4a25804a0', $report->getId());
+        $this->assertSame('processing', $report->getStatus());
+        $this->assertSame('RP-3256961-MLEPRN', $report->getShortReference());
+        $this->assertSame('conversion', $report->getReportType());
+        $this->assertSame('Test report for Conversion', $report->getDescription());
     }
 
     /**
@@ -114,8 +111,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
             json_decode($data),
             'POST',
             'reports/payments/create',
-            [],
-            [
+            request: [
                 'on_behalf_of' => null,
                 'description' => null,
                 'currency' => 'EUR',
@@ -144,11 +140,11 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         $paymentReportCriteria->setCurrency("EUR");
         $report = $reportsEntryPoint->createPaymentReport($paymentReportCriteria);
 
-        $this->assertSame("f2ec161b-5713-4d1a-953a-f6c783c622c0", $report->getId());
-        $this->assertSame("processing", $report->getStatus());
-        $this->assertSame("RP-2683901-DQIJUJ", $report->getShortReference());
-        $this->assertSame("payment", $report->getReportType());
-        $this->assertSame("Test Report for Payment", $report->getDescription());
+        $this->assertSame('f2ec161b-5713-4d1a-953a-f6c783c622c0', $report->getId());
+        $this->assertSame('processing', $report->getStatus());
+        $this->assertSame('RP-2683901-DQIJUJ', $report->getShortReference());
+        $this->assertSame('payment', $report->getReportType());
+        $this->assertSame('Test Report for Payment', $report->getDescription());
     }
 
     /**
@@ -236,8 +232,6 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
             [
                 'short_reference' => null,
                 'description' => null,
-                'account_id' => null,
-                'contact_id' => null,
                 'created_at_from' => null,
                 'created_at_to' => null,
                 'expiration_date_from' => null,
@@ -257,15 +251,15 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         $reports = $reportsEntryPoint->findReports($findReportCriteria, $pagination);
 
         $this->assertSame(3, $reports->getPagination()->getTotalEntries());
-        $this->assertSame("075ce584-b977-4538-a524-16b759277d66", $reports->getReports()[0]->getId());
-        $this->assertSame("RP-5279826-KZJHNX", $reports->getReports()[0]->getShortReference());
-        $this->assertSame("ea8da492-b03d-4330-b279-b5e4a25804a0", $reports->getReports()[1]->getId());
-        $this->assertSame("RP-3256961-MLEPRN", $reports->getReports()[1]->getShortReference());
-        $this->assertSame("3301474c-a4bc-44d3-9cfb-96ab109db0a7", $reports->getReports()[2]->getId());
+        $this->assertSame('075ce584-b977-4538-a524-16b759277d66', $reports->getReports()[0]->getId());
+        $this->assertSame('RP-5279826-KZJHNX', $reports->getReports()[0]->getShortReference());
+        $this->assertSame('ea8da492-b03d-4330-b279-b5e4a25804a0', $reports->getReports()[1]->getId());
+        $this->assertSame('RP-3256961-MLEPRN', $reports->getReports()[1]->getShortReference());
+        $this->assertSame('3301474c-a4bc-44d3-9cfb-96ab109db0a7', $reports->getReports()[2]->getId());
 
-        $this->assertSame("EUR", $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
-        $this->assertSame("GBP", $reports->getReports()[0]->getSearchParams()->getSellCurrency());
-        $this->assertSame("own", $reports->getReports()[0]->getSearchParams()->getScope());
+        $this->assertSame('EUR', $reports->getReports()[0]->getSearchParams()->getBuyCurrency());
+        $this->assertSame('GBP', $reports->getReports()[0]->getSearchParams()->getSellCurrency());
+        $this->assertSame('own', $reports->getReports()[0]->getSearchParams()->getScope());
     }
 
     /**
@@ -302,10 +296,10 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         )
         );
 
-        $report = $reportsEntryPoint->retrieve("075ce584-b977-4538-a524-16b759277d66");
+        $report = $reportsEntryPoint->retrieve('075ce584-b977-4538-a524-16b759277d66');
 
-        $this->assertSame("075ce584-b977-4538-a524-16b759277d66", $report->getId());
-        $this->assertSame("RP-5279826-KZJHNX", $report->getShortReference());
-        $this->assertSame("completed", $report->getStatus());
+        $this->assertSame('075ce584-b977-4538-a524-16b759277d66', $report->getId());
+        $this->assertSame('RP-5279826-KZJHNX', $report->getShortReference());
+        $this->assertSame('completed', $report->getStatus());
     }
 }

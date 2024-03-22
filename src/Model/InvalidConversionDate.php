@@ -20,22 +20,8 @@ class InvalidConversionDate
         return $this->date;
     }
 
-    public function setDate(?DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 }

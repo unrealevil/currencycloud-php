@@ -12,8 +12,13 @@ use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
 use CurrencyCloud\Model\PaymentSubmission;
+use CurrencyCloud\Model\PaymentTrackingInfo;
+use CurrencyCloud\Model\QuotePaymentFee;
 use DateTime;
+use DateTimeInterface;
 use stdClass;
+use function implode;
+use function sprintf;
 
 class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
@@ -23,9 +28,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             $payer = new Payer();
         }
 
-        return $this->doCreate('payments/create', $payment, function ($payment) use ($payer) {
+        return $this->doCreate('payments/create', $payment, function($payment) use ($payer) {
             return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
     }
@@ -39,26 +44,32 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'beneficiary_id' => $payment->getBeneficiaryId(),
             'conversion_id' => $payment->getConversionId(),
             'unique_request_id' => $payment->getUniqueRequestId(),
-            'purpose_code' => $payment->getPurposeCode(),
-            'charge_type' => $payment->getChargeType()
+            'charge_type' => $payment->getChargeType(),
+            'fee_currency' => $payment->getFeeCurrency(),
+            'fee_amount' => $payment->getFeeAmount(),
+            'invoice_number' => $payment->getInvoiceNumber(),
+            'invoice_date' => $payment->getInvoiceDate(),
         ];
         if ($convertForFind) {
             return $common + [
-                'short_reference' => $payment->getShortReference(),
-                'status' => $payment->getStatus()
-            ];
+                    'short_reference' => $payment->getShortReference(),
+                    'status' => $payment->getStatus(),
+                ];
         }
         $paymentDate = $payment->getPaymentDate();
+
         return $common + [
-            'reference' => $payment->getReference(),
-            'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format(\DateTimeInterface::RFC3339),
-            'payment_type' => $payment->getPaymentType()
-        ];
+                'reference' => $payment->getReference(),
+                'payment_date' => (null === $paymentDate) ? $paymentDate : $paymentDate->format('Y-m-d'),
+                'payment_type' => $payment->getPaymentType(),
+                'purpose_code' => $payment->getPurposeCode(),
+            ];
     }
 
     protected function convertPayerToRequest(Payer $payer): array
     {
         $payerDateOfBirth = $payer->getDateOfBirth();
+
         return [
             'payer_entity_type' => $payer->getLegalEntityType(),
             'payer_company_name' => $payer->getCompanyName(),
@@ -73,7 +84,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
                 'Y-m-d'
             ),
             'payer_identification_type' => $payer->getIdentificationType(),
-            'payer_identification_value' => $payer->getIdentificationValue()
+            'payer_identification_value' => $payer->getIdentificationValue(),
         ];
     }
 
@@ -103,15 +114,20 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             ->setUniqueRequestId($response->unique_request_id)
             ->setFailureReturnedAmount($response->failure_returned_amount)
             ->setPurposeCode($response->purpose_code)
-            ->setChargeType($response->charge_type);
+            ->setChargeType($response->charge_type)
+            ->setFeeAmount($response->fee_amount)
+            ->setFeeCurrency($response->fee_currency)
+            ->setInvoiceNumber($response->invoice_number)
+            ->setInvoiceDate($response->invoice_date);
 
         $this->setIdProperty($payment, $response->id);
+
         return $payment;
     }
 
     public function delete(Payment $payment, string $onBehalfOf = null): Payment
     {
-        return $this->doDelete(sprintf('payments/%s/delete', $payment->getId()), $payment, function (stdClass $response) {
+        return $this->doDelete(sprintf('payments/%s/delete', $payment->getId()), $payment, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
     }
@@ -124,8 +140,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             [
                 'on_behalf_of' => $onBehalfOf,
                 'with_deleted' => $withDeleted,
-                'purpose_code' => $purposeCode
-            ]);
+                'purpose_code' => $purposeCode,
+            ]
+        );
 
         return $this->createPaymentFromResponse($response);
     }
@@ -135,11 +152,12 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         if (null === $payer) {
             $payer = new Payer();
         }
-        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function ($payment, $onBehalfOf) use ($payer) {
+
+        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function($payment, $onBehalfOf) use ($payer) {
             return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [
-                'on_behalf_of' => $onBehalfOf
-            ];
-        }, function (stdClass $response) {
+                    'on_behalf_of' => $onBehalfOf,
+                ];
+        }, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
     }
@@ -160,14 +178,15 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFind('payments/find', $payment, $pagination, function ($payment, $onBehalfOf) use ($criteria) {
+
+        return $this->doFind('payments/find', $payment, $pagination, function($payment, $onBehalfOf) use ($criteria) {
             return $this->convertPaymentToRequest($payment, true)
-            + $this->convertFindPaymentsCriteriaToRequest($criteria) + [
-                'on_behalf_of' => $onBehalfOf
-            ];
-        }, function (stdClass $response) {
+                + $this->convertFindPaymentsCriteriaToRequest($criteria) + [
+                    'on_behalf_of' => $onBehalfOf,
+                ];
+        }, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
-        }, function ($items, $pagination) {
+        }, function($items, $pagination) {
             return new Payments($items, $pagination);
         }, 'payments', $onBehalfOf);
     }
@@ -182,17 +201,18 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $paymentDateTo = $criteria->getPaymentDateTo();
         $transferredAtFrom = $criteria->getTransferredAtFrom();
         $transferredAtTo = $criteria->getTransferredAtTo();
+
         return [
-            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(\DateTimeInterface::RFC3339),
-            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(\DateTimeInterface::RFC3339),
-            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(\DateTimeInterface::RFC3339),
-            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(\DateTimeInterface::RFC3339),
-            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(\DateTimeInterface::RFC3339),
-            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(\DateTimeInterface::RFC3339),
-            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(\DateTimeInterface::RFC3339),
-            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(\DateTimeInterface::RFC3339),
+            'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTimeInterface::RFC3339),
+            'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTimeInterface::RFC3339),
+            'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTimeInterface::RFC3339),
+            'updated_at_to' => (null === $updatedAtTo) ? null : $updatedAtTo->format(DateTimeInterface::RFC3339),
+            'payment_date_from' => (null === $paymentDateFrom) ? null : $paymentDateFrom->format(DateTimeInterface::RFC3339),
+            'payment_date_to' => (null === $paymentDateTo) ? null : $paymentDateTo->format(DateTimeInterface::RFC3339),
+            'transferred_at_from' => (null === $transferredAtFrom) ? null : $transferredAtFrom->format(DateTimeInterface::RFC3339),
+            'transferred_at_to' => (null === $transferredAtTo) ? null : $transferredAtTo->format(DateTimeInterface::RFC3339),
             'amount_from' => $criteria->getAmountFrom(),
-            'amount_to' => $criteria->getAmountTo()
+            'amount_to' => $criteria->getAmountTo(),
         ];
     }
 
@@ -206,7 +226,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'payments/authorise',
             [],
             [
-                'payment_ids' => $paymentIds
+                'payment_ids' => $paymentIds,
             ]
         );
 
@@ -229,7 +249,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     protected function createAuthorisationsFromResponse(stdClass $response): Authorisations
     {
         $authorisations = [];
-        foreach($response->authorisations as $value){
+        foreach ($response->authorisations as $value) {
             $authorisations[] = $this->createAuthorisationFromObject($value);
         }
 
@@ -254,7 +274,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
 
     public function retrieveConfirmation(string $id, string $onBehalfOf = null): PaymentConfirmation
     {
-        return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function (stdClass $response) {
+        return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function(stdClass $response) {
             return $this->createPaymentConfirmationFromResponse($response);
         }, $onBehalfOf);
     }
@@ -274,18 +294,138 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-
     public function paymentDeliveryDate(DateTime $paymentDate, string $paymentType, string $currency, string $bankCountry): PaymentDeliveryDate
     {
-        $response = $this->request('GET',
+        $response = $this->request(
+            'GET',
             'payments/payment_delivery_date',
-            ['payment_date' => $paymentDate->format('Y-m-d'),
+            [
+                'payment_date' => $paymentDate->format('Y-m-d'),
                 'payment_type' => $paymentType,
                 'currency' => $currency,
-                'bank_country' => $bankCountry]);
+                'bank_country' => $bankCountry,
+            ]
+        );
 
-        return new PaymentDeliveryDate(new DateTime($response->payment_date),new DateTime($response->payment_delivery_date),
-            new DateTime($response->payment_cutoff_time),$response->payment_type,$response->currency,$response->bank_country);
+        return new PaymentDeliveryDate(
+            new DateTime($response->payment_date), new DateTime($response->payment_delivery_date),
+            new DateTime($response->payment_cutoff_time), $response->payment_type, $response->currency, $response->bank_country
+        );
     }
 
+    public function getQuotePaymentFee(string $paymentCurrency, string $paymentDestinationCountry, string $paymentType, ?string $chargeType = null, ?string $accountId = null): QuotePaymentFee
+    {
+        $response = $this->request(
+            'GET',
+            'payments/quote_payment_fee',
+            [
+                'payment_currency' => $paymentCurrency,
+                'payment_destination_country' => $paymentDestinationCountry,
+                'payment_type' => $paymentType,
+                'charge_type' => $chargeType,
+                'account_id' => $accountId,
+            ]
+        );
+
+        return new QuotePaymentFee(
+            $response->account_id, $response->payment_currency, $response->payment_destination_country,
+            $response->payment_type, $response->charge_type, $response->fee_amount, $response->fee_currency
+        );
+    }
+
+    public function getTrackingInfo(string $id): PaymentTrackingInfo
+    {
+        $response = $this->request('GET', sprintf('payments/%s/tracking_info', $id));
+
+        return $this->createTrackingInfoFromResponse($response);
+    }
+
+    private function createTrackingInfoFromResponse(stdClass $response): PaymentTrackingInfo
+    {
+        $trackingInfo = new PaymentTrackingInfo();
+        $trackingInfo->setUetr($response->uetr);
+        $trackingInfo->setTransactionStatus(
+            new PaymentTrackingInfo\TransactionStatus($response->transaction_status->status, $response->transaction_status->reason)
+        );
+        $trackingInfo->setCompletionTime(null !== $response->completion_time ? new DateTime($response->completion_time) : null);
+        $trackingInfo->setInitiationTime(null !== $response->initiation_time ? new DateTime($response->initiation_time) : null);
+        $trackingInfo->setLastUpdateTime(null !== $response->last_update_time ? new DateTime($response->last_update_time) : null);
+
+        $paymentEvents = [];
+        foreach ($response->payment_events as $paymentEvent) {
+            $paymentEvents[] = $this->createTrackingInfoPaymentEventFromResponse($paymentEvent);
+        }
+        $trackingInfo->setPaymentEvents($paymentEvents);
+
+        return $trackingInfo;
+    }
+
+    private function createTrackingInfoPaymentEventFromResponse(stdClass $paymentEventResponse): PaymentTrackingInfo\PaymentEvent
+    {
+        $paymentEvent = new PaymentTrackingInfo\PaymentEvent();
+        $paymentEvent->setForwardedToAgent($paymentEventResponse->forwarded_to_agent);
+        $paymentEvent->setFrom($paymentEventResponse->from);
+        $paymentEvent->setFundsAvailable($paymentEventResponse->funds_available);
+        $paymentEvent->setOriginator($paymentEventResponse->originator);
+        $paymentEvent->setTo($paymentEventResponse->to);
+        $paymentEvent->setTrackerEventType($paymentEventResponse->tracker_event_type);
+        $paymentEvent->setTransactionStatus(
+            null !== $paymentEventResponse->transaction_status ?
+                new PaymentTrackingInfo\TransactionStatus(
+                    $paymentEventResponse->transaction_status->status,
+                    $paymentEventResponse->transaction_status->reason
+                ) : null
+        );
+        $paymentEvent->setValid($paymentEventResponse->valid);
+        $paymentEvent->setSerialParties(
+            null !== $paymentEventResponse->serial_parties ?
+                new PaymentTrackingInfo\SerialParties(
+                    $paymentEventResponse->serial_parties->debtor,
+                    $paymentEventResponse->serial_parties->debtor_agent,
+                    $paymentEventResponse->serial_parties->intermediary_agent1,
+                    $paymentEventResponse->serial_parties->instructing_reimbursement_agent,
+                    $paymentEventResponse->serial_parties->creditor_agent,
+                    $paymentEventResponse->serial_parties->creditor
+                ) : null
+        );
+        $paymentEvent->setSenderAcknowledgementReceipt(
+            null !== $paymentEventResponse->sender_acknowledgement_receipt ? new DateTime($paymentEventResponse->sender_acknowledgement_receipt) : null
+        );
+        $paymentEvent->setInstructedAmount(
+            null !== $paymentEventResponse->instructed_amount ?
+                new PaymentTrackingInfo\Amount($paymentEventResponse->instructed_amount->currency, $paymentEventResponse->instructed_amount->amount) : null
+        );
+        $paymentEvent->setConfirmedAmount(
+            null !== $paymentEventResponse->confirmed_amount ?
+                new PaymentTrackingInfo\Amount($paymentEventResponse->confirmed_amount->currency, $paymentEventResponse->confirmed_amount->amount) : null
+        );
+        $paymentEvent->setInterbankSettlementAmount(
+            null !== $paymentEventResponse->interbank_settlement_amount ?
+                new PaymentTrackingInfo\Amount(
+                    $paymentEventResponse->interbank_settlement_amount->currency,
+                    $paymentEventResponse->interbank_settlement_amount->amount
+                ) : null
+        );
+        $paymentEvent->setInterbankSettlementDate(
+            null !== $paymentEventResponse->interbank_settlement_date ? new DateTime($paymentEventResponse->interbank_settlement_date) : null
+        );
+        $paymentEvent->setChargeAmount(
+            null !== $paymentEventResponse->charge_amount ?
+                new PaymentTrackingInfo\Amount($paymentEventResponse->charge_amount->currency, $paymentEventResponse->charge_amount->amount) : null
+        );
+        $paymentEvent->setChargeType($paymentEventResponse->charge_type);
+        $paymentEvent->setForeignExchangeDetails(
+            null !== $paymentEventResponse->foreign_exchange_details ?
+                new PaymentTrackingInfo\ForeignExchangeDetails(
+                    $paymentEventResponse->foreign_exchange_details->source_currency,
+                    $paymentEventResponse->foreign_exchange_details->target_currency,
+                    $paymentEventResponse->foreign_exchange_details->rate
+                ) : null
+        );
+        $paymentEvent->setLastUpdateTime(
+            null !== $paymentEventResponse->last_update_time ? new DateTime($paymentEventResponse->last_update_time) : null
+        );
+
+        return $paymentEvent;
+    }
 }

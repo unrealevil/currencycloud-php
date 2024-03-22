@@ -10,7 +10,6 @@ use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 
 class IbansEntryPointTest extends BaseCurrencyCloudTestCase
 {
-
     /**
      * @test
      */
@@ -106,5 +105,4 @@ class IbansEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($ibans->getIbans()[2]->getIbanCode(), "GB91TCCL00997900063971");
         $this->assertSame($ibans->getIbans()[2]->getBicSwift(), "TCCLGB31");
     }
-
 }

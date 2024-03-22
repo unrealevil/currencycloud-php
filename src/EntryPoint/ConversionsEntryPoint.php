@@ -4,31 +4,33 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Criteria\ConversionProfitLossCriteria;
 use CurrencyCloud\Criteria\FindConversionsCriteria;
+use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\Conversion;
 use CurrencyCloud\Model\ConversionCancellationQuote;
 use CurrencyCloud\Model\ConversionDateChanged;
-use CurrencyCloud\Model\CancelledConversion;
 use CurrencyCloud\Model\ConversionDateChangeQuote;
 use CurrencyCloud\Model\ConversionProfitLoss;
-use CurrencyCloud\Model\ConversionSplit;
-use CurrencyCloud\Model\Conversions;
 use CurrencyCloud\Model\ConversionProfitLossCollection;
+use CurrencyCloud\Model\Conversions;
+use CurrencyCloud\Model\ConversionSplit;
 use CurrencyCloud\Model\ConversionSplitHistory;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use DateTimeInterface;
 use stdClass;
+use function array_merge;
+use function implode;
+use function sprintf;
 
 class ConversionsEntryPoint extends AbstractEntryPoint
 {
-    public function create(Conversion $conversion, string $amount, string $reason, bool $termAgreement, string $onBehalfOf = null): Conversion
+    public function create(Conversion $conversion, string $amount, ?string $reason, bool $termAgreement, string $onBehalfOf = null): Conversion
     {
         $conversionDate = $conversion->getConversionDate();
         $response = $this->request(
             'POST',
             'conversions/create',
-            [],
-            [
+            requestParams: [
                 'buy_currency' => $conversion->getBuyCurrency(),
                 'sell_currency' => $conversion->getSellCurrency(),
                 'fixed_side' => $conversion->getFixedSide(),
@@ -40,6 +42,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
                 'client_sell_amount' => $conversion->getClientSellAmount(),
                 'unique_request_id' => $conversion->getUniqueRequestId(),
                 'on_behalf_of' => $onBehalfOf,
+                'conversion_date_preference' => $conversion->getConversionDatePreference(),
             ]
         );
 
@@ -55,7 +58,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             ->setSettlementDate($response->settlement_date)
             ->setConversionDate($response->conversion_date)
             ->setStatus($response->status)
-            ->setPartnerStatus($response->partner_status)
             ->setCurrencyPair($response->currency_pair)
             ->setBuyCurrency($response->buy_currency)
             ->setSellCurrency($response->sell_currency)
@@ -161,10 +163,13 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $this->createConversionFromResponse($response);
     }
 
-    public function find(FindConversionsCriteria $criteria = null, string $onBehalfOf = null): Conversions
+    public function find(FindConversionsCriteria $criteria = null, string $onBehalfOf = null, Pagination $pagination = null): Conversions
     {
         if (null === $criteria) {
             $criteria = new FindConversionsCriteria();
+        }
+        if (null === $pagination) {
+            $pagination = new Pagination();
         }
 
         $response = $this->request(
@@ -172,7 +177,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'conversions/find',
             $this->convertFindConversionCriteriaToRequest($criteria) + [
                 'on_behalf_of' => $onBehalfOf,
-            ]
+            ] + $this->convertPaginationToRequest($pagination)
         );
 
         $conversions = [];
@@ -194,7 +199,6 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return [
             'short_reference' => $criteria->getShortReference(),
             'status' => $criteria->getStatus(),
-            'partner_status' => $criteria->getParentStatus(),
             'buy_currency' => $criteria->getBuyCurrency(),
             'sell_currency' => $criteria->getSellCurrency(),
             'conversion_ids' => (null === $conversionIds) ? null : implode(',', $conversionIds),

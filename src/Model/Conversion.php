@@ -21,8 +21,6 @@ class Conversion
 
     private ?string $status = null;
 
-    private ?string $partnerStatus = null;
-
     private ?string $currencyPair = null;
 
     private ?string $buyCurrency = null;
@@ -64,6 +62,8 @@ class Conversion
     private ?DateTimeInterface $updatedAt = null;
 
     private ?string $uniqueRequestId = null;
+
+    private ?string $conversionDatePreference = null;
 
     public static function create(?string $buyCurrency, string $sellCurrency, string $fixedSide): Conversion
     {
@@ -157,18 +157,6 @@ class Conversion
     public function setStatus(?string $status): static
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getPartnerStatus(): ?string
-    {
-        return $this->partnerStatus;
-    }
-
-    public function setPartnerStatus(?string $partnerStatus): static
-    {
-        $this->partnerStatus = $partnerStatus;
 
         return $this;
     }
@@ -421,6 +409,18 @@ class Conversion
     public function setUniqueRequestId(?string $uniqueRequestId): static
     {
         $this->uniqueRequestId = $uniqueRequestId;
+
+        return $this;
+    }
+
+    public function getConversionDatePreference(): ?string
+    {
+        return $this->conversionDatePreference;
+    }
+
+    public function setConversionDatePreference(?string $conversionDatePreference): self
+    {
+        $this->conversionDatePreference = $conversionDatePreference;
 
         return $this;
     }
