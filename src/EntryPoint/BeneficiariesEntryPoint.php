@@ -12,17 +12,13 @@ use function sprintf;
 
 class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 {
-    public function validate(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
+    public function validate(Beneficiary $beneficiary): Beneficiary
     {
         $response = $this->request(
             'POST',
             'beneficiaries/validate',
             [],
-            $this->convertBeneficiaryToRequest(
-                $beneficiary,
-                true,
-                $onBehalfOf
-            )
+            $this->convertBeneficiaryToRequest($beneficiary, true)
         );
 
         return $this->createBeneficiaryFromResponse($response, true);
