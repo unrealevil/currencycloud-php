@@ -62,13 +62,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     public function nullableFieldsCanBeNull(): void
     {
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'POST',
-            'accounts/create',
-            [],
-            $this->in
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'POST',
+                'accounts/create',
+                [],
+                $this->in
+            )
         );
 
         $account = Account::create('B', 'A');
@@ -103,13 +104,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         ];
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'POST',
-            'accounts/create',
-            [],
-            $in
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'POST',
+                'accounts/create',
+                [],
+                $in
+            )
         );
 
         $account =
@@ -142,12 +144,13 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     public function accountCanBeRetrievedWithOnBehalfOf(): void
     {
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'GET',
-            'accounts/1',
-            ['on_behalf_of' => '2']
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'GET',
+                'accounts/1',
+                ['on_behalf_of' => '2']
+            )
         );
 
         $account = $entryPoint->retrieve('1', '2');
@@ -160,7 +163,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
      */
     public function accountsCanBeFound(): void
     {
-        $in = array_merge(
+        $in = \array_merge(
             $this->in,
             [
                 'legal_entity_type' => null,
@@ -174,19 +177,20 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         );
         unset($in['spread_table'], $in['identification_type'], $in['identification_value'], $in['on_behalf_of'], $in['terms_and_conditions_accepted'], $in['api_trading'], $in['online_trading'], $in['phone_trading']);
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(
-                json_encode(
-                    [
-                        'accounts' => [$this->out],
-                        'pagination' => $this->getDummyPagination(),
-                    ]
-                )
-            ),
-            'POST',
-            'accounts/find',
-            request: $in
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(
+                    \json_encode(
+                        [
+                            'accounts' => [$this->out],
+                            'pagination' => $this->getDummyPagination(),
+                        ]
+                    )
+                ),
+                'POST',
+                'accounts/find',
+                request: $in
+            )
         );
 
         $entryPoint->find(
@@ -204,12 +208,13 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
     public function canCurrent(): void
     {
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'GET',
-            'accounts/current',
-            ['on_behalf_of' => null]
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'GET',
+                'accounts/current',
+                ['on_behalf_of' => null]
+            )
         );
 
         $account = $entryPoint->current();
@@ -234,13 +239,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         unset($in['on_behalf_of']);
 
         $entryPoint = new AccountsEntryPoint(
-            $this->getMockedEntityManager($account, $changeSet), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'POST',
-            'accounts/abc',
-            [],
-            $in
-        )
+            $this->getMockedEntityManager($account, $changeSet),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'POST',
+                'accounts/abc',
+                [],
+                $in
+            )
         );
 
         $account = $entryPoint->update($account);
@@ -274,11 +280,12 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings'
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings'
+            )
         );
 
         $settings = $entryPoint->getPaymentChargesSettings('3e12053j-ae22-40b1-cc4e-cc0230c009a5');
@@ -315,18 +322,22 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings/090baf7e-5chh-4bfd-9b7l-ad3f8a310123',
-            [],
-            ['enabled' => 'true', 'default' => 'false']
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'accounts/3e12053j-ae22-40b1-cc4e-cc0230c009a5/payment_charges_settings/090baf7e-5chh-4bfd-9b7l-ad3f8a310123',
+                [],
+                ['enabled' => 'true', 'default' => 'false']
+            )
         );
 
         $setting = new AccountPaymentChargesSetting(
             "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
-            "3e12053j-ae22-40b1-cc4e-cc0230c009a5", "ours", true, false
+            "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
+            "ours",
+            true,
+            false
         );
 
         $updated = $entryPoint->updatePaymentChargesSettings($setting);
@@ -386,13 +397,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         ];
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'POST',
-            'accounts/create',
-            [],
-            $in
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode(\json_encode($this->out)),
+                'POST',
+                'accounts/create',
+                [],
+                $in
+            )
         );
 
         $account =

@@ -20,11 +20,19 @@ class BankDetails
 
     public function __construct(
         ?string $identifierValue,
-        ?string $identifierType, ?string $accountNumber, ?string $bicSwift, ?string $bankName, ?string $bankBranch,
-        ?string $bankAddress, ?string $bankCity, ?string $bankState, ?string $bankPostCode, ?string $bankCountry,
-        ?string $bankCountryISO, ?string $currency
-    )
-    {
+        ?string $identifierType,
+        ?string $accountNumber,
+        ?string $bicSwift,
+        ?string $bankName,
+        ?string $bankBranch,
+        ?string $bankAddress,
+        ?string $bankCity,
+        ?string $bankState,
+        ?string $bankPostCode,
+        ?string $bankCountry,
+        ?string $bankCountryISO,
+        ?string $currency
+    ) {
         $this->identifierValue = (string) $identifierValue;
         $this->identifierType = (string) $identifierType;
         $this->accountNumber = (string) $accountNumber;

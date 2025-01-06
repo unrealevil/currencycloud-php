@@ -1,11 +1,12 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
 use Traversable;
 
-class Ibans extends PaginatedData {
-
+class Ibans extends PaginatedData
+{
     /**
      * @var Iban[]
      */
@@ -52,6 +53,6 @@ class Ibans extends PaginatedData {
      */
     public function count(): int
     {
-        return count($this->ibans);
+        return \count($this->ibans);
     }
 }

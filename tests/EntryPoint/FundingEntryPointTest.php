@@ -47,7 +47,7 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new FundingEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'funding_accounts/find',
                 [
@@ -113,7 +113,7 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new FundingEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'funding_accounts/find',
                 [

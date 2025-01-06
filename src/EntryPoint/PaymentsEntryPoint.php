@@ -17,12 +17,13 @@ use CurrencyCloud\Model\QuotePaymentFee;
 use DateTime;
 use DateTimeInterface;
 use stdClass;
+
 use function implode;
 use function sprintf;
 
 class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
-    public function create(Payment $payment, Payer $payer = null, string $onBehalfOf = null): Payment
+    public function create(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null): Payment
     {
         if (null === $payer) {
             $payer = new Payer();
@@ -76,7 +77,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
             'payer_first_name' => $payer->getFirstName(),
             'payer_last_name' => $payer->getLastName(),
             'payer_city' => $payer->getCity(),
-            'payer_address' => (null === $payer->getAddress()) ? null : implode(' ', $payer->getAddress()),
+            'payer_address' => (null === $payer->getAddress()) ? null : \implode(' ', $payer->getAddress()),
             'payer_postcode' => $payer->getPostcode(),
             'payer_state_or_province' => $payer->getStateOrProvince(),
             'payer_country' => $payer->getCountry(),
@@ -125,18 +126,18 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $payment;
     }
 
-    public function delete(Payment $payment, string $onBehalfOf = null): Payment
+    public function delete(Payment $payment, ?string $onBehalfOf = null): Payment
     {
-        return $this->doDelete(sprintf('payments/%s/delete', $payment->getId()), $payment, function(stdClass $response) {
+        return $this->doDelete(\sprintf('payments/%s/delete', $payment->getId()), $payment, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
         }, $onBehalfOf);
     }
 
-    public function retrieve(string $id, string $onBehalfOf = null, string $withDeleted = null, string $purposeCode = null): Payment
+    public function retrieve(string $id, ?string $onBehalfOf = null, ?string $withDeleted = null, ?string $purposeCode = null): Payment
     {
         $response = $this->request(
             'GET',
-            sprintf('payments/%s', $id),
+            \sprintf('payments/%s', $id),
             [
                 'on_behalf_of' => $onBehalfOf,
                 'with_deleted' => $withDeleted,
@@ -147,13 +148,13 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $this->createPaymentFromResponse($response);
     }
 
-    public function update(Payment $payment, Payer $payer = null, string $onBehalfOf = null): Payment
+    public function update(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null): Payment
     {
         if (null === $payer) {
             $payer = new Payer();
         }
 
-        return $this->doUpdate(sprintf('payments/%s', $payment->getId()), $payment, function($payment, $onBehalfOf) use ($payer) {
+        return $this->doUpdate(\sprintf('payments/%s', $payment->getId()), $payment, function($payment, $onBehalfOf) use ($payer) {
             return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer) + [
                     'on_behalf_of' => $onBehalfOf,
                 ];
@@ -163,12 +164,11 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
     }
 
     public function find(
-        Payment $payment = null,
-        FindPaymentsCriteria $criteria = null,
-        Pagination $pagination = null,
-        string $onBehalfOf = null
-    ): Payments
-    {
+        ?Payment $payment = null,
+        ?FindPaymentsCriteria $criteria = null,
+        ?Pagination $pagination = null,
+        ?string $onBehalfOf = null
+    ): Payments {
         if (null === $payment) {
             $payment = new Payment();
         }
@@ -186,7 +186,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
                 ];
         }, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
-        }, function($items, $pagination) {
+        }, static function($items, $pagination) {
             return new Payments($items, $pagination);
         }, 'payments', $onBehalfOf);
     }
@@ -256,9 +256,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return new Authorisations($authorisations);
     }
 
-    public function retrieveSubmission(string $id, string $onBehalfOf = null): PaymentSubmission
+    public function retrieveSubmission(string $id, ?string $onBehalfOf = null): PaymentSubmission
     {
-        $response = $this->request('GET', sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
+        $response = $this->request('GET', \sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
 
         return $this->createPaymentSubmissionFromResponse($response);
     }
@@ -272,9 +272,9 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    public function retrieveConfirmation(string $id, string $onBehalfOf = null): PaymentConfirmation
+    public function retrieveConfirmation(string $id, ?string $onBehalfOf = null): PaymentConfirmation
     {
-        return $this->doRetrieve(sprintf('payments/%s/confirmation', $id), function(stdClass $response) {
+        return $this->doRetrieve(\sprintf('payments/%s/confirmation', $id), function(stdClass $response) {
             return $this->createPaymentConfirmationFromResponse($response);
         }, $onBehalfOf);
     }
@@ -308,8 +308,12 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
 
         return new PaymentDeliveryDate(
-            new DateTime($response->payment_date), new DateTime($response->payment_delivery_date),
-            new DateTime($response->payment_cutoff_time), $response->payment_type, $response->currency, $response->bank_country
+            new DateTime($response->payment_date),
+            new DateTime($response->payment_delivery_date),
+            new DateTime($response->payment_cutoff_time),
+            $response->payment_type,
+            $response->currency,
+            $response->bank_country
         );
     }
 
@@ -328,14 +332,19 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
 
         return new QuotePaymentFee(
-            $response->account_id, $response->payment_currency, $response->payment_destination_country,
-            $response->payment_type, $response->charge_type, $response->fee_amount, $response->fee_currency
+            $response->account_id,
+            $response->payment_currency,
+            $response->payment_destination_country,
+            $response->payment_type,
+            $response->charge_type,
+            $response->fee_amount,
+            $response->fee_currency
         );
     }
 
     public function getTrackingInfo(string $id): PaymentTrackingInfo
     {
-        $response = $this->request('GET', sprintf('payments/%s/tracking_info', $id));
+        $response = $this->request('GET', \sprintf('payments/%s/tracking_info', $id));
 
         return $this->createTrackingInfoFromResponse($response);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
@@ -41,6 +42,6 @@ class ConversionProfitLossCollection extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->conversionsProfitLoss);
+        return \count($this->conversionsProfitLoss);
     }
 }

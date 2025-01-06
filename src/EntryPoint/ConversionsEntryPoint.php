@@ -18,13 +18,14 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use DateTimeInterface;
 use stdClass;
+
 use function array_merge;
 use function implode;
 use function sprintf;
 
 class ConversionsEntryPoint extends AbstractEntryPoint
 {
-    public function create(Conversion $conversion, string $amount, ?string $reason, bool $termAgreement, string $onBehalfOf = null): Conversion
+    public function create(Conversion $conversion, string $amount, ?string $reason, bool $termAgreement, ?string $onBehalfOf = null): Conversion
     {
         $conversionDate = $conversion->getConversionDate();
         $response = $this->request(
@@ -150,11 +151,11 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $conversionSplit;
     }
 
-    public function retrieve(string $id, string $onBehalfOf = null): Conversion
+    public function retrieve(string $id, ?string $onBehalfOf = null): Conversion
     {
         $response = $this->request(
             'GET',
-            sprintf('conversions/%s', $id),
+            \sprintf('conversions/%s', $id),
             [
                 'on_behalf_of' => $onBehalfOf,
             ]
@@ -163,7 +164,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         return $this->createConversionFromResponse($response);
     }
 
-    public function find(FindConversionsCriteria $criteria = null, string $onBehalfOf = null, Pagination $pagination = null): Conversions
+    public function find(?FindConversionsCriteria $criteria = null, ?string $onBehalfOf = null, ?Pagination $pagination = null): Conversions
     {
         if (null === $criteria) {
             $criteria = new FindConversionsCriteria();
@@ -201,7 +202,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
             'status' => $criteria->getStatus(),
             'buy_currency' => $criteria->getBuyCurrency(),
             'sell_currency' => $criteria->getSellCurrency(),
-            'conversion_ids' => (null === $conversionIds) ? null : implode(',', $conversionIds),
+            'conversion_ids' => (null === $conversionIds) ? null : \implode(',', $conversionIds),
             'created_at_from' => (null === $createdAtFrom) ? null : $createdAtFrom->format(DateTimeInterface::ATOM),
             'created_at_to' => (null === $createdAtTo) ? null : $createdAtTo->format(DateTimeInterface::ATOM),
             'updated_at_from' => (null === $updatedAtFrom) ? null : $updatedAtFrom->format(DateTimeInterface::ATOM),
@@ -219,11 +220,11 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         ];
     }
 
-    public function cancel(string $id, string $notes = null): CancelledConversion
+    public function cancel(string $id, ?string $notes = null): CancelledConversion
     {
         $response = $this->request(
             'POST',
-            sprintf('conversions/%s/cancel', $id),
+            \sprintf('conversions/%s/cancel', $id),
             [],
             [
                 'notes' => $notes,
@@ -237,7 +238,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'POST',
-            sprintf('conversions/%s/date_change', $id),
+            \sprintf('conversions/%s/date_change', $id),
             [
                 'new_settlement_date' => $new_settlement_date,
             ]
@@ -250,7 +251,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'POST',
-            sprintf('conversions/%s/split', $id),
+            \sprintf('conversions/%s/split', $id),
             [
                 'amount' => $amount,
             ]
@@ -271,7 +272,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
         $response = $this->request(
             'GET',
             'conversions/profit_and_loss',
-            array_merge($this->createRequestFromConversionProfitLossCriteria($conversionProfitLossCriteria), $this->convertPaginationToRequest($pagination))
+            \array_merge($this->createRequestFromConversionProfitLossCriteria($conversionProfitLossCriteria), $this->convertPaginationToRequest($pagination))
         );
 
         return $this->createConversionsProfitLossFromResponse($response);
@@ -324,7 +325,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'GET',
-            sprintf('conversions/%s/date_change_quote', $id),
+            \sprintf('conversions/%s/date_change_quote', $id),
             [
                 'new_settlement_date' => $newSettlementDate,
             ]
@@ -351,7 +352,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'GET',
-            sprintf('conversions/%s/split_preview', $id),
+            \sprintf('conversions/%s/split_preview', $id),
             [
                 'amount' => $amount,
             ]
@@ -364,7 +365,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'GET',
-            sprintf('conversions/%s/split_history', $id),
+            \sprintf('conversions/%s/split_history', $id),
         );
 
         return $this->convertConversionSplitHistoryFromResponse($response);
@@ -412,7 +413,7 @@ class ConversionsEntryPoint extends AbstractEntryPoint
     {
         $response = $this->request(
             'GET',
-            sprintf('conversions/%s/cancellation_quote', $id),
+            \sprintf('conversions/%s/cancellation_quote', $id),
         );
 
         return $this->createCancellationQuotefromResponse($response);

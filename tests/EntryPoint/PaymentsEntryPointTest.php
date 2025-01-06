@@ -23,11 +23,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $payment = Payment::create('A', 'B', 'C', 'D', 'E');
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/create',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/create',
+                request: [
                 'currency' => 'A',
                 'beneficiary_id' => 'B',
                 'amount' => 'C',
@@ -57,12 +58,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => null,
                 'invoice_date' => null,
             ]
-        )
+            )
         );
 
         $item = $entryPoint->create($payment);
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
     /**
@@ -99,11 +100,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setIdentificationValue('U');
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/create',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/create',
+                request: [
                 'currency' => 'A',
                 'beneficiary_id' => 'B',
                 'amount' => 'C',
@@ -133,12 +135,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => 'INV01',
                 'invoice_date' => '2023-07-03',
             ]
-        )
+            )
         );
 
         $item = $entryPoint->create($payment, $payer, 'V');
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
     /**
@@ -149,12 +151,13 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/hi/delete',
-            request: ['on_behalf_of' => null]
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/hi/delete',
+                request: ['on_behalf_of' => null]
+            )
         );
 
         $payment = new Payment();
@@ -162,7 +165,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $payment = $entryPoint->delete($payment);
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -173,12 +176,13 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/hi/delete',
-            request: ['on_behalf_of' => 'yes']
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/hi/delete',
+                request: ['on_behalf_of' => 'yes']
+            )
         );
 
         $payment = new Payment();
@@ -186,7 +190,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $payment = $entryPoint->delete($payment, 'yes');
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -197,16 +201,17 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"","purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'payments/543477161-91de-012f-e284-1e0030c7f3123',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'payments/543477161-91de-012f-e284-1e0030c7f3123',
+                [
                 'on_behalf_of' => null,
                 'with_deleted' => null,
                 'purpose_code' => null,
             ]
-        )
+            )
         );
 
         $payment = new Payment();
@@ -214,7 +219,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $payment = $entryPoint->retrieve('543477161-91de-012f-e284-1e0030c7f3123');
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -225,16 +230,17 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'payments/hi',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'payments/hi',
+                [
                 'on_behalf_of' => 'yes',
                 'with_deleted' => null,
                 'purpose_code' => null,
             ]
-        )
+            )
         );
 
         $payment = new Payment();
@@ -242,7 +248,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $payment = $entryPoint->retrieve('hi', 'yes');
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -255,12 +261,13 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $payment = new Payment();
 
         $entryPoint = new PaymentsEntryPoint(
-            $this->getMockedEntityManager($payment, $payment), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/hi',
-            [],
-            [
+            $this->getMockedEntityManager($payment, $payment),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/hi',
+                [],
+                [
                 'currency' => null,
                 'beneficiary_id' => null,
                 'amount' => null,
@@ -290,14 +297,14 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => null,
                 'invoice_date' => null,
             ]
-        )
+            )
         );
 
         $this->setIdProperty($payment, 'hi');
 
         $payment = $entryPoint->update($payment);
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -310,12 +317,13 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $payment = new Payment();
 
         $entryPoint = new PaymentsEntryPoint(
-            $this->getMockedEntityManager($payment, $payment), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/hi',
-            [],
-            [
+            $this->getMockedEntityManager($payment, $payment),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/hi',
+                [],
+                [
                 'currency' => null,
                 'beneficiary_id' => null,
                 'amount' => null,
@@ -345,14 +353,14 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => null,
                 'invoice_date' => null,
             ]
-        )
+            )
         );
 
         $this->setIdProperty($payment, 'hi');
 
         $payment = $entryPoint->update($payment, null, 'yes');
 
-        $this->validateObjectStrictName($payment, json_decode($data, true));
+        $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
     /**
@@ -363,11 +371,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"payments":[{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","payer_details_source":"","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'payments/find',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'payments/find',
+                [
                 'currency' => null,
                 'amount' => null,
                 'reason' => null,
@@ -397,7 +406,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => null,
                 'invoice_date' => null,
             ]
-        )
+            )
         );
 
         $payments = $entryPoint->find();
@@ -407,7 +416,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertArrayHasKey(0, $list);
         $this->assertCount(1, $list);
 
-        $this->validateObjectStrictName($list[0], json_decode($data, true)['payments'][0]);
+        $this->validateObjectStrictName($list[0], \json_decode($data, true)['payments'][0]);
     }
 
     /**
@@ -426,7 +435,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setShortReference('F')
             ->setStatus('G');
 
-        /* @var DateTime[] $dateTime */
+        // @var DateTime[] $dateTime
         $dateTime = [
             new DateTime(),
             (new DateTime())->modify('-1 hour'),
@@ -451,11 +460,12 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setAmountTo('I');
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'payments/find',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'payments/find',
+                [
                 'currency' => 'A',
                 'amount' => 'B',
                 'reason' => 'C',
@@ -485,7 +495,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
                 'invoice_number' => null,
                 'invoice_date' => null,
             ]
-        )
+            )
         );
 
         $payments = $entryPoint->find($payment, $criteria, null, 'J');
@@ -495,7 +505,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertArrayHasKey(0, $list);
         $this->assertCount(1, $list);
 
-        $this->validateObjectStrictName($list[0], json_decode($data, true)['payments'][0]);
+        $this->validateObjectStrictName($list[0], \json_decode($data, true)['payments'][0]);
     }
 
     /**
@@ -527,29 +537,30 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'payments/authorise',
-            [],
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'payments/authorise',
+                [],
+                [
                 'payment_ids' => [
                     '2416c8fe-0486-4fc3-82d9-4dc9a44eba9a',
                     'abf2ebe7-cdc9-460b-b64e-3652297b629e',
 
                 ],
             ]
-        )
+            )
         );
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $authorisations = $entryPoint->authorise([
             '2416c8fe-0486-4fc3-82d9-4dc9a44eba9a',
             'abf2ebe7-cdc9-460b-b64e-3652297b629e',
         ]);
 
-        $this->assertSame(count($dummy['authorisations']), $authorisations->count());
+        $this->assertSame(\count($dummy['authorisations']), $authorisations->count());
 
         foreach ($dummy['authorisations'] as $key => $value) {
             $this->assertSame($value['payment_id'], $authorisations->getAuthorisations()[$key]->getPaymentId());
@@ -573,19 +584,20 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'payments/48e707c9-43e3-4b07-a1d1-bee38f9c95a1/submission',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'payments/48e707c9-43e3-4b07-a1d1-bee38f9c95a1/submission',
+                [
                 'on_behalf_of' => null,
             ]
-        )
+            )
         );
 
         $paymentSubmission = $entryPoint->retrieveSubmission('48e707c9-43e3-4b07-a1d1-bee38f9c95a1');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['status'], $paymentSubmission->getStatus());
         $this->assertSame($dummy['mt103'], $paymentSubmission->getMt103());
@@ -612,7 +624,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new PaymentsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payments/796e0d7d-bae6-4d8a-b217-3cf9ee80a350/confirmation',
                 [
@@ -622,7 +634,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         );
 
         $paymentConfirmation = $entryPoint->retrieveConfirmation('796e0d7d-bae6-4d8a-b217-3cf9ee80a350');
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['payment_id'], $paymentConfirmation->getPaymentId());
         $this->assertSame($dummy['account_id'], $paymentConfirmation->getAccountId());
@@ -639,7 +651,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new PaymentsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payments/payment_delivery_date',
                 [
@@ -677,7 +689,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new PaymentsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payments/quote_payment_fee',
                 [
@@ -879,7 +891,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new PaymentsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payments/46ed4827-7b6f-4491-a06f-b548d5a7512d/tracking_info'
             )

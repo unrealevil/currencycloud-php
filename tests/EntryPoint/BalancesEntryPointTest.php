@@ -39,7 +39,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
     {
         $entryPoint = new BalancesEntryPoint(
             $this->getMockedClient(
-                json_decode(json_encode($this->out)),
+                \json_decode(\json_encode($this->out)),
                 'GET',
                 'balances/find',
                 [
@@ -64,7 +64,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
         $date = new DateTime();
         $entryPoint = new BalancesEntryPoint(
             $this->getMockedClient(
-                json_decode(json_encode($this->out)),
+                \json_decode(\json_encode($this->out)),
                 'GET',
                 'balances/find',
                 [
@@ -95,7 +95,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new BalancesEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'balances/top_up_margin',
                 [],

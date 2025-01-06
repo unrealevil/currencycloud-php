@@ -38,11 +38,12 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $reportsEntryPoint = new ReportsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'reports/conversions/create',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'reports/conversions/create',
+                request: [
                 'buy_currency' => 'EUR',
                 'sell_currency' => 'GBP',
                 'scope' => null,
@@ -67,7 +68,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
                 'updated_at_to' => null,
                 'unique_request_id' => null,
             ]
-        )
+            )
         );
 
         $conversionReportCriteria = new ConversionReportCriteria();
@@ -107,11 +108,12 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $reportsEntryPoint = new ReportsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'reports/payments/create',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'reports/payments/create',
+                request: [
                 'on_behalf_of' => null,
                 'description' => null,
                 'currency' => 'EUR',
@@ -133,7 +135,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
                 'unique_request_id' => null,
                 'scope' => null,
             ]
-        )
+            )
         );
 
         $paymentReportCriteria = new PaymentReportCriteria();
@@ -225,11 +227,12 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $reportsEntryPoint = new ReportsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'reports/report_requests/find',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'reports/report_requests/find',
+                [
                 'short_reference' => null,
                 'description' => null,
                 'created_at_from' => null,
@@ -243,7 +246,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
                 'order' => null,
                 'order_asc_desc' => null,
             ],
-        )
+            )
         );
 
         $findReportCriteria = new FindReportsCriteria();
@@ -288,12 +291,13 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         }';
 
         $reportsEntryPoint = new ReportsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'reports/report_requests/075ce584-b977-4538-a524-16b759277d66',
-            ['on_behalf_of' => null],
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'reports/report_requests/075ce584-b977-4538-a524-16b759277d66',
+                ['on_behalf_of' => null],
+            )
         );
 
         $report = $reportsEntryPoint->retrieve('075ce584-b977-4538-a524-16b759277d66');

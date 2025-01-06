@@ -21,10 +21,22 @@ class FundingAccount implements EntityInterface
     private ?DateTime $createdAt;
     private ?DateTime $updatedAt;
 
-    public function __construct(?string $id, ?string $accountId, ?string $accountNumber, ?string $accountNumberType, ?string $accountHolderName,
-        ?string $bankName, ?string $bankAddress, ?string $bankCountry, ?string $currency, ?string $paymentType, ?string $routingCode,
-        ?string $routingCodeType, ?DateTime $createdAt, ?DateTime $updatedAt)
-    {
+    public function __construct(
+        ?string $id,
+        ?string $accountId,
+        ?string $accountNumber,
+        ?string $accountNumberType,
+        ?string $accountHolderName,
+        ?string $bankName,
+        ?string $bankAddress,
+        ?string $bankCountry,
+        ?string $currency,
+        ?string $paymentType,
+        ?string $routingCode,
+        ?string $routingCodeType,
+        ?DateTime $createdAt,
+        ?DateTime $updatedAt
+    ) {
         $this->id = $id;
         $this->accountId = $accountId;
         $this->accountNumber = $accountNumber;

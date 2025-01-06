@@ -27,10 +27,10 @@ class Session
     {
         if (!isset(self::$urls[$environment])) {
             throw new InvalidArgumentException(
-                sprintf(
+                \sprintf(
                     'Invalid environment %s provided, expected one of [%s]',
                     $environment,
-                    implode(', ', array_keys(self::$urls))
+                    \implode(', ', \array_keys(self::$urls))
                 )
             );
         }
@@ -63,14 +63,14 @@ class Session
     {
         $pattern = '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i';
 
-        if (!is_string($contactId)
-            || !preg_match($pattern, $contactId)
+        if (!\is_string($contactId)
+            || !\preg_match($pattern, $contactId)
         ) {
             throw new InvalidArgumentException('Contact ID expected to be UUID');
         }
 
         if (null !== $this->onBehalfOf) {
-            throw new LogicException(sprintf('Already in on-behalf-of call with ID: %s', $this->onBehalfOf));
+            throw new LogicException(\sprintf('Already in on-behalf-of call with ID: %s', $this->onBehalfOf));
         }
 
         $this->onBehalfOf = $contactId;

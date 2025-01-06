@@ -18,7 +18,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transactions/hi',
                 [
@@ -29,7 +29,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entity = $entryPoint->retrieve('hi');
 
-        $temp = json_decode($data, true);
+        $temp = \json_decode($data, true);
 
         $this->validateObjectStrictName($entity, $temp);
     }
@@ -43,7 +43,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transactions/hi',
                 [
@@ -54,7 +54,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entity = $entryPoint->retrieve('hi', 'me');
 
-        $temp = json_decode($data, true);
+        $temp = \json_decode($data, true);
 
         $this->validateObjectStrictName($entity, $temp);
     }
@@ -68,7 +68,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transactions/find',
                 [
@@ -108,7 +108,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertArrayHasKey(0, $list);
         $this->assertCount(1, $list);
 
-        $this->validateObjectStrictName($list[0], json_decode($data, true)['transactions'][0]);
+        $this->validateObjectStrictName($list[0], \json_decode($data, true)['transactions'][0]);
     }
 
     /**
@@ -118,7 +118,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
     {
         $data = '{"transactions":[{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"e93e322f-93aa-4d31-b050-449da723db0b","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
 
-        /* @var DateTime[] $dateTimes */
+        // @var DateTime[] $dateTimes
         $dateTimes = [
             new DateTime(),
             (new DateTime())->modify('-1 hour'),
@@ -132,7 +132,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transactions/find',
                 [
@@ -197,7 +197,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertArrayHasKey(0, $list);
         $this->assertCount(1, $list);
 
-        $this->validateObjectStrictName($list[0], json_decode($data, true)['transactions'][0]);
+        $this->validateObjectStrictName($list[0], \json_decode($data, true)['transactions'][0]);
     }
 
     /**
@@ -220,7 +220,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transactions/sender/12345678-abcd-1234-abcd-123456789012',
                 [
@@ -231,7 +231,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $transactionSender = $entryPoint->retrieveSender('12345678-abcd-1234-abcd-123456789012');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transactionSender->getId());
         $this->assertSame($dummy['amount'], $transactionSender->getAmount());

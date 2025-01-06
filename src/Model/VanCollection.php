@@ -42,6 +42,6 @@ class VanCollection extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->vans);
+        return \count($this->vans);
     }
 }

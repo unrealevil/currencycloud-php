@@ -35,7 +35,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $entrypoint = new TransfersEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transfers/dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a',
                 [
@@ -46,7 +46,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $transfer = $entrypoint->retrieve('dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transfer->getId());
         $this->assertSame($dummy['short_reference'], $transfer->getShortReference());
@@ -130,7 +130,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $entrypoint = new TransfersEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'transfers/find',
                 [
@@ -164,7 +164,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $transfers = $entrypoint->find($findTransfersCriteria, $pagination);
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['pagination']['total_entries'], $transfers->getPagination()->getTotalEntries());
 
@@ -205,7 +205,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $entrypoint = new TransfersEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'transfers/create',
                 request: [
@@ -226,7 +226,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
             '100'
         );
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transfer->getId());
         $this->assertSame($dummy['short_reference'], $transfer->getShortReference());
@@ -263,7 +263,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $entrypoint = new TransfersEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'transfers/dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a/cancel'
             )
@@ -271,7 +271,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $transfer = $entrypoint->cancel('dbc1b2c3-fc83-439a-8ce9-5cdfc2cb321a');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['id'], $transfer->getId());
         $this->assertSame($dummy['status'], $transfer->getStatus());

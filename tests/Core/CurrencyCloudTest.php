@@ -83,18 +83,18 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
                 )
             );
 
-        /* @var \GuzzleHttp\Client $mockedClient */
+        // @var \GuzzleHttp\Client $mockedClient
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
         $currencyCloudClient = new Client($session, $mockedClient, new EventDispatcher());
         $client = CurrencyCloud::createDefault($session, $currencyCloudClient);
 
         $client->onBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', function(CurrencyCloud $client) use ($transactionsData, $paymentsData) {
             $transaction = $client->transactions()->retrieve('hi');
-            $this->validateObjectStrictName($transaction, json_decode($transactionsData, true));
+            $this->validateObjectStrictName($transaction, \json_decode($transactionsData, true));
             $payment = new Payment();
             $this->setIdProperty($payment, 'me');
             $contact = $client->payments()->delete($payment);
-            $this->validateObjectStrictName($contact, json_decode($paymentsData, true));
+            $this->validateObjectStrictName($contact, \json_decode($paymentsData, true));
         });
 
         $this->assertNull($session->getOnBehalfOf());
@@ -109,13 +109,13 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
 
         $mockedClient = $this->createMock(\GuzzleHttp\Client::class);
 
-        /* @var \GuzzleHttp\Client $mockedClient */
+        // @var \GuzzleHttp\Client $mockedClient
 
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
         $currencyCloudClient = new Client($session, $mockedClient, new EventDispatcher());
         $client = CurrencyCloud::createDefault($session, $currencyCloudClient);
 
-        $client->onBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', function(CurrencyCloud $client) {
+        $client->onBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', static function(CurrencyCloud $client) {
             $client->transactions()->retrieve('hi', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
         });
     }
@@ -138,14 +138,14 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
                 )
             );
 
-        /* @var \GuzzleHttp\Client $mockedClient */
+        // @var \GuzzleHttp\Client $mockedClient
 
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
         $currencyCloudClient = new Client($session, $mockedClient, new EventDispatcher());
         $client = CurrencyCloud::createDefault($session, $currencyCloudClient);
 
         $transaction = $client->transactions()->retrieve('hi', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
-        $this->validateObjectStrictName($transaction, json_decode($transactionsData, true));
+        $this->validateObjectStrictName($transaction, \json_decode($transactionsData, true));
     }
 
     /**
@@ -158,7 +158,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Entity is not managed by entity manager and therefore can not be updated');
 
-        /* @var \GuzzleHttp\Client $mockedClient */
+        // @var \GuzzleHttp\Client $mockedClient
 
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
         $currencyCloudClient = new Client($session, $mockedClient, new EventDispatcher());

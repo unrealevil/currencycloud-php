@@ -6,6 +6,7 @@ use CurrencyCloud\EntryPoint\ReferenceEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 use DateTimeInterface;
+
 use function count;
 
 class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
@@ -21,7 +22,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payment_dates',
                 [
@@ -38,9 +39,9 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $this->assertSame('2013-04-15', $first->format('Y-m-d'));
 
-        $temp = json_decode($data, true)['invalid_payment_dates'];
+        $temp = \json_decode($data, true)['invalid_payment_dates'];
 
-        $this->assertCount(count($temp), $invalid);
+        $this->assertCount(\count($temp), $invalid);
 
         foreach ($invalid as $single) {
             $k = $single->getDate()->format('Y-m-d');
@@ -170,7 +171,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payer_required_details',
                 [
@@ -183,9 +184,9 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $payerRequiredDetails = $entryPoint->payerRequiredDetails('GB', "", "");
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
-        $this->assertCount(count($dummy['details']), $payerRequiredDetails->getPayerDetails());
+        $this->assertCount(\count($dummy['details']), $payerRequiredDetails->getPayerDetails());
 
         $payerDetails = $payerRequiredDetails->getPayerDetails();
 
@@ -209,7 +210,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'reference/bank_details/find',
                 request: [
@@ -266,7 +267,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payment_fee_rules',
                 [
@@ -314,7 +315,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payment_fee_rules',
                 [
@@ -353,7 +354,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payment_fee_rules',
                 [
@@ -561,7 +562,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ReferenceEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'reference/payment_purpose_codes',
                 [

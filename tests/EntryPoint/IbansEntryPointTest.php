@@ -72,7 +72,7 @@ class IbansEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new IbansEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'ibans/find',
                 [

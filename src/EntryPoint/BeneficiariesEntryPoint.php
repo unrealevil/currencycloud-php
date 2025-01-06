@@ -7,6 +7,7 @@ use CurrencyCloud\Model\Beneficiary;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
+
 use function implode;
 use function sprintf;
 
@@ -24,51 +25,51 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         return $this->createBeneficiaryFromResponse($response, true);
     }
 
-    public function create(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
+    public function create(Beneficiary $beneficiary, ?string $onBehalfOf = null): Beneficiary
     {
         return $this->doCreate(
             'beneficiaries/create',
             $beneficiary,
-            function ($beneficiary) {
+            function($beneficiary) {
                 return $this->convertBeneficiaryToRequest($beneficiary);
             },
-            function ($response) {
+            function($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
             $onBehalfOf
         );
     }
 
-    public function retrieve(string $id, string $onBehalfOf = null): Beneficiary
+    public function retrieve(string $id, ?string $onBehalfOf = null): Beneficiary
     {
         return $this->doRetrieve(
-            sprintf('beneficiaries/%s', $id),
-            function ($response) {
+            \sprintf('beneficiaries/%s', $id),
+            function($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
             $onBehalfOf
         );
     }
 
-    public function update(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
+    public function update(Beneficiary $beneficiary, ?string $onBehalfOf = null): Beneficiary
     {
         return $this->doUpdate(
-            sprintf(
+            \sprintf(
                 'beneficiaries/%s',
                 $beneficiary->getId()
             ),
             $beneficiary,
-            function ($entity) {
+            function($entity) {
                 return $this->convertBeneficiaryToRequest($entity, false, true);
             },
-            function ($response) {
+            function($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
             $onBehalfOf
         );
     }
 
-    public function find(Beneficiary $beneficiary = null, Pagination $pagination = null, string $onBehalfOf = null): Beneficiaries
+    public function find(?Beneficiary $beneficiary = null, ?Pagination $pagination = null, ?string $onBehalfOf = null): Beneficiaries
     {
         if (null === $beneficiary) {
             $beneficiary = new Beneficiary();
@@ -81,13 +82,13 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'beneficiaries/find',
             $beneficiary,
             $pagination,
-            function ($entity) {
+            function($entity) {
                 return $this->convertBeneficiaryToRequest($entity);
             },
-            function ($response) {
+            function($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
-            function (array $entities, Pagination $pagination) {
+            static function(array $entities, Pagination $pagination) {
                 return new Beneficiaries($entities, $pagination);
             },
             'beneficiaries',
@@ -95,12 +96,12 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    public function delete(Beneficiary $beneficiary, string $onBehalfOf = null): Beneficiary
+    public function delete(Beneficiary $beneficiary, ?string $onBehalfOf = null): Beneficiary
     {
         return $this->doDelete(
-            sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
+            \sprintf('beneficiaries/%s/delete', $beneficiary->getId()),
             $beneficiary,
-            function ($response) {
+            function($response) {
                 return $this->createBeneficiaryFromResponse($response);
             },
             $onBehalfOf
@@ -121,14 +122,14 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             'routing_code_value_2' => $beneficiary->getRoutingCodeValue2(),
             'bic_swift' => $beneficiary->getBicSwift(),
             'iban' => $beneficiary->getIban(),
-            'bank_address' => implode(', ', $beneficiary->getBankAddress() ?: []),
+            'bank_address' => \implode(', ', $beneficiary->getBankAddress() ?: []),
             'bank_name' => $beneficiary->getBankName(),
             'default_beneficiary' => (null === $isDefaultBeneficiary) ? null :
                 ($isDefaultBeneficiary ? 'true' : 'false'),
             'bank_account_type' => $beneficiary->getBankAccountType(),
             'beneficiary_entity_type' => $beneficiary->getBeneficiaryEntityType(),
             'beneficiary_company_name' => $beneficiary->getBeneficiaryCompanyName(),
-            'beneficiary_address' => implode(', ', $beneficiary->getBeneficiaryAddress() ?: []),
+            'beneficiary_address' => \implode(', ', $beneficiary->getBeneficiaryAddress() ?: []),
             'beneficiary_first_name' => $beneficiary->getBeneficiaryFirstName(),
             'beneficiary_last_name' => $beneficiary->getBeneficiaryLastName(),
             'beneficiary_city' => $beneficiary->getBeneficiaryCity(),

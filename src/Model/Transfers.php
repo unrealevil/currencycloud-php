@@ -42,6 +42,6 @@ class Transfers extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->transfers);
+        return \count($this->transfers);
     }
 }

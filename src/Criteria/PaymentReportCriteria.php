@@ -1,4 +1,5 @@
 <?php
+
 namespace CurrencyCloud\Criteria;
 
 use DateTime;

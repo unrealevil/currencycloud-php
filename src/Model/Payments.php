@@ -43,6 +43,6 @@ class Payments extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->payments);
+        return \count($this->payments);
     }
 }

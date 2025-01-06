@@ -19,7 +19,7 @@ class Rates
     {
         $this->rates = $rates;
         //For faster search
-        $this->unavailable = array_combine($unavailable, $unavailable);
+        $this->unavailable = \array_combine($unavailable, $unavailable);
     }
 
     /**
@@ -43,7 +43,7 @@ class Rates
     public function getRate(string $pair): Rate
     {
         if (!$this->isAvailable($pair)) {
-            throw new OutOfBoundsException(sprintf('Pair "%s" not found', $pair));
+            throw new OutOfBoundsException(\sprintf('Pair "%s" not found', $pair));
         }
         return $this->rates[$pair];
     }

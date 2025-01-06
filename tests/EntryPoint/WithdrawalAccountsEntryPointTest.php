@@ -42,7 +42,7 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new WithdrawalAccountsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'withdrawal_accounts/find',
                 [
@@ -122,7 +122,7 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new WithdrawalAccountsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'withdrawal_accounts/find',
                 [
@@ -185,7 +185,7 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new WithdrawalAccountsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'withdrawal_accounts/0886ac00-6ab6-41a6-b0e1-8d3faf2e0de2/pull_funds',
                 request: [

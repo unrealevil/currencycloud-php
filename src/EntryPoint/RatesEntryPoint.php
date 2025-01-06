@@ -10,16 +10,16 @@ use stdClass;
 
 class RatesEntryPoint extends AbstractEntryPoint
 {
-    public function multiple(array|string $currencyPairs, bool $ignoreInvalidPairs = null, string $onBehalfOf = null): Rates
+    public function multiple(array|string $currencyPairs, ?bool $ignoreInvalidPairs = null, ?string $onBehalfOf = null): Rates
     {
-        if (!is_array($currencyPairs)) {
+        if (!\is_array($currencyPairs)) {
             $currencyPairs = [$currencyPairs];
         }
         $response = $this->request(
             'GET',
             'rates/find',
             [
-                'currency_pair' => implode(',', $currencyPairs),
+                'currency_pair' => \implode(',', $currencyPairs),
                 'ignore_invalid_pairs' => (null === $ignoreInvalidPairs) ? null : ($ignoreInvalidPairs ? 'true' : 'false'),
                 'on_behalf_of' => $onBehalfOf
             ]
@@ -36,11 +36,10 @@ class RatesEntryPoint extends AbstractEntryPoint
         string $sellCurrency,
         string $fixedSide,
         string $amount,
-        DateTime $conversionDate = null,
-        string $onBehalfOf = null,
-        string $conversionDatePreference = null
-    ): DetailedRate
-    {
+        ?DateTime $conversionDate = null,
+        ?string $onBehalfOf = null,
+        ?string $conversionDatePreference = null
+    ): DetailedRate {
         $response = $this->request(
             'GET',
             'rates/detailed',

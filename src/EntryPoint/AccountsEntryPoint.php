@@ -8,36 +8,37 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use DateTime;
 use stdClass;
+
 use function sprintf;
 
 class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
     public function create(Account $account): Account
     {
-        return $this->doCreate('accounts/create', $account, function ($account) {
+        return $this->doCreate('accounts/create', $account, function($account) {
             return $this->convertAccountToRequest($account);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createAccountFromResponse($response);
         });
     }
 
-    public function retrieve(string $id, string $onBehalfOf = null): Account
+    public function retrieve(string $id, ?string $onBehalfOf = null): Account
     {
-        return $this->doRetrieve(sprintf('accounts/%s', $id), function (stdClass $response) {
+        return $this->doRetrieve(\sprintf('accounts/%s', $id), function(stdClass $response) {
             return $this->createAccountFromResponse($response);
         }, $onBehalfOf);
     }
 
     public function update(Account $account): Account
     {
-        return $this->doUpdate(sprintf('accounts/%s', $account->getId()), $account, function ($account) {
+        return $this->doUpdate(\sprintf('accounts/%s', $account->getId()), $account, function($account) {
             return $this->convertAccountToRequest($account);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createAccountFromResponse($response);
         });
     }
 
-    public function find(Account $account = null, Pagination $pagination = null): Accounts
+    public function find(?Account $account = null, ?Pagination $pagination = null): Accounts
     {
         if (null === $account) {
             $account = new Account();
@@ -45,18 +46,18 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFindWithPost('accounts/find', $account, $pagination, function ($account) {
+        return $this->doFindWithPost('accounts/find', $account, $pagination, function($account) {
             return $this->convertAccountToRequest($account, true);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createAccountFromResponse($response);
-        }, function ($items, $pagination) {
+        }, static function($items, $pagination) {
             return new Accounts($items, $pagination);
         }, 'accounts');
     }
 
     public function current(): Account
     {
-        return $this->doRetrieve('accounts/current', function (stdClass $response) {
+        return $this->doRetrieve('accounts/current', function(stdClass $response) {
             return $this->createAccountFromResponse($response);
         });
     }
@@ -126,27 +127,39 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
 
     public function getPaymentChargesSettings(string $accountId): array
     {
-        $response = $this->request('GET', sprintf('accounts/%s/payment_charges_settings', $accountId));
+        $response = $this->request('GET', \sprintf('accounts/%s/payment_charges_settings', $accountId));
 
         $paymentSettings = [];
         foreach ($response->payment_charges_settings as $setting) {
-            $paymentSettings[] = new AccountPaymentChargesSetting($setting->charge_settings_id, $setting->account_id,
-                $setting->charge_type, $setting->enabled, $setting->default);
+            $paymentSettings[] = new AccountPaymentChargesSetting(
+                $setting->charge_settings_id,
+                $setting->account_id,
+                $setting->charge_type,
+                $setting->enabled,
+                $setting->default
+            );
         }
         return $paymentSettings;
     }
 
     public function updatePaymentChargesSettings(AccountPaymentChargesSetting $paymentSettings): AccountPaymentChargesSetting
     {
-        $response = $this->request('POST',
-            sprintf('accounts/%s/payment_charges_settings/%s', $paymentSettings->getAccountId(), $paymentSettings->getChargeSettingsId()),
+        $response = $this->request(
+            'POST',
+            \sprintf('accounts/%s/payment_charges_settings/%s', $paymentSettings->getAccountId(), $paymentSettings->getChargeSettingsId()),
             [],
             [
                 'enabled' => $paymentSettings->isEnabled() ? 'true' : 'false',
                 'default' => $paymentSettings->isDefault() ? 'true' : 'false'
-            ]);
+            ]
+        );
 
-        return new AccountPaymentChargesSetting($response->charge_settings_id, $response->account_id,
-            $response->charge_type, $response->enabled, $response->default);
+        return new AccountPaymentChargesSetting(
+            $response->charge_settings_id,
+            $response->account_id,
+            $response->charge_type,
+            $response->enabled,
+            $response->default
+        );
     }
 }

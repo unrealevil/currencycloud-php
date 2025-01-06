@@ -7,6 +7,7 @@ use CurrencyCloud\Model\FundingAccounts;
 use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
+
 use function array_merge;
 
 class FundingEntryPoint extends AbstractEntryPoint
@@ -19,7 +20,7 @@ class FundingEntryPoint extends AbstractEntryPoint
         $response = $this->request(
             'GET',
             'funding_accounts/find',
-            array_merge(
+            \array_merge(
                 [
                     'currency' => $currency,
                     'account_id' => $accountId,

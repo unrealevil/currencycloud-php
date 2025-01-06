@@ -18,7 +18,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         $this->entityManager = $entityManager;
     }
 
-    protected function doCreate(string $entryPoint, mixed $data, callable $converterToRequest, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
+    protected function doCreate(string $entryPoint, mixed $data, callable $converterToRequest, callable $converterFromResponse, ?string $onBehalfOf = null): EntityInterface
     {
 
         $response = $this->request(
@@ -34,7 +34,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         return $data;
     }
 
-    protected function doDelete(string $entryPoint, EntityInterface $entity, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
+    protected function doDelete(string $entryPoint, EntityInterface $entity, callable $converterFromResponse, ?string $onBehalfOf = null): EntityInterface
     {
         $response = $this->request(
             'POST',
@@ -48,7 +48,7 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         return $converterFromResponse($response);
     }
 
-    protected function doRetrieve(string $entryPoint, callable $converterFromResponse, string $onBehalfOf = null): EntityInterface
+    protected function doRetrieve(string $entryPoint, callable $converterFromResponse, ?string $onBehalfOf = null): EntityInterface
     {
         $response = $this->request(
             'GET',
@@ -72,9 +72,8 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         callable $converterFromResponse,
         callable $collectionConverter,
         string $property,
-        string $onBehalfOf = null
-    ): PaginatedData
-    {
+        ?string $onBehalfOf = null
+    ): PaginatedData {
 
         $response = $this->request(
             'GET',
@@ -100,9 +99,8 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         callable $converterFromResponse,
         callable $collectionConverter,
         string $property,
-        string $onBehalfOf = null
-    ): PaginatedData
-    {
+        ?string $onBehalfOf = null
+    ): PaginatedData {
 
         $response = $this->request(
             'POST',
@@ -125,9 +123,8 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         EntityInterface $entity,
         callable $converterToRequest,
         callable $converterFromResponse,
-        string $onBehalfOf = null
-    ): EntityInterface
-    {
+        ?string $onBehalfOf = null
+    ): EntityInterface {
         $changeSet = $this->entityManager->computeChangeSet($entity);
         if (null === $changeSet) {
             return $entity;

@@ -8,15 +8,15 @@ use CurrencyCloud\Model\Transfer;
 use CurrencyCloud\Model\Transfers;
 use DateTime;
 use stdClass;
+
 use function sprintf;
 
 class TransfersEntryPoint extends AbstractEntityEntryPoint
 {
-
     public function retrieve(string $id, ?string $onBehalfOf = null): Transfer
     {
         return $this->doRetrieve(
-            sprintf('transfers/%s', $id),
+            \sprintf('transfers/%s', $id),
             function(stdClass $response) {
                 return $this->createTransferFromResponse($response);
             },
@@ -44,7 +44,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint
         );
     }
 
-    public function find(FindTransferCriteria $findTransferCriteria, Pagination $pagination, string $onBehalfOf = null): Transfers
+    public function find(FindTransferCriteria $findTransferCriteria, Pagination $pagination, ?string $onBehalfOf = null): Transfers
     {
         return $this->doFind(
             'transfers/find',
@@ -52,15 +52,15 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint
             $pagination,
             function() use ($findTransferCriteria, $pagination, $onBehalfOf) {
                 return $this->convertFindCriteriaToRequest(
-                        $findTransferCriteria
-                    ) +
+                    $findTransferCriteria
+                ) +
                     $this->convertPaginationToRequest($pagination) +
                     ['on_behalf_of' => $onBehalfOf];
             },
             function($response) {
                 return $this->createTransferFromResponse($response);
             },
-            function($entities, $pagination) {
+            static function($entities, $pagination) {
                 return new Transfers($entities, $pagination);
             },
             'transfers',
@@ -92,7 +92,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint
 
     public function convertTransferFromResponse(stdClass $response): Transfer
     {
-        return new  Transfer(
+        return new Transfer(
             $response->id,
             $response->short_reference,
             $response->source_account_id,
@@ -131,7 +131,7 @@ class TransfersEntryPoint extends AbstractEntityEntryPoint
 
     public function cancel(string $id): Transfer
     {
-        $response = $this->request('POST', sprintf('transfers/%s/cancel', $id));
+        $response = $this->request('POST', \sprintf('transfers/%s/cancel', $id));
 
         return $this->createTransferFromResponse($response);
     }

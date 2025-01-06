@@ -10,7 +10,7 @@ use stdClass;
 
 class ContactsEntryPoint extends AbstractEntityEntryPoint
 {
-    public function createResetToken(string $loginId = null): void
+    public function createResetToken(?string $loginId = null): void
     {
         $this->request(
             'POST',
@@ -24,9 +24,9 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
 
     public function create(Contact $contact): Contact
     {
-        return $this->doCreate('contacts/create', $contact, function ($contact) {
+        return $this->doCreate('contacts/create', $contact, function($contact) {
             return $this->convertContactToRequest($contact);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createContactFromResponse($response);
         });
     }
@@ -79,7 +79,7 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         return $contact;
     }
 
-    public function find(Contact $contact = null, Pagination $pagination = null): Contacts
+    public function find(?Contact $contact = null, ?Pagination $pagination = null): Contacts
     {
         if (null === $contact) {
             $contact = new Contact();
@@ -87,34 +87,34 @@ class ContactsEntryPoint extends AbstractEntityEntryPoint
         if (null === $pagination) {
             $pagination = new Pagination();
         }
-        return $this->doFindWithPost('contacts/find', $contact, $pagination, function ($contact) {
+        return $this->doFindWithPost('contacts/find', $contact, $pagination, function($contact) {
             return $this->convertContactToRequest($contact, true);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createContactFromResponse($response);
-        }, function ($items, $pagination) {
+        }, static function($items, $pagination) {
             return new Contacts($items, $pagination);
         }, 'contacts');
     }
 
     public function retrieve(string $id): Contact
     {
-        return $this->doRetrieve(sprintf('contacts/%s', $id), function (stdClass $response) {
+        return $this->doRetrieve(\sprintf('contacts/%s', $id), function(stdClass $response) {
             return $this->createContactFromResponse($response);
         });
     }
 
     public function update(Contact $contact): Contact
     {
-        return $this->doUpdate(sprintf('contacts/%s', $contact->getId()), $contact, function ($contact) {
+        return $this->doUpdate(\sprintf('contacts/%s', $contact->getId()), $contact, function($contact) {
             return $this->convertContactToRequest($contact);
-        }, function (stdClass $response) {
+        }, function(stdClass $response) {
             return $this->createContactFromResponse($response);
         });
     }
 
     public function current(): Contact
     {
-        return $this->doRetrieve('contacts/current', function (stdClass $response) {
+        return $this->doRetrieve('contacts/current', function(stdClass $response) {
             return $this->createContactFromResponse($response);
         });
     }

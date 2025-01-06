@@ -48,7 +48,7 @@ class Client
         //Check for on behalf of in order to inject it if needed
         $isOnBehalfOfUsedInParams = false;
         foreach ([&$queryParams, &$requestParams] as &$paramsArray) {
-            if (array_key_exists('on_behalf_of', $paramsArray)) { //isset is not used because id skips null-s
+            if (\array_key_exists('on_behalf_of', $paramsArray)) { //isset is not used because id skips null-s
                 if (null !== $paramsArray['on_behalf_of']) {
                     $this->session->setOnBehalfOf($paramsArray['on_behalf_of']);
                     $isOnBehalfOfUsedInParams = true;
@@ -69,14 +69,14 @@ class Client
 
             $options['headers']['User-Agent'] = "CurrencyCloudSDK/2.0 PHP/".CurrencyCloud::$SDK_VERSION;
 
-            $queryParams = array_filter($queryParams);
-            $requestParams = array_filter($requestParams);
+            $queryParams = \array_filter($queryParams);
+            $requestParams = \array_filter($requestParams);
 
-            if (count($requestParams) > 0) {
+            if (\count($requestParams) > 0) {
                 if (!isset($options['form_params'])) {
                     $options['form_params'] = [];
                 }
-                $options['form_params'] = array_merge($options['form_params'], $requestParams);
+                $options['form_params'] = \array_merge($options['form_params'], $requestParams);
             }
 
             $this->formatFormData($options);
@@ -117,12 +117,12 @@ class Client
     protected function formatFormData(array &$options): ?array
     {
         $newForm = [];
-        if(empty($options['form_params'])){
+        if (empty($options['form_params'])) {
             return $newForm;
         }
-        foreach ($options['form_params'] as $name => $param){
-            if(is_array($param)){
-                foreach ($param as $value){
+        foreach ($options['form_params'] as $name => $param) {
+            if (\is_array($param)) {
+                foreach ($param as $value) {
                     $newForm[] = ['name' => $name."[]", 'contents' => $value];
                 }
             } else {
@@ -137,9 +137,9 @@ class Client
 
     protected function applyApiBaseUrl(string $path, array $queryParams): string
     {
-        if (count($queryParams) > 0) {
-            return sprintf('%s%s?%s', $this->session->getApiUrl(), $path, http_build_query($queryParams));
+        if (\count($queryParams) > 0) {
+            return \sprintf('%s%s?%s', $this->session->getApiUrl(), $path, \http_build_query($queryParams));
         }
-        return sprintf('%s%s', $this->session->getApiUrl(), $path);
+        return \sprintf('%s%s', $this->session->getApiUrl(), $path);
     }
 }

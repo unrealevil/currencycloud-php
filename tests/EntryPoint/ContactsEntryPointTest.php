@@ -16,15 +16,16 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
     public function canResetTokenWithoutLoginId(): void
     {
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            [],
-            'POST',
-            'contacts/reset_token/create',
-            [],
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                [],
+                'POST',
+                'contacts/reset_token/create',
+                [],
+                [
                 'login_id' => null,
             ]
-        )
+            )
         );
 
         $entryPoint->createResetToken();
@@ -36,15 +37,16 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
     public function canResetTokenWithLoginId(): void
     {
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            [],
-            'POST',
-            'contacts/reset_token/create',
-            [],
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                [],
+                'POST',
+                'contacts/reset_token/create',
+                [],
+                [
                 'login_id' => 'hi-dude',
             ]
-        )
+            )
         );
 
         $entryPoint->createResetToken('hi-dude');
@@ -58,12 +60,13 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'contacts/create',
-            [],
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'contacts/create',
+                [],
+                [
                 'account_id' => 'A',
                 'first_name' => 'B',
                 'last_name' => 'C',
@@ -79,14 +82,14 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'mobile_phone_number' => null,
                 'on_behalf_of' => null,
             ]
-        )
+            )
         );
 
         $contact = Contact::create('A', 'B', 'C', 'D', 'E');
 
         $contact = $entryPoint->create($contact);
 
-        $this->validateObjectStrictName($contact, json_decode($data, true));
+        $this->validateObjectStrictName($contact, \json_decode($data, true));
     }
 
     /**
@@ -99,12 +102,13 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $date = new DateTime();
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'contacts/create',
-            [],
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'contacts/create',
+                [],
+                [
                 'account_id' => 'A',
                 'first_name' => 'B',
                 'last_name' => 'C',
@@ -120,7 +124,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'date_of_birth' => $date->format('Y-m-d'),
                 'on_behalf_of' => null,
             ]
-        )
+            )
         );
 
         $contact = Contact::create('A', 'B', 'C', 'D', 'E')
@@ -135,7 +139,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $contact = $entryPoint->create($contact);
 
-        $this->validateObjectStrictName($contact, json_decode($data, true));
+        $this->validateObjectStrictName($contact, \json_decode($data, true));
     }
 
     /**
@@ -146,11 +150,12 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"contacts":[{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'contacts/find',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'contacts/find',
+                request: [
                 'account_id' => null,
                 'first_name' => null,
                 'last_name' => null,
@@ -163,13 +168,13 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'timezone' => null,
                 'locale' => null,
             ] + $this->getDummyPaginationRequest()
-        )
+            )
         );
 
         $items = $entryPoint->find();
 
         $this->assertArrayHasKey(0, $items->getContacts());
-        $this->validateObjectStrictName($items->getContacts()[0], json_decode($data, true)['contacts'][0]);
+        $this->validateObjectStrictName($items->getContacts()[0], \json_decode($data, true)['contacts'][0]);
     }
 
     /**
@@ -180,11 +185,12 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"contacts":[{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'contacts/find',
-            request: [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'contacts/find',
+                request: [
                 'account_id' => 'A',
                 'first_name' => 'B',
                 'last_name' => 'C',
@@ -197,7 +203,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'timezone' => 'K',
                 'locale' => 'L',
             ] + $this->getDummyPaginationRequest()
-        )
+            )
         );
 
         $contact = Contact::create('A', 'B', 'C', 'D', 'E')
@@ -219,19 +225,20 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'contacts/hi',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'contacts/hi',
+                [
                 'on_behalf_of' => null,
             ]
-        )
+            )
         );
 
         $item = $entryPoint->retrieve('hi');
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
     /**
@@ -242,19 +249,20 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
 
         $entryPoint = new ContactsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode($data),
-            'GET',
-            'contacts/current',
-            [
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                \json_decode($data),
+                'GET',
+                'contacts/current',
+                [
                 'on_behalf_of' => null,
             ]
-        )
+            )
         );
 
         $item = $entryPoint->current();
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
     /**
@@ -282,12 +290,13 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $manager = $this->getMockedEntityManager($contact, clone $contact);
 
         $entryPoint = new ContactsEntryPoint(
-            $manager, $this->getMockedClient(
-            json_decode($data),
-            'POST',
-            'contacts/hi',
-            [],
-            [
+            $manager,
+            $this->getMockedClient(
+                \json_decode($data),
+                'POST',
+                'contacts/hi',
+                [],
+                [
                 'account_id' => 'A',
                 'first_name' => 'B',
                 'last_name' => 'C',
@@ -302,11 +311,11 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'locale' => 'L',
                 'date_of_birth' => $date->format('Y-m-d'),
             ]
-        )
+            )
         );
 
         $item = $entryPoint->update($contact);
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 }

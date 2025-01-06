@@ -37,22 +37,23 @@ class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
     protected function getClient(
         string $loginId = 'rjnienaber@gmail.com',
         string $apiKey = 'ef0fd50fca1fb14c1fab3a8436b9ecb65f02f129fd87eafa45ded8ae257528f0'
-    ): CurrencyCloud
-    {
+    ): CurrencyCloud {
         //We do not use static method in CurrencyCloud because we are not testing it
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, $loginId, $apiKey);
 
         $eventDispatcher = new EventDispatcher();
 
         $client = new Client(
-            $session, new \GuzzleHttp\Client([
+            $session,
+            new \GuzzleHttp\Client([
             'sync' => true,
             'handler' => HandlerStack::create(
                 new CurlHandler([
                     'handle_factory' => new CurlFactory(0),
                 ])
             ),
-        ]), $eventDispatcher
+        ]),
+            $eventDispatcher
         );
 
         $authenticateEntryPoint = new AuthenticateEntryPoint($session, $client);

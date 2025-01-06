@@ -4,6 +4,7 @@ namespace CurrencyCloud\Model;
 
 use ArrayIterator;
 use Traversable;
+
 use function count;
 
 class WithdrawalAccounts extends PaginatedData
@@ -37,6 +38,6 @@ class WithdrawalAccounts extends PaginatedData
 
     public function count(): int
     {
-        return count($this->withdrawalAccounts);
+        return \count($this->withdrawalAccounts);
     }
 }

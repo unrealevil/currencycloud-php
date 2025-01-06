@@ -2,7 +2,7 @@
 
 use CurrencyCloud\Tests\FormDataExtractor;
 
-$parametersMatcher = function($first, $second) {
+$parametersMatcher = static function($first, $second) {
     //process and check data sent as form-data via POST
     if (strpos($first, "form-data")) {
         $first = FormDataExtractor::extract($first);
@@ -38,8 +38,8 @@ $parametersMatcher = function($first, $second) {
                 if ($firstParams[$key] !== $secondParams[$key]) {
                     return false;
                 }
-                unset($firstParams[$key]);
-                unset($secondParams[$key]);
+                unset($firstParams[$key], $secondParams[$key]);
+                
             } else {
                 return false;
             }
@@ -52,8 +52,8 @@ $parametersMatcher = function($first, $second) {
     return true;
 };
 
-$filterHeadersInWhitelist = function(array $headers) {
-    $result = array_filter($headers, function($key) {
+$filterHeadersInWhitelist = static function(array $headers) {
+    $result = array_filter($headers, static function($key) {
         $whitelist = ["Date", "X-Request-Id", "X-Auth-Token"];
         if (in_array($key, $whitelist)) {
             return $key;

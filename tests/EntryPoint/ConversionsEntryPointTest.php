@@ -24,7 +24,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/find',
                 [
@@ -102,7 +102,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
             ->setOrder('buy_currency');
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/find',
                 [
@@ -145,7 +145,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/hi',
                 [
@@ -156,7 +156,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $item = $entryPoint->retrieve('hi');
 
-        $this->validateObjectStrictName($item, json_decode($data, true));
+        $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
     /**
@@ -168,7 +168,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'conversions/0ff0ea60-d976-4c7f-ad7f-3eb94da68452/cancel',
                 [],
@@ -177,7 +177,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                 ]
             )
         );
-        $dummyData = json_decode($data, true);
+        $dummyData = \json_decode($data, true);
 
         $conversionCancellation = $entryPoint->cancel('0ff0ea60-d976-4c7f-ad7f-3eb94da68452', 'Cancelduetoveryimportantreason');
 
@@ -202,7 +202,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'conversions/13909849-1dbd-45c1-83c7-25930132f02c/date_change',
                 [
@@ -225,7 +225,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'conversions/13909849-1dbd-45c1-83c7-25930132f02c/split',
                 [
@@ -297,7 +297,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/profit_and_loss',
                 [
@@ -323,7 +323,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $pagination = new Pagination();
         $conversionProfitLossCollection = $entryPoint->retrieveProfitLoss($conversionProfitLossCriteria, $pagination);
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         foreach ($dummy['conversion_profit_and_losses'] as $key => $value) {
             $this->assertSame(
@@ -369,7 +369,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/date_change_quote',
                 [
@@ -380,7 +380,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $conversionConversionDateChangeQuote = $entryPoint->retrieveDateChangeQuote('cef197c6-2192-4970-a2cf-d45ee046ae8c', '2018-11-06');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame(
             $dummy['conversion_id'],
@@ -436,7 +436,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/cef197c6-2192-4970-a2cf-d45ee046ae8c/split_preview',
                 [
@@ -447,7 +447,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $conversionConversionSplitPreview = $entryPoint->retrieveSplitPreview('cef197c6-2192-4970-a2cf-d45ee046ae8c', '35.46');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['parent_conversion']['id'], $conversionConversionSplitPreview->getParentConversion()->getId());
         $this->assertSame($dummy['parent_conversion']['short_reference'], $conversionConversionSplitPreview->getParentConversion()->getShortReference());
@@ -522,7 +522,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/24d2ee7f-c7a3-4181-979e-9c58dbace992/split_history',
             )
@@ -530,7 +530,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $conversionConversionSplitHistory = $entryPoint->retrieveSplitHistory('24d2ee7f-c7a3-4181-979e-9c58dbace992');
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['parent_conversion']['id'], $conversionConversionSplitHistory->getParentConversion()->getId());
         $this->assertSame($dummy['parent_conversion']['short_reference'], $conversionConversionSplitHistory->getParentConversion()->getShortReference());
@@ -572,14 +572,14 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'conversions/9b29e56d-6a67-4470-a291-ee72b6371c32/cancellation_quote',
             )
         );
 
         $conversionConversionCancellationQuote = $entryPoint->retrieveCancellationQuote('9b29e56d-6a67-4470-a291-ee72b6371c32');
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
         $this->assertSame($dummy['amount'], $conversionConversionCancellationQuote->getAmount());
         $this->assertSame($dummy['currency'], $conversionConversionCancellationQuote->getCurrency());
@@ -624,7 +624,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new ConversionsEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'POST',
                 'conversions/create',
                 [],

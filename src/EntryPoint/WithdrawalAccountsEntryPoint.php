@@ -8,11 +8,12 @@ use CurrencyCloud\Model\WithdrawalAccount;
 use CurrencyCloud\Model\WithdrawalAccountFunds;
 use CurrencyCloud\Model\WithdrawalAccounts;
 use DateTime;
+
 use function sprintf;
 
 class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
 {
-    public function findWithdrawalAccounts(FindWithdrawalAccountsCriteria $findWithdrawalAccountsCriteria = null, Pagination $pagination = null): WithdrawalAccounts
+    public function findWithdrawalAccounts(?FindWithdrawalAccountsCriteria $findWithdrawalAccountsCriteria = null, ?Pagination $pagination = null): WithdrawalAccounts
     {
         if (null === $findWithdrawalAccountsCriteria) {
             $findWithdrawalAccountsCriteria = new FindWithdrawalAccountsCriteria();
@@ -25,7 +26,7 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
             return $this->convertFindWithdrawalAccountsCriteriaToRequest($findWithdrawalAccountsCriteria);
         }, function($response) {
             return $this->convertResponseToWithdrawalAccount($response);
-        }, function(array $entities, Pagination $pagination) {
+        }, static function(array $entities, Pagination $pagination) {
             return new WithdrawalAccounts($entities, $pagination);
         }, 'withdrawal_accounts');
     }
@@ -34,7 +35,7 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
     {
         $response = $this->request(
             'POST',
-            sprintf('withdrawal_accounts/%s/pull_funds', $withdrawalAccountId),
+            \sprintf('withdrawal_accounts/%s/pull_funds', $withdrawalAccountId),
             requestParams: [
                 'reference' => $reference,
                 'amount' => $amount,

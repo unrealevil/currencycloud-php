@@ -43,6 +43,6 @@ class Authorisations implements IteratorAggregate, Countable
      */
     public function count(): int
     {
-        return count($this->authorisations);
+        return \count($this->authorisations);
     }
 }

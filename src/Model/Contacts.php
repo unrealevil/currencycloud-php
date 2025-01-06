@@ -43,6 +43,6 @@ class Contacts extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->contacts);
+        return \count($this->contacts);
     }
 }

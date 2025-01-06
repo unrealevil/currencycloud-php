@@ -10,11 +10,12 @@ use CurrencyCloud\Model\Report;
 use CurrencyCloud\Model\Reports;
 use CurrencyCloud\Model\ReportSearchParams;
 use stdClass;
+
 use function sprintf;
 
 class ReportsEntryPoint extends AbstractEntityEntryPoint
 {
-    public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, string $onBehalfOf = null): Report
+    public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, ?string $onBehalfOf = null): Report
     {
         return $this->doCreate('reports/conversions/create', $conversionReportCriteria, function($conversionReportCriteria) {
             return $this->convertConversionReportCriteriaToRequest($conversionReportCriteria);
@@ -52,7 +53,7 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         ];
     }
 
-    public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, string $onBehalfOf = null): Report
+    public function createPaymentReport(PaymentReportCriteria $paymentReportCriteria, ?string $onBehalfOf = null): Report
     {
         return $this->doCreate('reports/payments/create', $paymentReportCriteria, function($paymentReportCriteria) {
             return $this->convertPaymentReportCriteriaToRequest($paymentReportCriteria);
@@ -90,9 +91,8 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
     public function findReports(
         ?FindReportsCriteria $findReportsCriteria,
         ?Pagination $pagination,
-        string $onBehalfOf = null
-    ): Reports
-    {
+        ?string $onBehalfOf = null
+    ): Reports {
         if (null === $findReportsCriteria) {
             $findReportsCriteria = new FindReportsCriteria();
         }
@@ -104,7 +104,7 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
             return $this->convertFindReportsCriteriaToRequest($findReportsCriteria);
         }, function($response) {
             return $this->createReportFromResponse($response);
-        }, function(array $entities, Pagination $pagination) {
+        }, static function(array $entities, Pagination $pagination) {
             return new Reports($entities, $pagination);
         }, 'report_requests', $onBehalfOf);
     }
@@ -123,10 +123,10 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         ];
     }
 
-    public function retrieve(string $id, string $onBehalfOf = null): Report
+    public function retrieve(string $id, ?string $onBehalfOf = null): Report
     {
         return $this->doRetrieve(
-            sprintf('reports/report_requests/%s', $id),
+            \sprintf('reports/report_requests/%s', $id),
             function($response) {
                 return $this->createReportFromResponse($response);
             },
@@ -155,4 +155,3 @@ class ReportsEntryPoint extends AbstractEntityEntryPoint
         return $report;
     }
 }
-

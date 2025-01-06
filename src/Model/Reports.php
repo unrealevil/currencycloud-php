@@ -42,6 +42,6 @@ class Reports extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->reports);
+        return \count($this->reports);
     }
 }

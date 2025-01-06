@@ -39,14 +39,14 @@ class BaseCurrencyCloudTestCase extends TestCase
     {
         $this->assertIsObject($object);
         foreach ($dummy as $key => $original) {
-            $parts = explode('_', $key);
-            $uCased = implode('', array_map('ucfirst', $parts));
-            $getter = sprintf('get%s', $uCased);
-            if (!is_callable([$object, $getter])) {
-                $getter = sprintf('is%s', $uCased);
-                if (!is_callable([$object, $getter])) {
+            $parts = \explode('_', $key);
+            $uCased = \implode('', \array_map('ucfirst', $parts));
+            $getter = \sprintf('get%s', $uCased);
+            if (!\is_callable([$object, $getter])) {
+                $getter = \sprintf('is%s', $uCased);
+                if (!\is_callable([$object, $getter])) {
                     $this->fail(
-                        sprintf('Found property "%s" but not method "(is|get)%s". Is it wrongly named?', $key, $uCased)
+                        \sprintf('Found property "%s" but not method "(is|get)%s". Is it wrongly named?', $key, $uCased)
                     );
                 }
             }
@@ -54,12 +54,12 @@ class BaseCurrencyCloudTestCase extends TestCase
             if ($value instanceof DateTime) {
                 $value = $value->getTimestamp();
                 $original = (new DateTime($original))->getTimestamp();
-            } elseif (is_bool($value)) {
-                if (!is_bool($original)) {
+            } elseif (\is_bool($value)) {
+                if (!\is_bool($original)) {
                     $value = $value ? 'true' : 'false';
                 }
             }
-            $this->assertEquals($original, $value, sprintf('Property "%s" with method "%s"', $key, $getter));
+            $this->assertEquals($original, $value, \sprintf('Property "%s" with method "%s"', $key, $getter));
             unset($dummy[$key]);
         }
         $this->assertCount(0, $dummy);

@@ -21,7 +21,7 @@ class ApiException extends CurrencyCloudException
         string $url,
         string $message = '',
         int $code = 0,
-        Exception $previous = null
+        ?Exception $previous = null
     ) {
         parent::__construct(
             $parameters,

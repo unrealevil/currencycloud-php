@@ -20,11 +20,11 @@ abstract class CurrencyCloudException extends RuntimeException
         ?string $url,
         ?string $message = '',
         ?string $apiCode = '',
-        Exception $previous = null
+        ?Exception $previous = null
     ) {
         parent::__construct($message, 0, $previous);
         $this->parameters = $parameters;
-        $this->httpMethod = strtolower((string) $httpMethod);
+        $this->httpMethod = \strtolower((string) $httpMethod);
         $this->url = (string) $url;
         $this->apiCode = (string) $apiCode;
     }
@@ -53,9 +53,9 @@ abstract class CurrencyCloudException extends RuntimeException
     {
         if (null === $this->compiled) {
             $dumper = new Dumper();
-            $this->compiled = trim(sprintf(
+            $this->compiled = \trim(\sprintf(
                 "%s\n---\n%s",
-                basename(str_replace('\\', '/', get_class($this))),
+                \basename(\str_replace('\\', '/', \get_class($this))),
                 $dumper->dump($this->getCompileProperties(), PHP_INT_MAX)
             ));
         }
@@ -70,7 +70,7 @@ abstract class CurrencyCloudException extends RuntimeException
     protected function getCompileProperties(): array
     {
         return [
-            'platform' => sprintf('PHP %s', PHP_VERSION),
+            'platform' => \sprintf('PHP %s', PHP_VERSION),
             'request' => [
                 'parameters' => $this->parameters,
                 'verb' => $this->httpMethod,

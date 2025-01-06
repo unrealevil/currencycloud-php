@@ -4,15 +4,16 @@ namespace CurrencyCloud\EntryPoint;
 
 use CurrencyCloud\Model\Payer;
 use DateTime;
+
 use function sprintf;
 
 class PayersEntryPoint extends AbstractEntryPoint
 {
-    public function retrieve(string $id, string $onBehalfOf = null): Payer
+    public function retrieve(string $id, ?string $onBehalfOf = null): Payer
     {
         $response = $this->request(
             'GET',
-            sprintf('payers/%s', $id),
+            \sprintf('payers/%s', $id),
             [
                 'on_behalf_of' => $onBehalfOf,
             ]

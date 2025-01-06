@@ -9,11 +9,12 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use DateTimeInterface;
 use stdClass;
+
 use function sprintf;
 
 class BalancesEntryPoint extends AbstractEntryPoint
 {
-    public function find(float $amountFrom = null, float $amountTo = null, DateTime $asAtDate = null, Pagination $pagination = null, string $onBehalfOf = null): Balances
+    public function find(?float $amountFrom = null, ?float $amountTo = null, ?DateTime $asAtDate = null, ?Pagination $pagination = null, ?string $onBehalfOf = null): Balances
     {
         if (null === $pagination) {
             $pagination = new Pagination();
@@ -40,11 +41,11 @@ class BalancesEntryPoint extends AbstractEntryPoint
         return new Balances($balances, $this->createPaginationFromResponse($response));
     }
 
-    public function retrieve(string $currency, string $onBehalfOf = null): Balance
+    public function retrieve(string $currency, ?string $onBehalfOf = null): Balance
     {
         $response = $this->request(
             'GET',
-            sprintf('balances/%s', $currency),
+            \sprintf('balances/%s', $currency),
             [
                 'on_behalf_of' => $onBehalfOf,
             ]

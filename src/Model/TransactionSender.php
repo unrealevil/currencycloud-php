@@ -4,7 +4,7 @@ namespace CurrencyCloud\Model;
 
 use DateTime;
 
-class  TransactionSender implements EntityInterface
+class TransactionSender implements EntityInterface
 {
     private ?string $id;
     private ?string $amount;

@@ -43,6 +43,6 @@ class PayerRequirementDetails implements Countable, IteratorAggregate
      */
     public function count(): int
     {
-        return count($this->payerDetails);
+        return \count($this->payerDetails);
     }
 }

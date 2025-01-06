@@ -31,14 +31,19 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         $ret = [];
         foreach ($response->currencies as $currency) {
             $ret[] = new Currency(
-                $currency->code, $currency->decimal_places, $currency->name, $currency->online_trading, $currency->can_buy, $currency->can_sell
+                $currency->code,
+                $currency->decimal_places,
+                $currency->name,
+                $currency->online_trading,
+                $currency->can_buy,
+                $currency->can_sell
             );
         }
 
         return $ret;
     }
 
-    public function beneficiaryRequiredDetails(string $currency = null, string $bankAccountCountry = null, string $beneficiaryCountry = null): array
+    public function beneficiaryRequiredDetails(?string $currency = null, ?string $bankAccountCountry = null, ?string $beneficiaryCountry = null): array
     {
         $response = $this->request(
             'GET',
@@ -57,7 +62,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    public function conversionDates(string $conversionPair, DateTime $startDate = null): ConversionDates
+    public function conversionDates(string $conversionPair, ?DateTime $startDate = null): ConversionDates
     {
         $response = $this->request(
             'GET',
@@ -83,7 +88,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         );
     }
 
-    public function paymentDates(string $currency, DateTime $startDate = null): PaymentDates
+    public function paymentDates(string $currency, ?DateTime $startDate = null): PaymentDates
     {
         $response = $this->request(
             'GET',
@@ -100,11 +105,12 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         }
 
         return new PaymentDates(
-            $invalidDates, new DateTime($response->first_payment_date)
+            $invalidDates,
+            new DateTime($response->first_payment_date)
         );
     }
 
-    public function settlementAccounts(string $currency = null): array
+    public function settlementAccounts(?string $currency = null): array
     {
         $response = $this->request(
             'GET',
@@ -120,7 +126,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
                 $settlementAccount->beneficiary_address,
                 $settlementAccount->beneficiary_country,
                 $settlementAccount->bank_name,
-                (is_array($settlementAccount->bank_address)) ? $settlementAccount->bank_address : [],
+                (\is_array($settlementAccount->bank_address)) ? $settlementAccount->bank_address : [],
                 $settlementAccount->bank_country,
                 $settlementAccount->currency,
                 $settlementAccount->bic_swift,
@@ -136,7 +142,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    public function paymentPurposeCodes(string $currency, string $entity_type = null, string $bank_account_country = null): array
+    public function paymentPurposeCodes(string $currency, ?string $entity_type = null, ?string $bank_account_country = null): array
     {
         $response = $this->request(
             'GET',
@@ -161,7 +167,7 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         return $ret;
     }
 
-    public function payerRequiredDetails(string $payerCountry, string $payerEntityType = null, string $paymentType = null): PayerRequirementDetails
+    public function payerRequiredDetails(string $payerCountry, ?string $payerEntityType = null, ?string $paymentType = null): PayerRequirementDetails
     {
         $response = $this->request(
             'GET',
@@ -188,10 +194,19 @@ class ReferenceEntryPoint extends AbstractEntryPoint
         );
 
         return new BankDetails(
-            $response->identifier_value, $response->identifier_type, $response->account_number,
-            $response->bic_swift, $response->bank_name, $response->bank_branch, $response->bank_address,
-            $response->bank_city, $response->bank_state, $response->bank_post_code, $response->bank_country,
-            $response->bank_country_ISO, $response->currency
+            $response->identifier_value,
+            $response->identifier_type,
+            $response->account_number,
+            $response->bic_swift,
+            $response->bank_name,
+            $response->bank_branch,
+            $response->bank_address,
+            $response->bank_city,
+            $response->bank_state,
+            $response->bank_post_code,
+            $response->bank_country,
+            $response->bank_country_ISO,
+            $response->currency
         );
     }
 

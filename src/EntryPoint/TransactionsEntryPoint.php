@@ -13,11 +13,11 @@ class TransactionsEntryPoint extends AbstractEntryPoint
 {
     public const DATE_FORMAT = 'Y-m-d';
 
-    public function retrieve(string $id, string $onBehalfOf = null): Transaction
+    public function retrieve(string $id, ?string $onBehalfOf = null): Transaction
     {
         $response = $this->request(
             'GET',
-            sprintf('transactions/%s', $id),
+            \sprintf('transactions/%s', $id),
             [
                 'on_behalf_of' => $onBehalfOf
             ]
@@ -26,22 +26,21 @@ class TransactionsEntryPoint extends AbstractEntryPoint
     }
 
     public function find(
-        Transaction $transaction = null,
-        string $amountFrom = null,
-        string $amountTo = null,
-        DateTime $settlesAtFrom = null,
-        DateTime $settlesAtTo = null,
-        DateTime $createdAtFrom = null,
-        DateTime $createdAtTo = null,
-        DateTime $updatedAtFrom = null,
-        DateTime $updatedAtTo = null,
-        string $onBehalfOf = null,
-        Pagination $pagination = null,
-        DateTime $completedAtFrom = null,
-        DateTime $completedAtTo = null,
-        string $scope = null
-    ): Transactions
-    {
+        ?Transaction $transaction = null,
+        ?string $amountFrom = null,
+        ?string $amountTo = null,
+        ?DateTime $settlesAtFrom = null,
+        ?DateTime $settlesAtTo = null,
+        ?DateTime $createdAtFrom = null,
+        ?DateTime $createdAtTo = null,
+        ?DateTime $updatedAtFrom = null,
+        ?DateTime $updatedAtTo = null,
+        ?string $onBehalfOf = null,
+        ?Pagination $pagination = null,
+        ?DateTime $completedAtFrom = null,
+        ?DateTime $completedAtTo = null,
+        ?string $scope = null
+    ): Transactions {
         if (null === $transaction) {
             $transaction = new Transaction();
         }
@@ -113,11 +112,11 @@ class TransactionsEntryPoint extends AbstractEntryPoint
         return $transaction;
     }
 
-    public function retrieveSender(string $id, string $onBehalfOf = null): TransactionSender
+    public function retrieveSender(string $id, ?string $onBehalfOf = null): TransactionSender
     {
         $response = $this->request(
             'GET',
-            sprintf('transactions/sender/%s', $id),
+            \sprintf('transactions/sender/%s', $id),
             [
                 'on_behalf_of' => $onBehalfOf
             ]

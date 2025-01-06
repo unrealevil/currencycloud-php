@@ -43,6 +43,6 @@ class Beneficiaries extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->beneficiaries);
+        return \count($this->beneficiaries);
     }
 }

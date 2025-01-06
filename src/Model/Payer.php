@@ -23,22 +23,21 @@ class Payer
     private ?DateTimeInterface $updatedAt;
 
     public function __construct(
-        string $legalEntityType = null,
-        string $companyName = null,
-        string $firstName = null,
-        string $lastName = null,
-        array $address = null,
-        string $city = null,
-        string $stateOrProvince = null,
-        string $country = null,
-        string $identificationType = null,
-        string $identificationValue = null,
-        string $postcode = null,
-        DateTimeInterface $dateOfBirth = null,
-        DateTimeInterface $createdAt = null,
-        DateTimeInterface $updatedAt = null
-    )
-    {
+        ?string $legalEntityType = null,
+        ?string $companyName = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?array $address = null,
+        ?string $city = null,
+        ?string $stateOrProvince = null,
+        ?string $country = null,
+        ?string $identificationType = null,
+        ?string $identificationValue = null,
+        ?string $postcode = null,
+        ?DateTimeInterface $dateOfBirth = null,
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null
+    ) {
         $this->legalEntityType = $legalEntityType;
         $this->companyName = $companyName;
         $this->firstName = $firstName;

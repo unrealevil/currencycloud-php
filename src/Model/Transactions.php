@@ -42,6 +42,6 @@ class Transactions extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->transactions);
+        return \count($this->transactions);
     }
 }

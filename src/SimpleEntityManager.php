@@ -103,7 +103,7 @@ class SimpleEntityManager
         $reflectionObject = new ReflectionObject($object);
         $currentProperties = $reflectionObject->getProperties();
 
-        return array_map(static function(ReflectionProperty $property) {
+        return \array_map(static function(ReflectionProperty $property) {
             $property->setAccessible(true);
 
             return $property;

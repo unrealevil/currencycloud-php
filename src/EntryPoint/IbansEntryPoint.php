@@ -10,7 +10,6 @@ use DateTime;
 
 class IbansEntryPoint extends AbstractEntityEntryPoint
 {
-
     public function find(?FindIbansCriteria $findIbansCriteria, ?Pagination $pagination): Ibans
     {
         if (null === $findIbansCriteria) {
@@ -30,7 +29,7 @@ class IbansEntryPoint extends AbstractEntityEntryPoint
             function($response) {
                 return $this->convertResponseToIban($response);
             },
-            function(array $entities, Pagination $pagination) {
+            static function(array $entities, Pagination $pagination) {
                 return new Ibans($entities, $pagination);
             },
             'ibans'

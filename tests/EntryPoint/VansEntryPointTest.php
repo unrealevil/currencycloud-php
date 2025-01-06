@@ -42,7 +42,7 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new VansEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'virtual_accounts',
                 [
@@ -57,9 +57,9 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase
         $pagination = new Pagination();
         $vansCollection = $entryPoint->retrieveVans($pagination);
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
-        $this->assertSame(count($dummy['virtual_accounts']), $vansCollection->count());
+        $this->assertSame(\count($dummy['virtual_accounts']), $vansCollection->count());
 
         $this->assertSame($dummy['virtual_accounts'][0]['id'], $vansCollection->getVans()[0]->getId());
         $this->assertSame($dummy['virtual_accounts'][0]['account_id'], $vansCollection->getVans()[0]->getAccountId());
@@ -104,7 +104,7 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint = new VansEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'virtual_accounts/find',
                 [
@@ -121,9 +121,9 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase
         $pagination = new Pagination();
         $vansCollection = $entryPoint->find($pagination);
 
-        $dummy = json_decode($data, true);
+        $dummy = \json_decode($data, true);
 
-        $this->assertSame(count($dummy['virtual_accounts']), $vansCollection->count());
+        $this->assertSame(\count($dummy['virtual_accounts']), $vansCollection->count());
 
         $this->assertSame($dummy['virtual_accounts'][0]['id'], $vansCollection->getVans()[0]->getId());
         $this->assertSame($dummy['virtual_accounts'][0]['account_id'], $vansCollection->getVans()[0]->getAccountId());

@@ -88,7 +88,7 @@ class CurrencyCloud
         $this->fundingEntryPoint = $fundingEntryPoint;
     }
 
-    public static function createDefault(Session $session, Client $client = null): CurrencyCloud
+    public static function createDefault(Session $session, ?Client $client = null): CurrencyCloud
     {
         if (null === $client) {
             $eventDispatcher = new EventDispatcher();

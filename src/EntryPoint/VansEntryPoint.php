@@ -53,7 +53,7 @@ class VansEntryPoint extends AbstractEntityEntryPoint
         return $vans;
     }
 
-    public function find(?Pagination $pagination, string $scope = null, string $accountId = null): VanCollection
+    public function find(?Pagination $pagination, ?string $scope = null, ?string $accountId = null): VanCollection
     {
         if (null === $pagination) {
             $pagination = new Pagination();
@@ -61,7 +61,7 @@ class VansEntryPoint extends AbstractEntityEntryPoint
         $response = $this->request(
             'GET',
             'virtual_accounts/find',
-            array_merge(
+            \array_merge(
                 [
                     'scope' => $scope,
                     'account_id' => $accountId,

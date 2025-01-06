@@ -10,6 +10,7 @@ use CurrencyCloud\Exception\ForbiddenException;
 use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
+
 use function array_is_list;
 use function current;
 use function implode;
@@ -34,17 +35,17 @@ class ClientHttpErrorListener
             default => ApiException::class,
         };
         $statusCode = $response->getStatusCode();
-        $date = current($response->getHeader('Date'));
-        $requestId = current($response->getHeader('X-Request-Id'));
+        $date = \current($response->getHeader('Date'));
+        $requestId = \current($response->getHeader('X-Request-Id'));
         $body =
             $response->getBody()
                 ->getContents();
-        $decoded = json_decode($body, true, flags: \JSON_THROW_ON_ERROR);
-        if (is_array($decoded)) {
+        $decoded = \json_decode($body, true, flags: \JSON_THROW_ON_ERROR);
+        if (\is_array($decoded)) {
             $errors = [];
             $messages = [];
             foreach ($decoded['error_messages'] as $field => $messageContexts) {
-                if(array_is_list($messageContexts)) {
+                if (\array_is_list($messageContexts)) {
                     foreach ($messageContexts as $messageContext) {
                         $errors[] = [
                             'field' => $field,
@@ -64,7 +65,7 @@ class ClientHttpErrorListener
                     $messages['message'] = $messageContexts['message'];
                 }
             }
-            $message = implode('; ', $messages);
+            $message = \implode('; ', $messages);
             $code = (int) $decoded['error_code'];
         } else {
             $message = 'Invalid JSON describing error returned';

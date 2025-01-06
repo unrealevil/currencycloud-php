@@ -43,6 +43,6 @@ class Conversions extends PaginatedData
      */
     public function count(): int
     {
-        return count($this->conversions);
+        return \count($this->conversions);
     }
 }

@@ -17,7 +17,7 @@ class PayersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new PayersEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payers/hi',
                 [
@@ -28,7 +28,7 @@ class PayersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $item = $entryPoint->retrieve('hi');
 
-        $this->validateObjectStrictName($item, json_decode($data2, true));
+        $this->validateObjectStrictName($item, \json_decode($data2, true));
     }
 
     /**
@@ -41,7 +41,7 @@ class PayersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $entryPoint = new PayersEntryPoint(
             $this->getMockedClient(
-                json_decode($data),
+                \json_decode($data),
                 'GET',
                 'payers/hi',
                 [
@@ -52,6 +52,6 @@ class PayersEntryPointTest extends BaseCurrencyCloudTestCase
 
         $item = $entryPoint->retrieve('hi', 'test');
 
-        $this->validateObjectStrictName($item, json_decode($data2, true));
+        $this->validateObjectStrictName($item, \json_decode($data2, true));
     }
 }
