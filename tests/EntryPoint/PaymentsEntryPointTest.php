@@ -10,12 +10,11 @@ use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Test;
 
 class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateWithDefaultValues(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -66,9 +65,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createWithAllValues(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": "12.34", "fee_currency": "GBP", "invoice_number": "INV01", "invoice_date": "2023-07-03"}';
@@ -143,9 +140,192 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
+    public function validate()
+    {
+        $data = '{"validation_result": "success"}';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            [
+                'body' => json_decode($data),
+                'headers' => [
+                    'x-sca-id' => ['123e4567-e89b-12d3-a456-426614174000'],
+                    'x-sca-required' => ['true'],
+                    'x-sca-type' => ['SMS']
+                ]
+            ],
+            'POST',
+            'payments/validate',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null,
+            ],
+            [
+                'include_response_headers' => true,
+                'headers' => [
+                    'x-sca-to-authenticated-user' => 'true'
+                ]
+            ]
+        ));
+
+        $item = $entryPoint->validate($payment, $payer, null, true);
+
+        $this->validateObjectStrictName($item, json_decode($data, true));
+    }
+
+    #[Test]
+    public function canValidateAndCreateWithSCA()
+    {
+        $data = '{"validation_result": "success"}';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            [
+                'body' => json_decode($data),
+                'headers' => [
+                    'x-sca-id' => ['123e4567-e89b-12d3-a456-426614174000'],
+                    'x-sca-required' => ['true'],
+                    'x-sca-type' => ['SMS']
+                ]
+            ],
+            'POST',
+            'payments/validate',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null
+            ],
+            [
+                'include_response_headers' => true,
+                'headers' => [
+                    'x-sca-to-authenticated-user' => 'true'
+                ]
+            ]
+        ));
+
+        $paymentValidationResult = $entryPoint->validate($payment, $payer, null, true);
+
+        $this->validateObjectStrictName($paymentValidationResult, json_decode($data, true));
+
+        $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","short_reference":"140416-GGJBNQ001","beneficiary_id":"24b58031-ed62-4555-89d8-3c285392d340","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"Test payment","reason":"Invoice Payment","payment_date":"2023-12-31T23:59:59.000Z","transferred_at":"2023-12-31T23:59:59.000Z","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","created_at":"2023-12-31T23:59:59.000Z","updated_at":"2023-12-31T23:59:59.000Z","unique_request_id":"68b833b6a13cc","failure_returned_amount":"","purpose_code":"","fee_amount":"10.00","fee_currency":"EUR","invoice_number":"INV01","invoice_date":"2023-07-03", "payer_details_source": null, "charge_type": null }';
+
+        $payment = Payment::create('GBP', '24b58031-ed62-4555-89d8-3c285392d340', '1000', 'Invoice payment', 'TestPayment')
+            ->setPaymentType('regular')
+            ->setUniqueRequestId("68b833b6a13cc");
+
+        $payer = new Payer();
+
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(), $this->getMockedClient(
+            json_decode($data),
+            'POST',
+            'payments/create',
+            [],
+            [
+                'currency' => 'GBP',
+                'amount' => '1000',
+                'reason' => 'Invoice payment',
+                'beneficiary_id' => '24b58031-ed62-4555-89d8-3c285392d340',
+                'conversion_id' => null,
+                'unique_request_id' => '68b833b6a13cc',
+                'charge_type' => null,
+                'fee_currency' => null,
+                'fee_amount' => null,
+                'invoice_number' => null,
+                'invoice_date' => null,
+                'reference' => 'TestPayment',
+                'payment_date' => null,
+                'payment_type' => 'regular',
+                'purpose_code' => null,
+                'payer_entity_type' => null,
+                'payer_company_name' => null,
+                'payer_first_name' => null,
+                'payer_last_name' => null,
+                'payer_city' => null,
+                'payer_address' => null,
+                'payer_postcode' => null,
+                'payer_state_or_province' => null,
+                'payer_country' => null,
+                'payer_date_of_birth' => null,
+                'payer_identification_type' => null,
+                'payer_identification_value' => null,
+                'on_behalf_of' => null
+            ],
+            [
+                'headers' => [
+                    'x-sca-id' => '123e4567-e89b-12d3-a456-426614174000',
+                    'x-sca-token' => '123456'
+                ]
+            ]
+        ));
+
+        $paymentResult = $entryPoint->create($payment, $payer, null, $paymentValidationResult->getScaId(), "123456");
+
+        $this->validateObjectStrictName($paymentResult, json_decode($data, true));
+    }
+
+    #[Test]
     public function canDelete(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -168,9 +348,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canDeleteWithOnBehalfOf(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -193,9 +371,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieve(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"","purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -222,9 +398,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveWithOnBehalfOf(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -251,9 +425,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canUpdate(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -307,9 +479,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canUpdateWithOnBehalfOf(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","payer_details_source":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}';
@@ -363,9 +533,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($payment, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithDefaultValues(): void
     {
         $data = '{"payments":[{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","payer_details_source":"","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
@@ -419,9 +587,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($list[0], \json_decode($data, true)['payments'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithSomeValues(): void
     {
         $data = '{"payments":[{"id":"543477161-91de-012f-e284-1e0030c7f3123","unique_request_id":null,"short_reference":"140416-GGJBNQ001","beneficiary_id":"543477161-91de-012f-e284-1e0030c7f352","conversion_id":"049bab6d-fe2a-42e1-be0f-531c59f838ea","amount":"1250000.00","currency":"GBP","status":"ready_to_send","payment_type":"regular","reference":"INVOICE 9876","reason":"Salary for March","payment_date":"2014-01-12T00:00:00+00:00","payer_details_source":"","transferred_at":"2014-01-12T13:00:00+00:00","authorisation_steps_required":"0","creator_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","last_updater_contact_id":"ab3477161-91de-012f-e284-1e0030c7f35c","failure_reason":"","payer_id":"","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","failure_returned_amount":"", "purpose_code": null, "charge_type": null, "fee_amount": null, "fee_currency": null, "invoice_number": null, "invoice_date": null}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
@@ -508,9 +674,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($list[0], \json_decode($data, true)['payments'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canAuthorisePayment(): void
     {
         $data = '{
@@ -572,41 +736,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function canGetPaymentSubmission(): void
-    {
-        $data = '{
-            "mt103": "{1:F01TCCLGB20AXXX0090000004}{2:I103BARCGB22XXXXN}{4: :20:20160617-ZSYWVY :23B:CRED :32A:160617GBP3000,0 :33B:GBP3000,0 :50K:/150618-00026 PCOMAPNY address New-York Province 555222 GB :53B:/20060513071472 :57C://SC200605 :59:/200605000 First Name Last Name e03036bf6c325dd12c58 London GB :70:test reference Test reason Payment group: 0160617-ZSYWVY :71A:SHA -}",
-            "status": "pending",
-            "submission_ref": "MXGGYAGJULIIQKDV"
-        }';
-
-        $entryPoint = new PaymentsEntryPoint(
-            new SimpleEntityManager(),
-            $this->getMockedClient(
-                \json_decode($data),
-                'GET',
-                'payments/48e707c9-43e3-4b07-a1d1-bee38f9c95a1/submission',
-                [
-                'on_behalf_of' => null,
-            ]
-            )
-        );
-
-        $paymentSubmission = $entryPoint->retrieveSubmission('48e707c9-43e3-4b07-a1d1-bee38f9c95a1');
-
-        $dummy = \json_decode($data, true);
-
-        $this->assertSame($dummy['status'], $paymentSubmission->getStatus());
-        $this->assertSame($dummy['mt103'], $paymentSubmission->getMt103());
-        $this->assertSame($dummy['submission_ref'], $paymentSubmission->getSubmissionRef());
-    }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentConfirmation(): void
     {
         $data = '{
@@ -642,9 +772,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['status'], $paymentConfirmation->getStatus());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentDeliveryDate(): void
     {
         $data = '{"payment_date":"2019-06-07","payment_delivery_date":"2019-06-07T00:00:00+00:00","payment_cutoff_time":"2019-06-07T14:30:00+00:00","payment_type":"regular","currency":"GBP","bank_country":"GB"}';
@@ -671,9 +799,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('GB', $deliveryDate->getBankCountry());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetQuotePaymentFee(): void
     {
         $data = '{
@@ -711,9 +837,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertNull($quotePaymentFee->getChargeType());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentTrackingInfo(): void
     {
         $data = '{
@@ -1169,5 +1293,21 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
             '2019-07-09T13:20:50+00:00',
             $trackingInfo->getPaymentEvents()[6]->getLastUpdateTime()->format(DateTimeInterface::RFC3339)
         );
+    }
+
+    public function canRetryPaymentNotification()
+    {
+        $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode('{}'),
+                'POST',
+                'payments/796e0d7d-bae6-4d8a-b217-3cf9ee80a350/notifications/retry',
+                [
+                    "notification_type" => "payment_failed_notification",
+                ]
+            )
+        );
+        $response = $entryPoint->retryPaymentNotifications('796e0d7d-bae6-4d8a-b217-3cf9ee80a350', 'payment_failed_notification');
+        $this->assertNotNull($response);
     }
 }

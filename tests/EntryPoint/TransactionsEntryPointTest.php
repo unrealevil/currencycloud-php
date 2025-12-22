@@ -6,15 +6,14 @@ use CurrencyCloud\EntryPoint\TransactionsEntryPoint;
 use CurrencyCloud\Model\Transaction;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
+use PHPUnit\Framework\Attributes\Test;
 
 class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieve(): void
     {
-        $data = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
+        $data = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:20+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2015-03-02T07:53:46+00:00","completed_at":"2014-01-12T12:24:21+00:00"}';
 
         $entryPoint = new TransactionsEntryPoint(
             $this->getMockedClient(
@@ -34,9 +33,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($entity, $temp);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveWithOnBehalfOf(): void
     {
         $data = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
@@ -59,9 +56,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($entity, $temp);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFind(): void
     {
         $data = '{"transactions":[{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"e93e322f-93aa-4d31-b050-449da723db0b","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
@@ -80,7 +75,6 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                     'related_entity_short_reference' => null,
                     'status' => null,
                     'type' => null,
-                    'reason' => null,
                     'on_behalf_of' => null,
                     'amount_from' => null,
                     'amount_to' => null,
@@ -111,9 +105,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($list[0], \json_decode($data, true)['transactions'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithAllParams(): void
     {
         $data = '{"transactions":[{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"e93e322f-93aa-4d31-b050-449da723db0b","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"previous_page":-1,"next_page":-1,"per_page":25,"order":"created_at","order_asc_desc":"asc"}}';
@@ -144,7 +136,6 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
                     'related_entity_short_reference' => 'H',
                     'status' => 'I',
                     'type' => 'J',
-                    'reason' => 'K',
                     'on_behalf_of' => 'L',
                     'amount_from' => 'A',
                     'amount_to' => 'B',
@@ -200,9 +191,7 @@ class TransactionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($list[0], \json_decode($data, true)['transactions'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveSenderDetails(): void
     {
         $data = '{

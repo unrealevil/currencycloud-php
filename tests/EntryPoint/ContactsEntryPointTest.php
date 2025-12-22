@@ -7,12 +7,11 @@ use CurrencyCloud\Model\Contact;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
+use PHPUnit\Framework\Attributes\Test;
 
 class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canResetTokenWithoutLoginId(): void
     {
         $entryPoint = new ContactsEntryPoint(
@@ -31,9 +30,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint->createResetToken();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canResetTokenWithLoginId(): void
     {
         $entryPoint = new ContactsEntryPoint(
@@ -52,9 +49,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint->createResetToken('hi-dude');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateWithRequiredValues(): void
     {
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
@@ -92,9 +87,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($contact, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateWithAllValues(): void
     {
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
@@ -142,9 +135,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($contact, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWhenAllParamsAreNull(): void
     {
         $data = '{"contacts":[{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
@@ -155,20 +146,21 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 \json_decode($data),
                 'POST',
                 'contacts/find',
-                request: [
-                'account_id' => null,
-                'first_name' => null,
-                'last_name' => null,
-                'email_address' => null,
-                'phone_number' => null,
-                'account_name' => null,
-                'your_reference' => null,
-                'login_id' => null,
-                'status' => null,
-                'timezone' => null,
-                'locale' => null,
-            ] + $this->getDummyPaginationRequest()
-            )
+                [],
+                [
+                    'account_id' => null,
+                    'first_name' => null,
+                    'last_name' => null,
+                    'email_address' => null,
+                    'phone_number' => null,
+                    'account_name' => null,
+                    'your_reference' => null,
+                    'login_id' => null,
+                    'status' => null,
+                    'timezone' => null,
+                    'locale' => null,
+                ] + $this->getDummyPaginationRequest()
+                )
         );
 
         $items = $entryPoint->find();
@@ -177,9 +169,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($items->getContacts()[0], \json_decode($data, true)['contacts'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWhenAllParamsAreSet(): void
     {
         $data = '{"contacts":[{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
@@ -190,20 +180,21 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 \json_decode($data),
                 'POST',
                 'contacts/find',
-                request: [
-                'account_id' => 'A',
-                'first_name' => 'B',
-                'last_name' => 'C',
-                'email_address' => 'D',
-                'phone_number' => 'E',
-                'account_name' => 'F',
-                'your_reference' => 'G',
-                'login_id' => 'I',
-                'status' => 'J',
-                'timezone' => 'K',
-                'locale' => 'L',
-            ] + $this->getDummyPaginationRequest()
-            )
+                [],
+                [
+                    'account_id' => 'A',
+                    'first_name' => 'B',
+                    'last_name' => 'C',
+                    'email_address' => 'D',
+                    'phone_number' => 'E',
+                    'account_name' => 'F',
+                    'your_reference' => 'G',
+                    'login_id' => 'I',
+                    'status' => 'J',
+                    'timezone' => 'K',
+                    'locale' => 'L',
+                ] + $this->getDummyPaginationRequest()
+                )
         );
 
         $contact = Contact::create('A', 'B', 'C', 'D', 'E')
@@ -217,9 +208,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint->find($contact);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieve(): void
     {
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
@@ -241,9 +230,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCurrent(): void
     {
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
@@ -265,9 +252,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canUpdateWhenEverythingIsSet(): void
     {
         $data = '{"login_id":"john.smith","id":"543477161-91de-012f-e284-1e0030c7f352","your_reference":"ACME12345","first_name":"John","last_name":"Smith","account_id":"87077161-91de-012f-e284-1e0030c7f352","account_name":"Company PLC","status":"enabled","phone_number":"06554 87845","mobile_phone_number":"07564 534 54","locale":"en-US","timezone":"Europe/London","email_address":"john.smith@company.com","date_of_birth":"1980-01-22","created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';

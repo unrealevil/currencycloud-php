@@ -18,8 +18,12 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         $this->entityManager = $entityManager;
     }
 
-    protected function doCreate(string $entryPoint, mixed $data, callable $converterToRequest, callable $converterFromResponse, ?string $onBehalfOf = null): EntityInterface
+    protected function doCreate(string $entryPoint, mixed $data, callable $converterToRequest, callable $converterFromResponse, ?string $onBehalfOf = null, array $headers = []): EntityInterface
     {
+        $options = [];
+        if (!empty($headers)) {
+            $options['headers'] = $headers;
+        }
 
         $response = $this->request(
             'POST',
@@ -27,7 +31,8 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             [],
             $converterToRequest($data) + [
                 'on_behalf_of' => $onBehalfOf
-            ]
+            ],
+            $options
         );
         $data = $converterFromResponse($response);
         $this->entityManager->add($data);
@@ -110,12 +115,13 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
             )
         );
         $beneficiaries = [];
-        foreach ($response->$property as $model) {
-            $entity = $converterFromResponse($model);
+
+        foreach ($response->$property as $searchModel) {
+            $entity = call_user_func($converterFromResponse, $searchModel);
             $this->entityManager->add($entity);
             $beneficiaries[] = $entity;
         }
-        return $collectionConverter($beneficiaries, $this->createPaginationFromResponse($response));
+        return call_user_func($collectionConverter, $beneficiaries, $this->createPaginationFromResponse($response));
     }
 
     protected function doUpdate(

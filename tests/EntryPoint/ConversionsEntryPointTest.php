@@ -12,12 +12,11 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Test;
 
 class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWhenAllParamsAreNull(): void
     {
         $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
@@ -48,6 +47,10 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
                     'sell_amount_to' => null,
                     'on_behalf_of' => null,
                     'unique_request_id' => null,
+                'page' => null,
+                'per_page' => null,
+                'order' => null,
+                'order_asc_desc' => null,
                     'page' => null,
                     'per_page' => null,
                     'order' => null,
@@ -62,9 +65,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertInstanceOf(Conversion::class, $items->getConversions()[0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWhenAllParamsAreNonNull(): void
     {
         $data = '{"conversions":[{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}],"pagination":{"total_entries":1,"total_pages":1,"current_page":1,"per_page":25,"previous_page":-1,"next_page":2,"order":"created_at","order_asc_desc":"asc"}}';
@@ -136,9 +137,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint->find($criteria, null, $pagination);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieve(): void
     {
         $data = '{"id":"c9b6b851-10f9-4bbf-881e-1d8a49adf7d8","unique_request_id":null,"account_id":"0386e472-8d2b-45a8-9c14-a393dce5bf3a","creator_contact_id":"ac743762-5860-4b78-9c6a-82c5bca68867","short_reference":"20140507-VRTNFC","settlement_date":"2014-05-21T14:00:00Z","conversion_date":"2014-05-21T14:00:00Z","status":"awaiting_funds","currency_pair":"GBPUSD","buy_currency":"GBP","sell_currency":"USD","fixed_side":"buy","partner_buy_amount":"1000.00","partner_sell_amount":"1587.80","client_buy_amount":"1000.00","client_sell_amount":"1594.90","mid_market_rate":"1.5868","core_rate":"1.5871","partner_rate":"1.5878","client_rate":"1.5949","deposit_required":true,"deposit_amount":"47.85","deposit_currency":"GBP","deposit_status":"awaiting_deposit","deposit_required_at":"2013-05-09T14:00:00Z","payment_ids":["b934794f-d810-4b4a-b360-5a0f47b7126e"],"created_at":"2014-01-12T00:00:00+00:00","updated_at":"2014-01-12T00:00:00+00:00"}';
@@ -159,9 +158,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCancel(): void
     {
         $data = '{"account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","event_account_id":"f054ef5d-3cfa-4d2c-ad84-caee50e5fc83","event_contact_id":"0ff0ea60-d976-4c7f-ad7f-3eb94da68452","conversion_id":"740a64c5-fd0a-47d4-b690-51310501f470","event_type":"self_service_cancellation","amount":"-1.00","currency":"GBP","notes":"Cancelduetoveryimportantreason","event_date_time":"2018-05-01T09:22:11+00:00"}';
@@ -193,9 +190,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummyData['event_date_time'], $conversionCancellation->getEventDateTime()->format(DATE_RFC3339));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canDateChange(): void
     {
         $data = '{"conversion_id":"13909849-1dbd-45c1-83c7-25930132f02c","amount":"19.12","currency":"GBP","new_conversion_date":"2018-05-14T00:00:00+00:00","new_settlement_date":"2018-05-14T15:30:00+00:00","old_conversion_date":"2018-05-03T00:00:00+00:00","old_settlement_date":"2018-05-03T15:30:00+00:00","event_date_time":"2018-05-01T14:08:17+00:00"}';
@@ -216,9 +211,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertInstanceOf(ConversionDateChanged::class, $conversionDateChanged);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canSplit(): void
     {
         $data = '{"parent_conversion":{"id":"13909849-1dbd-45c1-83c7-25930132f02c","short_reference":"20180501-JLWFFS","sell_amount":"7031.75","sell_currency":"GBP","buy_amount":"9900.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"},"child_conversion":{"id":"bd054ea4-0e81-48de-bb49-b0373ae34180","short_reference":"20180501-XGYQDR","sell_amount":"71.03","sell_currency":"GBP","buy_amount":"100.00","buy_currency":"USD","settlement_date":"2018-05-14T15:30:00+00:00","conversion_date":"2018-05-14T00:00:00+00:00","status":"awaiting_funds"}}';
@@ -239,9 +232,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertInstanceOf(ConversionSplit::class, $conversionSplit);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveConversionProfitLoss(): void
     {
         $data = '{
@@ -351,9 +342,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['pagination']['total_entries'], $conversionProfitLossCollection->getPagination()->getTotalEntries());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveConversionDateChangeQuote(): void
     {
         $data = '{
@@ -404,9 +393,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveConversionSplitPreview(): void
     {
         $data = '{
@@ -466,9 +453,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['child_conversion']['status'], $conversionConversionSplitPreview->getChildConversion()->getStatus());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveConversionSplitHistory(): void
     {
         $data = '{
@@ -559,9 +544,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveConversionCancellationQuote(): void
     {
         $data = '{
@@ -585,9 +568,7 @@ class ConversionsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['currency'], $conversionConversionCancellationQuote->getCurrency());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateConversionWithConversionDatePreference(): void
     {
         $data = '{

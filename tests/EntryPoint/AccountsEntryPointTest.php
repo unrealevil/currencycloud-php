@@ -8,6 +8,7 @@ use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
 {
@@ -32,7 +33,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'terms_and_conditions_accepted' => null,
         'api_trading' => 'true',
         'online_trading' => 'true',
-        'phone_trading' => 'true',
+        'phone_trading' => 'true'
     ];
 
     protected array $in = [
@@ -53,12 +54,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         'terms_and_conditions_accepted' => null,
         'api_trading' => null,
         'online_trading' => null,
-        'phone_trading' => null,
+        'phone_trading' => null
     ];
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nullableFieldsCanBeNull(): void
     {
         $entryPoint = new AccountsEntryPoint(
@@ -77,9 +76,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $entryPoint->create($account);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function allFieldsCanBeSet(): void
     {
         $in = [
@@ -100,7 +97,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'terms_and_conditions_accepted' => 'false',
             'api_trading' => 'true',
             'online_trading' => 'true',
-            'phone_trading' => 'false',
+            'phone_trading' => 'false'
         ];
 
         $entryPoint = new AccountsEntryPoint(
@@ -138,9 +135,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($account, $this->out);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function accountCanBeRetrievedWithOnBehalfOf(): void
     {
         $entryPoint = new AccountsEntryPoint(
@@ -158,9 +153,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($account, $this->out);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function accountsCanBeFound(): void
     {
         $in = \array_merge(
@@ -176,6 +169,10 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             ]
         );
         unset($in['spread_table'], $in['identification_type'], $in['identification_value'], $in['on_behalf_of'], $in['terms_and_conditions_accepted'], $in['api_trading'], $in['online_trading'], $in['phone_trading']);
+        unset($in['terms_and_conditions_accepted']);
+        unset($in['api_trading']);
+        unset($in['online_trading']);
+        unset($in['phone_trading']);
         $entryPoint = new AccountsEntryPoint(
             new SimpleEntityManager(),
             $this->getMockedClient(
@@ -189,6 +186,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ),
                 'POST',
                 'accounts/find',
+            [],
                 request: $in
             )
         );
@@ -202,9 +200,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCurrent(): void
     {
         $entryPoint = new AccountsEntryPoint(
@@ -222,9 +218,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($account, $this->out);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canUpdate(): void
     {
         $account = new Account();
@@ -254,9 +248,7 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($account, $this->out);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentChargesSettings(): void
     {
 
@@ -307,13 +299,11 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertTrue($setting2->isDefault());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canUpdatePaymentChargesSettings(): void
     {
 
-        $data = '{        
+        $data = '{
             "charge_settings_id": "090baf7e-5chh-4bfd-9b7l-ad3f8a310123",
             "account_id": "3e12053j-ae22-40b1-cc4e-cc0230c009a5",
             "charge_type": "ours",
@@ -348,32 +338,23 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertFalse($updated->isDefault());
     }
 
-    /**
-     * @test
-     */
-    public function termAndConditionsAcceptedTrue(): void
+    #[Test]
+    public function termAndConditionsAcceptedTrue()
     {
         $this->testTermsAndConditionsAccepted(true);
     }
-
-    /**
-     * @test
-     */
-    public function termAndConditionsAcceptedFalse(): void
+    #[Test]
+    public function termAndConditionsAcceptedFalse()
     {
         $this->testTermsAndConditionsAccepted(false);
     }
-
-    /**
-     * @test
-     */
-    public function termAndConditionsAcceptedNull(): void
+    #[Test]
+    public function termAndConditionsAcceptedNull()
     {
         $this->testTermsAndConditionsAccepted(null);
     }
 
-    private function testTermsAndConditionsAccepted($isTermsAndConditionsAccepted): void
-    {
+    private function testTermsAndConditionsAccepted($isTermsAndConditionsAccepted) {
         $in = [
             'legal_entity_type' => 'A',
             'account_name' => 'B',
@@ -390,21 +371,20 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
             'identification_value' => 'M',
             'on_behalf_of' => null,
             'terms_and_conditions_accepted' => (null === $isTermsAndConditionsAccepted) ? null :
-                ($isTermsAndConditionsAccepted ? 'true' : 'false'),
+            ($isTermsAndConditionsAccepted ? 'true' : 'false'),
             'api_trading' => 'true',
             'online_trading' => 'true',
-            'phone_trading' => 'true',
+            'phone_trading' => 'true'
         ];
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(),
-            $this->getMockedClient(
-                \json_decode(\json_encode($this->out)),
-                'POST',
-                'accounts/create',
-                [],
-                $in
-            )
+            new SimpleEntityManager(), $this->getMockedClient(
+            json_decode(json_encode($this->out)),
+            'POST',
+            'accounts/create',
+            [],
+            $in
+        )
         );
 
         $account =

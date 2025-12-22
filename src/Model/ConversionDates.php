@@ -15,6 +15,18 @@ class ConversionDates
     private ?DateTime $firstConversionCutoffDatetime;
     private ?DateTime $optimizeLiquidityConversionDate;
     private ?DateTime $nextDayConversionDate;
+    /**
+     * @var DateTime
+     */
+    private $firstConversionCutoffDatetime;
+    /**
+     * @var DateTime
+     */
+    private $optimizeLiquidityConversionDate;
+    /**
+     * @var DateTime
+     */
+    private $nextDayConversionDate;
 
     /**
      * @param InvalidConversionDate[] $invalidConversionDates

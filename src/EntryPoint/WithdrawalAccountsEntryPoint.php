@@ -22,9 +22,9 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
             $pagination = new Pagination();
         }
 
-        return $this->doFind('withdrawal_accounts/find', $findWithdrawalAccountsCriteria, $pagination, function($findWithdrawalAccountsCriteria) {
+        return $this->doFind('withdrawal_accounts/find', $findWithdrawalAccountsCriteria, $pagination, function ($findWithdrawalAccountsCriteria) {
             return $this->convertFindWithdrawalAccountsCriteriaToRequest($findWithdrawalAccountsCriteria);
-        }, function($response) {
+        }, function ($response) {
             return $this->convertResponseToWithdrawalAccount($response);
         }, static function(array $entities, Pagination $pagination) {
             return new WithdrawalAccounts($entities, $pagination);
@@ -50,6 +50,7 @@ class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
         return [
             'account_id' => $findWithdrawalAccountsCriteria->getAccountId(),
         ];
+        return $common;
     }
 
     protected function convertResponseToWithdrawalAccount($response): WithdrawalAccount

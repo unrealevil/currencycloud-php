@@ -82,4 +82,5 @@ class BalancesEntryPoint extends AbstractEntryPoint
 
         return $balance;
     }
+
 }

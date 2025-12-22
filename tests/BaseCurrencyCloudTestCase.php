@@ -96,4 +96,17 @@ class BaseCurrencyCloudTestCase extends TestCase
         $property->setAccessible(true);
         $property->setValue($object, $value);
     }
+
+
+    protected function getMock($className){
+        return $this->createMock($className);
+    }
+
+    protected function setExpectedException(string $class, string $string=null)
+    {
+        $this->expectException($class);
+        if($string){
+            $this->expectExceptionMessage($string);
+        }
+    }
 }

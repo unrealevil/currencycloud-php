@@ -84,7 +84,6 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         $isApiTrading = $account->isApiTrading();
         $isOnlineTrading = $account->isOnlineTrading();
         $isPhoneTrading = $account->isPhoneTrading();
-
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),

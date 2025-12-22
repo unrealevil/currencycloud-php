@@ -9,12 +9,11 @@ use CurrencyCloud\EntryPoint\ReportsEntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateConversionReport(): void
     {
         $data = '{
@@ -83,9 +82,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('Test report for Conversion', $report->getDescription());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreatePaymentReport(): void
     {
         $data = '{
@@ -149,9 +146,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('Test Report for Payment', $report->getDescription());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindReportRequests(): void
     {
         $data = '{
@@ -265,9 +260,7 @@ class ReportsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('own', $reports->getReports()[0]->getSearchParams()->getScope());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveReport(): void
     {
         $data = '{

@@ -89,7 +89,16 @@ class Client
 
             switch ($response->getStatusCode()) {
                 case 200:
-                    return \json_decode($response->getBody()->getContents(), flags: \JSON_THROW_ON_ERROR);
+                    $data = \json_decode($response->getBody()->getContents(), flags: \JSON_THROW_ON_ERROR);
+                    // Return response headers if requested.
+                    if (isset($options['include_response_headers']) && $options['include_response_headers']) {
+                        return [
+                            'body' => $data,
+                            'headers' => $response->getHeaders()
+                        ];
+                    }
+
+                    return $data;
                 default:
                     //Everything that's not 200 consider error and dispatch event
                     $event = new ClientHttpErrorEvent(

@@ -31,6 +31,7 @@ use GuzzleHttp\Handler\CurlFactory;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use VCR\VCR;
 
 class BaseCurrencyCloudVCRTestCase extends BaseCurrencyCloudTestCase
 {

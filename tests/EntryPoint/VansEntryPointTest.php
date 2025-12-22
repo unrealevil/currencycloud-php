@@ -6,12 +6,11 @@ use CurrencyCloud\EntryPoint\VansEntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class VansEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetVans(): void
     {
         $data = '{
@@ -71,9 +70,7 @@ class VansEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['virtual_accounts'][0]['routing_code'], $vansCollection->getVans()[0]->getRoutingCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindVans(): void
     {
         $data = '{

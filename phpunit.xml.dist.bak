@@ -1,0 +1,19 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false"
+         colors="true" bootstrap="tests/bootstrap.php" failOnRisky="true" failOnWarning="true">
+
+    <testsuites>
+        <testsuite name="EntryPoint">
+            <directory>./tests/EntryPoint</directory>
+        </testsuite>
+        <testsuite name="Core">
+            <directory>./tests/Core</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage>
+        <include>
+            <directory>src</directory>
+        </include>
+    </coverage>
+
+</phpunit>

@@ -6,12 +6,11 @@ use CurrencyCloud\EntryPoint\FundingEntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Test;
 
 class FundingEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindFundingAccounts(): void
     {
         $data = '{
@@ -92,9 +91,7 @@ class FundingEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('desc', $pagination->getOrderAscDesc());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindFundingAccountsOnBehalfOf(): void
     {
         $data = '{

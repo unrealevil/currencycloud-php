@@ -7,13 +7,12 @@ use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 use DateTimeInterface;
 
+use PHPUnit\Framework\Attributes\Test;
 use function count;
 
 class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentDates(): void
     {
         $data = '{"invalid_payment_dates":{"2013-04-18":"Good Friday","2013-04-19":"No trading on Saturday"},"first_payment_date":"2013-04-15"}';
@@ -50,9 +49,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPayerRequirementDetails(): void
     {
         $data = '{
@@ -201,9 +198,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetBankDetails(): void
     {
         $data = '{"identifier_value":"GB19TCCL00997901654515","identifier_type":"iban","account_number":"GB19TCCL00997901654515","bic_swift":"TCCLGB22XXX","bank_name":"THE CURRENCY CLOUD LIMITED","bank_branch":"","bank_address":"12 STEWARD STREET  THE STEWARD BUILDING FLOOR 0","bank_city":"LONDON","bank_state":"LONDON","bank_post_code":"E1 6FQ","bank_country":"UNITED KINGDOM","bank_country_ISO":"GB","currency":null}';
@@ -237,9 +232,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('', $details->getCurrency());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentFeeRules_noParameters(): void
     {
         $data = '{
@@ -297,9 +290,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame("GBP", $rules[2]->getFeeCurrency());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentFeeRules_paymentTypeFilter(): void
     {
         $data = '{
@@ -336,9 +327,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('USD', $rules[0]->getFeeCurrency());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymentFeeRules_chargeTypeFilter(): void
     {
         $data = '{
@@ -375,9 +364,7 @@ class ReferencesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('GBP', $rules[0]->getFeeCurrency());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetPaymenPurposeCode(): void
     {
         $data = '{

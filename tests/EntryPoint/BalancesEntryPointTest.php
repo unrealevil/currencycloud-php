@@ -6,6 +6,7 @@ use CurrencyCloud\EntryPoint\BalancesEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Test;
 
 class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
 {
@@ -32,9 +33,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
         ],
     ];
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFind(): void
     {
         $entryPoint = new BalancesEntryPoint(
@@ -56,9 +55,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($ret->getBalances()[0], $this->out['balances'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithNonNull(): void
     {
         $date = new DateTime();
@@ -81,9 +78,7 @@ class BalancesEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($ret->getBalances()[0], $this->out['balances'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canTopUpMargin(): void
     {
         $data = '{
