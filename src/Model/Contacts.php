@@ -14,7 +14,6 @@ class Contacts extends PaginatedData
 
     /**
      * @param Contact[] $contacts
-     * @param Pagination $pagination
      */
     public function __construct(array $contacts, Pagination $pagination)
     {
@@ -30,17 +29,11 @@ class Contacts extends PaginatedData
         return $this->contacts;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->contacts);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->contacts);

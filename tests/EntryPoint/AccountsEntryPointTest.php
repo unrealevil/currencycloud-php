@@ -186,7 +186,6 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
                 ),
                 'POST',
                 'accounts/find',
-            [],
                 request: $in
             )
         );
@@ -378,13 +377,14 @@ class AccountsEntryPointTest extends BaseCurrencyCloudTestCase
         ];
 
         $entryPoint = new AccountsEntryPoint(
-            new SimpleEntityManager(), $this->getMockedClient(
-            json_decode(json_encode($this->out)),
-            'POST',
-            'accounts/create',
-            [],
-            $in
-        )
+            new SimpleEntityManager(),
+            $this->getMockedClient(
+                json_decode(json_encode($this->out)),
+                'POST',
+                'accounts/create',
+                [],
+                $in
+            )
         );
 
         $account =

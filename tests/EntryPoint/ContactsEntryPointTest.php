@@ -22,8 +22,8 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'contacts/reset_token/create',
                 [],
                 [
-                'login_id' => null,
-            ]
+                    'login_id' => null,
+                ]
             )
         );
 
@@ -41,8 +41,8 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'contacts/reset_token/create',
                 [],
                 [
-                'login_id' => 'hi-dude',
-            ]
+                    'login_id' => 'hi-dude',
+                ]
             )
         );
 
@@ -62,21 +62,21 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'contacts/create',
                 [],
                 [
-                'account_id' => 'A',
-                'first_name' => 'B',
-                'last_name' => 'C',
-                'email_address' => 'D',
-                'phone_number' => 'E',
-                'account_name' => null,
-                'your_reference' => null,
-                'login_id' => null,
-                'status' => null,
-                'timezone' => null,
-                'locale' => null,
-                'date_of_birth' => null,
-                'mobile_phone_number' => null,
-                'on_behalf_of' => null,
-            ]
+                    'account_id' => 'A',
+                    'first_name' => 'B',
+                    'last_name' => 'C',
+                    'email_address' => 'D',
+                    'phone_number' => 'E',
+                    'account_name' => null,
+                    'your_reference' => null,
+                    'login_id' => null,
+                    'status' => null,
+                    'timezone' => null,
+                    'locale' => null,
+                    'date_of_birth' => null,
+                    'mobile_phone_number' => null,
+                    'on_behalf_of' => null,
+                ]
             )
         );
 
@@ -102,21 +102,21 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'contacts/create',
                 [],
                 [
-                'account_id' => 'A',
-                'first_name' => 'B',
-                'last_name' => 'C',
-                'email_address' => 'D',
-                'phone_number' => 'E',
-                'account_name' => 'F',
-                'your_reference' => 'G',
-                'mobile_phone_number' => 'H',
-                'login_id' => 'I',
-                'status' => 'J',
-                'timezone' => 'K',
-                'locale' => 'L',
-                'date_of_birth' => $date->format('Y-m-d'),
-                'on_behalf_of' => null,
-            ]
+                    'account_id' => 'A',
+                    'first_name' => 'B',
+                    'last_name' => 'C',
+                    'email_address' => 'D',
+                    'phone_number' => 'E',
+                    'account_name' => 'F',
+                    'your_reference' => 'G',
+                    'mobile_phone_number' => 'H',
+                    'login_id' => 'I',
+                    'status' => 'J',
+                    'timezone' => 'K',
+                    'locale' => 'L',
+                    'date_of_birth' => $date->format('Y-m-d'),
+                    'on_behalf_of' => null,
+                ]
             )
         );
 
@@ -160,7 +160,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                     'timezone' => null,
                     'locale' => null,
                 ] + $this->getDummyPaginationRequest()
-                )
+            )
         );
 
         $items = $entryPoint->find();
@@ -194,7 +194,7 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                     'timezone' => 'K',
                     'locale' => 'L',
                 ] + $this->getDummyPaginationRequest()
-                )
+            )
         );
 
         $contact = Contact::create('A', 'B', 'C', 'D', 'E')
@@ -220,8 +220,8 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'GET',
                 'contacts/hi',
                 [
-                'on_behalf_of' => null,
-            ]
+                    'on_behalf_of' => null,
+                ]
             )
         );
 
@@ -242,8 +242,8 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'GET',
                 'contacts/current',
                 [
-                'on_behalf_of' => null,
-            ]
+                    'on_behalf_of' => null,
+                ]
             )
         );
 
@@ -282,20 +282,20 @@ class ContactsEntryPointTest extends BaseCurrencyCloudTestCase
                 'contacts/hi',
                 [],
                 [
-                'account_id' => 'A',
-                'first_name' => 'B',
-                'last_name' => 'C',
-                'email_address' => 'D',
-                'phone_number' => 'E',
-                'account_name' => 'F',
-                'your_reference' => 'G',
-                'mobile_phone_number' => 'H',
-                'login_id' => 'I',
-                'status' => 'J',
-                'timezone' => 'K',
-                'locale' => 'L',
-                'date_of_birth' => $date->format('Y-m-d'),
-            ]
+                    'account_id' => 'A',
+                    'first_name' => 'B',
+                    'last_name' => 'C',
+                    'email_address' => 'D',
+                    'phone_number' => 'E',
+                    'account_name' => 'F',
+                    'your_reference' => 'G',
+                    'mobile_phone_number' => 'H',
+                    'login_id' => 'I',
+                    'status' => 'J',
+                    'timezone' => 'K',
+                    'locale' => 'L',
+                    'date_of_birth' => $date->format('Y-m-d'),
+                ]
             )
         );
 

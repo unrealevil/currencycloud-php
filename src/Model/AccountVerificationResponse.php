@@ -4,129 +4,83 @@ namespace CurrencyCloud\Model;
 
 class AccountVerificationResponse
 {
-    /**
-     * @var string
-     */
-    private $answer;
-    /**
-     * @var string
-     */
-    private $actualName;
-    /**
-     * @var string
-     */
-    private $reasonCode;
-    /**
-     * @var string
-     */
-    private $reason;
-    /**
-     * @var string
-     */
-    private $reasonType;
+    private ?string $answer;
+    private ?string $actualName;
+    private ?string $reasonCode;
+    private ?string $reason;
+    private ?string $reasonType;
 
-    public function __construct($answer, $actualName, $reasonCode, $reason, $reasonType)
-    {
-        $this->answer = (string)$answer;
-        $this->actualName = (string)$actualName;
-        $this->reasonCode = (string)$reasonCode;
-        $this->reason = (string)$reason;
-        $this->reasonType = (string)$reasonType;
+    public function __construct(
+        ?string $answer = null,
+        ?string $actualName = null,
+        ?string $reasonCode = null,
+        ?string $reason = null,
+        ?string $reasonType = null
+    ) {
+        $this->answer = $answer;
+        $this->actualName = $actualName;
+        $this->reasonCode = $reasonCode;
+        $this->reason = $reason;
+        $this->reasonType = $reasonType;
     }
 
-    /**
-     * @return string
-     */
-    public function getAnswer()
+    public function getAnswer(): ?string
     {
         return $this->answer;
     }
 
-    /**
-     * @param string $answer
-     *
-     * @return $this
-     */
-    public function setAnswer($answer)
+    public function setAnswer(string $answer): self
     {
-        $this->answer = (string) $answer;
+        $this->answer = $answer;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getActualName()
+    public function getActualName(): ?string
     {
         return $this->actualName;
     }
 
-    /**
-     * @param string $actualName
-     *
-     * @return $this
-     */
-    public function setActualName($actualName)
+    public function setActualName(string $actualName): self
     {
-        $this->actualName = (string) $actualName;
+        $this->actualName = $actualName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReasonCode()
+    public function getReasonCode(): ?string
     {
         return $this->reasonCode;
     }
 
-    /**
-     * @param string $reasonCode
-     *
-     * @return $this
-     */
-    public function setReasonCode($reasonCode)
+    public function setReasonCode(string $reasonCode): self
     {
-        $this->reasonCode = (string) $reasonCode;
+        $this->reasonCode = $reasonCode;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReason()
+    public function getReason(): ?string
     {
         return $this->reason;
     }
 
-    /**
-     * @param string $reason
-     *
-     * @return $this
-     */
-    public function setReason($reason)
+    public function setReason(string $reason): self
     {
-        $this->reason = (string) $reason;
+        $this->reason = $reason;
+
         return $this;
     }
 
-   /**
-     * @return string
-     */
-    public function getReasonType()
+    public function getReasonType(): ?string
     {
         return $this->reasonType;
     }
 
-    /**
-     * @param string $reasonType
-     *
-     * @return $this
-     */
-    public function setReasonType($reasonType)
+    public function setReasonType(string $reasonType): self
     {
-        $this->reasonType = (string) $reasonType;
+        $this->reasonType = $reasonType;
+
         return $this;
     }
-
 }

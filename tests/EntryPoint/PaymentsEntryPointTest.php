@@ -141,7 +141,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
     }
 
     #[Test]
-    public function validate()
+    public function validate(): void
     {
         $data = '{"validation_result": "success"}';
 
@@ -206,7 +206,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
     }
 
     #[Test]
-    public function canValidateAndCreateWithSCA()
+    public function canValidateAndCreateWithSCA(): void
     {
         $data = '{"validation_result": "success"}';
 
@@ -1295,7 +1295,7 @@ class PaymentsEntryPointTest extends BaseCurrencyCloudTestCase
         );
     }
 
-    public function canRetryPaymentNotification()
+    public function canRetryPaymentNotification(): void
     {
         $entryPoint = new PaymentsEntryPoint(new SimpleEntityManager(),
             $this->getMockedClient(

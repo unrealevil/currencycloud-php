@@ -14,7 +14,6 @@ class Ibans extends PaginatedData
 
     /**
      * @param Iban[] $ibans
-     * @param Pagination $pagination
      */
     public function __construct(array $ibans, Pagination $pagination)
     {
@@ -40,17 +39,11 @@ class Ibans extends PaginatedData
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->ibans);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->ibans);

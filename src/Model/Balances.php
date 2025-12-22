@@ -14,7 +14,6 @@ class Balances extends PaginatedData
 
     /**
      * @param Balance[] $balances
-     * @param Pagination $pagination
      */
     public function __construct(array $balances, Pagination $pagination)
     {
@@ -30,17 +29,11 @@ class Balances extends PaginatedData
         return $this->balances;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->balances);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->balances);

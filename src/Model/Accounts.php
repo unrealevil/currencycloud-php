@@ -14,7 +14,6 @@ class Accounts extends PaginatedData
 
     /**
      * @param Account[] $accounts
-     * @param Pagination $pagination
      */
     public function __construct(array $accounts, Pagination $pagination)
     {
@@ -30,17 +29,11 @@ class Accounts extends PaginatedData
         return $this->accounts;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->accounts);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->accounts);

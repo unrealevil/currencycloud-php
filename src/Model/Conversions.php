@@ -14,7 +14,6 @@ class Conversions extends PaginatedData
 
     /**
      * @param Conversion[] $conversions
-     * @param Pagination $pagination
      */
     public function __construct(array $conversions, Pagination $pagination)
     {
@@ -30,17 +29,11 @@ class Conversions extends PaginatedData
         return $this->conversions;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->conversions);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->conversions);

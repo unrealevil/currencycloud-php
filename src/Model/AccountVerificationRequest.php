@@ -4,54 +4,31 @@ namespace CurrencyCloud\Model;
 
 class AccountVerificationRequest
 {
-    /**
-     * @var array
-     */
-    private $paymentType;
-    /**
-     * @var string
-     */
-    private $bankCountry;
-    /**
-     * @var string
-     */
-    private $currency;
-    /**
-     * @var string
-     */
-    private $accountNumber;
-    /**
-     * @var string
-     */
-    private $beneficiaryEntityType;
-    /**
-     * @var string
-     */
-    private $beneficiaryCompanyName;
-    /**
-     * @var string
-     */
-    private $beneficiaryFirstName;
-    /**
-     * @var string
-     */
-    private $beneficiaryLastName;
-    /**
-     * @var string
-     */
-    private $routingCodeType1;
-    /**
-     * @var string
-     */
-    private $routingCodeValue1;
-    /**
-     * @var string
-     */
-    private $secondaryReferenceData;
+    private ?array $paymentType;
+    private ?string $bankCountry;
+    private ?string $currency;
+    private ?string $accountNumber;
+    private ?string $beneficiaryEntityType;
+    private ?string $beneficiaryCompanyName;
+    private ?string $beneficiaryFirstName;
+    private ?string $beneficiaryLastName;
+    private ?string $routingCodeType1;
+    private ?string $routingCodeValue1;
+    private ?string $secondaryReferenceData;
 
-
-    public function __construct($paymentType = null, $bankCountry = null, $currency = null, $accountNumber = null, $beneficiaryEntityType = null, $beneficiaryCompanyName = null, $beneficiaryFirstName = null, $beneficiaryLastName = null, $routingCodeType1 = null, $routingCodeValue1 = null, $secondaryReferenceData = null)
-    {
+    public function __construct(
+        ?array $paymentType = null,
+        ?string $bankCountry = null,
+        ?string $currency = null,
+        ?string $accountNumber = null,
+        ?string $beneficiaryEntityType = null,
+        ?string $beneficiaryCompanyName = null,
+        ?string $beneficiaryFirstName = null,
+        ?string $beneficiaryLastName = null,
+        ?string $routingCodeType1 = null,
+        ?string $routingCodeValue1 = null,
+        ?string $secondaryReferenceData = null
+    ) {
         $this->paymentType = $paymentType;
         $this->bankCountry = $bankCountry;
         $this->currency = $currency;
@@ -65,212 +42,135 @@ class AccountVerificationRequest
         $this->secondaryReferenceData = $secondaryReferenceData;
     }
 
-    /**
-     * @return array
-     */
-    public function getPaymentType()
+    public function getPaymentType(): ?array
     {
         return $this->paymentType;
     }
 
-    /**
-     * @param array $paymentTypes
-     *
-     * @return $this
-     */
-    public function setPaymentType($paymentType)
+    public function setPaymentType(?array $paymentType): self
     {
         $this->paymentType = $paymentType;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankCountry()
+    public function getBankCountry(): ?string
     {
         return $this->bankCountry;
     }
 
-    /**
-     * @param string $bankCountry
-     *
-     * @return $this
-     */
-    public function setBankCountry($bankCountry)
+    public function setBankCountry(string $bankCountry): self
     {
-        $this->bankCountry = (string) $bankCountry;
+        $this->bankCountry = $bankCountry;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     *
-     * @return $this
-     */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency): self
     {
-        $this->currency = (string) $currency;
+        $this->currency = $currency;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
-    /**
-     * @param string $accountNumber
-     *
-     * @return $this
-     */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber): self
     {
-        $this->accountNumber = (string) $accountNumber;
+        $this->accountNumber = $accountNumber;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryEntityType()
+    public function getBeneficiaryEntityType(): ?string
     {
         return $this->beneficiaryEntityType;
     }
 
-    /**
-     * @param string $beneficiaryEntityType
-     *
-     * @return $this
-     */
-    public function setBeneficiaryEntityType($beneficiaryEntityType)
+    public function setBeneficiaryEntityType(string $beneficiaryEntityType): self
     {
-        $this->beneficiaryEntityType = (string) $beneficiaryEntityType;
+        $this->beneficiaryEntityType = $beneficiaryEntityType;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryCompanyName()
+    public function getBeneficiaryCompanyName(): ?string
     {
         return $this->beneficiaryCompanyName;
     }
 
-    /**
-     * @param string $beneficiaryCompanyName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryCompanyName($beneficiaryCompanyName)
+    public function setBeneficiaryCompanyName(string $beneficiaryCompanyName): self
     {
-        $this->beneficiaryCompanyName = (string) $beneficiaryCompanyName;
+        $this->beneficiaryCompanyName = $beneficiaryCompanyName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryFirstName()
+    public function getBeneficiaryFirstName(): ?string
     {
         return $this->beneficiaryFirstName;
     }
 
-    /**
-     * @param string $beneficiaryFirstName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryFirstName($beneficiaryFirstName)
+    public function setBeneficiaryFirstName(string $beneficiaryFirstName): self
     {
-        $this->beneficiaryFirstName = (string) $beneficiaryFirstName;
+        $this->beneficiaryFirstName = $beneficiaryFirstName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeneficiaryLastName()
+    public function getBeneficiaryLastName(): ?string
     {
         return $this->beneficiaryLastName;
     }
 
-    /**
-     * @param string $beneficiaryLastName
-     *
-     * @return $this
-     */
-    public function setBeneficiaryLastName($beneficiaryLastName)
+    public function setBeneficiaryLastName(string $beneficiaryLastName): self
     {
-        $this->beneficiaryLastName = (string) $beneficiaryLastName;
+        $this->beneficiaryLastName = $beneficiaryLastName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeType1()
+    public function getRoutingCodeType1(): ?string
     {
         return $this->routingCodeType1;
     }
 
-    /**
-     * @param string $routingCodeType1
-     *
-     * @return $this
-     */
-    public function setRoutingCodeType1($routingCodeType1)
+    public function setRoutingCodeType1(string $routingCodeType1): self
     {
-        $this->routingCodeType1 = (string) $routingCodeType1;
+        $this->routingCodeType1 = $routingCodeType1;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutingCodeValue1()
+    public function getRoutingCodeValue1(): ?string
     {
         return $this->routingCodeValue1;
     }
 
-    /**
-     * @param string $routingCodeValue1
-     *
-     * @return $this
-     */
-    public function setRoutingCodeValue1($routingCodeValue1)
+    public function setRoutingCodeValue1(string $routingCodeValue1): self
     {
-        $this->routingCodeValue1 = (string) $routingCodeValue1;
+        $this->routingCodeValue1 = $routingCodeValue1;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSecondaryReferenceData()
+    public function getSecondaryReferenceData(): ?string
     {
         return $this->secondaryReferenceData;
     }
 
-    /**
-     * @param string $routingCodeValue1
-     *
-     * @return $this
-     */
-    public function setSecondaryReferenceData($secondaryReferenceData)
+    public function setSecondaryReferenceData(string $secondaryReferenceData): self
     {
-        $this->secondaryReferenceData = (string) $secondaryReferenceData;
+        $this->secondaryReferenceData = $secondaryReferenceData;
+
         return $this;
     }
 }

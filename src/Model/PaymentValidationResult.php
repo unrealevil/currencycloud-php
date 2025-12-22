@@ -4,71 +4,47 @@ namespace CurrencyCloud\Model;
 
 class PaymentValidationResult
 {
-
     private const HEADER_SCA_ID = 'x-sca-id';
     private const HEADER_SCA_REQUIRED = 'x-sca-required';
     private const HEADER_SCA_TYPE = 'x-sca-type';
 
-    /**
-     * @var string
-     */
-    private $validationResult;
+    private string $validationResult;
+    private array $responseHeaders;
 
-    /**
-     * @var array
-     */
-    private $responseHeaders = [];
-
-    public function __construct($validationResult, $responseHeaders)
+    public function __construct(string $validationResult, array $responseHeaders)
     {
-        $this->validationResult = (string)$validationResult;
+        $this->validationResult = $validationResult;
         $this->responseHeaders = $responseHeaders;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidationResult()
+    public function getValidationResult(): string
     {
         return $this->validationResult;
     }
 
-    /**
-     * @param string $validationResult
-     *
-     * @return $this
-     */
-    public function setValidationResult($validationResult)
+    public function setValidationResult(string $validationResult): self
     {
         $this->validationResult = $validationResult;
+
         return $this;
     }
 
-    private function getHeader($key)
+    private function getHeader(string $key): ?string
     {
         return isset($this->responseHeaders[$key]) ? $this->responseHeaders[$key][0] : null;
     }
 
-    /**
-     * @return string
-     */
-    public function getScaId()
+    public function getScaId(): ?string
     {
         return $this->getHeader(self::HEADER_SCA_ID);
     }
 
-    /**
-     * @return string
-     */
-    public function getScaRequired()
+    public function getScaRequired(): ?string
     {
         return $this->getHeader(self::HEADER_SCA_REQUIRED);
     }
 
-    /**
-     * @return string
-     */
-    public function getScaType()
+    public function getScaType(): ?string
     {
         return $this->getHeader(self::HEADER_SCA_TYPE);
     }

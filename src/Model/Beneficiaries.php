@@ -14,7 +14,6 @@ class Beneficiaries extends PaginatedData
 
     /**
      * @param Beneficiary[] $beneficiaries
-     * @param Pagination $pagination
      */
     public function __construct(array $beneficiaries, Pagination $pagination)
     {
@@ -30,17 +29,11 @@ class Beneficiaries extends PaginatedData
         return $this->beneficiaries;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->beneficiaries);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->beneficiaries);

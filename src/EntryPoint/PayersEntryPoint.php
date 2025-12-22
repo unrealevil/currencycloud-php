@@ -5,8 +5,6 @@ namespace CurrencyCloud\EntryPoint;
 use CurrencyCloud\Model\Payer;
 use DateTime;
 
-use function sprintf;
-
 class PayersEntryPoint extends AbstractEntryPoint
 {
     public function retrieve(string $id, ?string $onBehalfOf = null): Payer

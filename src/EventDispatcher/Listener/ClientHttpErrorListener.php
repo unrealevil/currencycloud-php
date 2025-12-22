@@ -11,12 +11,6 @@ use CurrencyCloud\Exception\InternalApplicationException;
 use CurrencyCloud\Exception\NotFoundException;
 use CurrencyCloud\Exception\ToManyRequestsException;
 
-use function array_is_list;
-use function current;
-use function implode;
-use function is_array;
-use function json_decode;
-
 class ClientHttpErrorListener
 {
     public function onClientHttpErrorEvent(ClientHttpErrorEvent $event): void

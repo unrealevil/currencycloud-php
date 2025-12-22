@@ -19,9 +19,6 @@ use DateTime;
 use DateTimeInterface;
 use stdClass;
 
-use function implode;
-use function sprintf;
-
 class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
     public function create(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null, ?string $scaId = null, ?string $scaToken = null): Payment
@@ -136,7 +133,7 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $payment;
     }
 
-    public function validate(Payment $payment, Payer $payer = null, ?string $onBehalfOf = null, ?bool $scaToAuthenticatedUser = null)
+    public function validate(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null, ?bool $scaToAuthenticatedUser = null): PaymentValidationResult
     {
         if (null === $payer) {
             $payer = new Payer();
@@ -481,15 +478,14 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return $paymentEvent;
     }
 
-    public function retryPaymentNotifications(string $id, string $notificationType): \stdClass
+    public function retryPaymentNotifications(string $id, string $notificationType): stdClass
     {
-        $response = $this->request(
+        return $this->request(
             'POST',
-            sprintf('payments/%s/notifications/retry', $id),
+            \sprintf('payments/%s/notifications/retry', $id),
             [
                 'notification_type' => $notificationType,
-            ]);
-
-        return $response;
+            ]
+        );
     }
 }

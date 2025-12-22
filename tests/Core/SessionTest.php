@@ -15,7 +15,6 @@ class SessionTest extends TestCase
 
     public function setUp(): void
     {
-        parent::setUp();
         $this->session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
     }
 
@@ -78,11 +77,5 @@ class SessionTest extends TestCase
         $this->assertNull($this->session->getOnBehalfOf());
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
         $this->assertEquals('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab', $this->session->getOnBehalfOf());
-    }
-
-    private function setExpectedException(string $class, string $string)
-    {
-        $this->expectException($class);
-        $this->expectExceptionMessage($string);
     }
 }

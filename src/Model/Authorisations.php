@@ -30,17 +30,11 @@ class Authorisations implements IteratorAggregate, Countable
         return $this->authorisations;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->authorisations);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->authorisations);

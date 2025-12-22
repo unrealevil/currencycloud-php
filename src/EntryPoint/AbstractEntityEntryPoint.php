@@ -117,11 +117,11 @@ abstract class AbstractEntityEntryPoint extends AbstractEntryPoint
         $beneficiaries = [];
 
         foreach ($response->$property as $searchModel) {
-            $entity = call_user_func($converterFromResponse, $searchModel);
+            $entity = \call_user_func($converterFromResponse, $searchModel);
             $this->entityManager->add($entity);
             $beneficiaries[] = $entity;
         }
-        return call_user_func($collectionConverter, $beneficiaries, $this->createPaginationFromResponse($response));
+        return \call_user_func($collectionConverter, $beneficiaries, $this->createPaginationFromResponse($response));
     }
 
     protected function doUpdate(

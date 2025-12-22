@@ -9,8 +9,6 @@ use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use DateTime;
 use stdClass;
 
-use function sprintf;
-
 class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
     public function create(Account $account): Account
@@ -84,6 +82,7 @@ class AccountsEntryPoint extends AbstractEntityEntryPoint
         $isApiTrading = $account->isApiTrading();
         $isOnlineTrading = $account->isOnlineTrading();
         $isPhoneTrading = $account->isPhoneTrading();
+
         return $common + [
             'spread_table' => $account->getSpreadTable(),
             'identification_type' => $account->getIdentificationType(),

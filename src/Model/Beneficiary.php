@@ -63,30 +63,6 @@ class Beneficiary implements EntityInterface
         return $this->id;
     }
 
-    public function getCompanyWebsite(): ?string
-    {
-        return $this->companyWebsite;
-    }
-
-    public function setCompanyWebsite(?string $companyWebsite): self
-    {
-        $this->companyWebsite = $companyWebsite;
-
-        return $this;
-    }
-
-    public function getBusinessNature(): ?string
-    {
-        return $this->businessNature;
-    }
-
-    public function setBusinessNature(?string $businessNature): self
-    {
-        $this->businessNature = $businessNature;
-
-        return $this;
-    }
-
     public function getPaymentTypes(): ?array
     {
         return $this->paymentTypes;

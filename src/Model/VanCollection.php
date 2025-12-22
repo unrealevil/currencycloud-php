@@ -29,17 +29,11 @@ class VanCollection extends PaginatedData
         return $this->vans;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->vans);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->vans);

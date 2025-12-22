@@ -10,9 +10,6 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
-use function implode;
-use function sprintf;
-
 class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
 {
     public function validate(Beneficiary $beneficiary, ?string $onBehalfOf = null): Beneficiary
@@ -35,8 +32,8 @@ class BeneficiariesEntryPoint extends AbstractEntityEntryPoint
             [],
             $this->convertAccountVerificationRequestToRequest($accountVerificationRequest)
         );
-        return new AccountVerificationResponse($response->answer, $response->actual_name, $response->reason_code,
-        $response->reason, $response->reason_type);
+
+        return new AccountVerificationResponse($response->answer, $response->actual_name, $response->reason_code, $response->reason, $response->reason_type);
     }
 
     public function create(Beneficiary $beneficiary, ?string $onBehalfOf = null): Beneficiary

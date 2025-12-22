@@ -29,17 +29,11 @@ class Transfers extends PaginatedData
         return $this->transfers;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->transfers);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->transfers);
