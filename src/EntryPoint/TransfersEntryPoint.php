@@ -9,8 +9,6 @@ use CurrencyCloud\Model\Transfers;
 use DateTime;
 use stdClass;
 
-use function sprintf;
-
 class TransfersEntryPoint extends AbstractEntityEntryPoint
 {
     public function retrieve(string $id, ?string $onBehalfOf = null): Transfer

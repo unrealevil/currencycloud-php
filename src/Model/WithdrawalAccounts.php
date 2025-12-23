@@ -5,8 +5,6 @@ namespace CurrencyCloud\Model;
 use ArrayIterator;
 use Traversable;
 
-use function count;
-
 class WithdrawalAccounts extends PaginatedData
 {
     /**

@@ -8,12 +8,11 @@ use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Test;
 
 class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithdrawalAccount(): void
     {
         $data = '{"withdrawal_accounts": [
@@ -81,9 +80,7 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('asc', $accounts->getPagination()->getOrderAscDesc());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindWithdrawalAccount2(): void
     {
         $data = '{"withdrawal_accounts": [
@@ -169,9 +166,7 @@ class WithdrawalAccountsEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame('asc', $accounts->getPagination()->getOrderAscDesc());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canPullFunds(): void
     {
         $data = '{

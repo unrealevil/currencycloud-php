@@ -9,8 +9,6 @@ use CurrencyCloud\Model\WithdrawalAccountFunds;
 use CurrencyCloud\Model\WithdrawalAccounts;
 use DateTime;
 
-use function sprintf;
-
 class WithdrawalAccountsEntryPoint extends AbstractEntityEntryPoint
 {
     public function findWithdrawalAccounts(?FindWithdrawalAccountsCriteria $findWithdrawalAccountsCriteria = null, ?Pagination $pagination = null): WithdrawalAccounts

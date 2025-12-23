@@ -19,10 +19,6 @@ use DateTime;
 use DateTimeInterface;
 use stdClass;
 
-use function array_merge;
-use function implode;
-use function sprintf;
-
 class ConversionsEntryPoint extends AbstractEntryPoint
 {
     public function create(Conversion $conversion, string $amount, ?string $reason, bool $termAgreement, ?string $onBehalfOf = null): Conversion

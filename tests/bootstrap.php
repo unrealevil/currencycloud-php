@@ -1,6 +1,7 @@
 <?php
 
 use CurrencyCloud\Tests\FormDataExtractor;
+use VCR\VCR;
 
 $parametersMatcher = static function($first, $second) {
     //process and check data sent as form-data via POST
@@ -39,7 +40,7 @@ $parametersMatcher = static function($first, $second) {
                     return false;
                 }
                 unset($firstParams[$key], $secondParams[$key]);
-                
+
             } else {
                 return false;
             }

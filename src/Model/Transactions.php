@@ -29,17 +29,11 @@ class Transactions extends PaginatedData
         return $this->transactions;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->transactions);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->transactions);

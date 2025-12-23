@@ -9,15 +9,10 @@ use DateTime;
 class PaymentTrackingInfo
 {
     private ?string $uetr = null;
-
     private ?TransactionStatus $transactionStatus = null;
-
     private ?DateTime $initiationTime = null;
-
     private ?DateTime $completionTime = null;
-
     private ?DateTime $lastUpdateTime = null;
-
     /**
      * @var PaymentEvent[]
      */

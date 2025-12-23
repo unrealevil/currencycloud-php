@@ -4,12 +4,11 @@ namespace CurrencyCloud\Tests\EntryPoint;
 
 use CurrencyCloud\EntryPoint\PayersEntryPoint;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PayersEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveWithoutOnBehalfOf(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","legal_entity_type":"company","company_name":"Acme Corporation","first_name":"","last_name":"","address":"164 Bishopsgate,London","city":"London","state_or_province":"","country":"GB","identification_type":"incorporation_number","identification_value":"123123","postcode":"EC2M 4LX","date_of_birth":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00"}';
@@ -31,9 +30,7 @@ class PayersEntryPointTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($item, \json_decode($data2, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canRetrieveWithOnBehalfOf(): void
     {
         $data = '{"id":"543477161-91de-012f-e284-1e0030c7f3123","legal_entity_type":"company","company_name":"Acme Corporation","first_name":"","last_name":"","address":"164 Bishopsgate,London","city":"London","state_or_province":"","country":"GB","identification_type":"incorporation_number","identification_value":"123123","postcode":"EC2M 4LX","date_of_birth":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00"}';

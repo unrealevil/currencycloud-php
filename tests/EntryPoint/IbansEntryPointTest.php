@@ -7,12 +7,11 @@ use CurrencyCloud\EntryPoint\IbansEntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class IbansEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindIbans(): void
     {
         $data = '{

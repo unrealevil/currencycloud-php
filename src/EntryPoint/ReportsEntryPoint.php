@@ -11,8 +11,6 @@ use CurrencyCloud\Model\Reports;
 use CurrencyCloud\Model\ReportSearchParams;
 use stdClass;
 
-use function sprintf;
-
 class ReportsEntryPoint extends AbstractEntityEntryPoint
 {
     public function createConversionReport(ConversionReportCriteria $conversionReportCriteria, ?string $onBehalfOf = null): Report

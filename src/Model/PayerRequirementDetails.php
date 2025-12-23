@@ -30,17 +30,11 @@ class PayerRequirementDetails implements Countable, IteratorAggregate
         return $this->payerDetails;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->payerDetails);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->payerDetails);

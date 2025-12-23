@@ -5,7 +5,9 @@ namespace CurrencyCloud\Tests\Core;
 use CurrencyCloud\Session;
 use InvalidArgumentException;
 use LogicException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+
 
 class SessionTest extends TestCase
 {
@@ -16,9 +18,7 @@ class SessionTest extends TestCase
         $this->session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidEnvironmentThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -26,19 +26,16 @@ class SessionTest extends TestCase
         new Session('test', 'test', 'test');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidLoginIdThrowsException(): void
     {
+
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Login ID can not be nul');
+        $this->expectExceptionMessage('Login ID can not be null');
         new Session(Session::ENVIRONMENT_DEMONSTRATION, null, 'test');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidApiKeyThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -46,9 +43,7 @@ class SessionTest extends TestCase
         new Session(Session::ENVIRONMENT_DEMONSTRATION, 'test', null);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfCanNotBeNull(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -56,9 +51,7 @@ class SessionTest extends TestCase
         $this->session->setOnBehalfOf(null);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfMustBeValidUUID(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -66,9 +59,7 @@ class SessionTest extends TestCase
         $this->session->setOnBehalfOf('bok');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfCanNotBeSetBeforeItIsUnset(): void
     {
         $this->expectException(LogicException::class);
@@ -77,9 +68,7 @@ class SessionTest extends TestCase
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfCanBeSetAfterUnset(): void
     {
         $this->session->setOnBehalfOf('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');

@@ -11,6 +11,8 @@ Many people have helped us along the way and we are sincerely grateful to all of
 |Donovan Schönknecht (tpyo)|https://github.com/tpyo|
 |Steve Rhodes (elasticsteve)|https://github.com/elasticsteve|
 |Valdas Barakauskas (bilikaz)|https://github.com/bilikaz|
+|mo6709|https://github.com/mo6709|
+|Mark Unsworth (markunsworth)|https://github.com/markunsworth|
 
  In our book, they have reached [**honorificabilitudinitatibus**][sesqui] :-)
 

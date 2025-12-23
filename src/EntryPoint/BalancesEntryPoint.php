@@ -10,8 +10,6 @@ use DateTime;
 use DateTimeInterface;
 use stdClass;
 
-use function sprintf;
-
 class BalancesEntryPoint extends AbstractEntryPoint
 {
     public function find(?float $amountFrom = null, ?float $amountTo = null, ?DateTime $asAtDate = null, ?Pagination $pagination = null, ?string $onBehalfOf = null): Balances

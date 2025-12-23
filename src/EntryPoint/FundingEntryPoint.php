@@ -8,8 +8,6 @@ use CurrencyCloud\Model\Pagination;
 use DateTime;
 use stdClass;
 
-use function array_merge;
-
 class FundingEntryPoint extends AbstractEntryPoint
 {
     public function findFundingAccounts(?Pagination $pagination, string $currency, ?string $accountId = null, ?string $paymentType = null, ?string $onBehalfOf = null): FundingAccounts

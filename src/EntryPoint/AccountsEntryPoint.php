@@ -9,8 +9,6 @@ use CurrencyCloud\Model\AccountPaymentChargesSetting;
 use DateTime;
 use stdClass;
 
-use function sprintf;
-
 class AccountsEntryPoint extends AbstractEntityEntryPoint
 {
     public function create(Account $account): Account

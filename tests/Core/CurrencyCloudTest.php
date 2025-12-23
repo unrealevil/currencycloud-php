@@ -19,16 +19,18 @@ use CurrencyCloud\Model\Account;
 use CurrencyCloud\Model\Payment;
 use CurrencyCloud\Session;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use CurrencyCloud\Tests\PhpunitTrait;
 use GuzzleHttp\Psr7\Response;
 use LogicException;
+use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CurrencyCloudTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    use PhpunitTrait;
+
+    #[Test]
     public function canCreateDefaultInstance(): void
     {
         $session = new Session(Session::ENVIRONMENT_DEMONSTRATION, 'a', 'b');
@@ -48,9 +50,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $this->assertInstanceOf(TransactionsEntryPoint::class, $client->transactions());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfWorks(): void
     {
         $transactionsData = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
@@ -59,8 +59,18 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
 
         $mockedClient = $this->createMock(\GuzzleHttp\Client::class);
 
-        $mockedClient->expects($this->exactly(2))->method('request')->withConsecutive(
-            [$this->equalTo('GET'), 'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'],
+        $mockedClient->expects($this->exactly(2))->method('request')->with(...self::withConsecutive(
+            [
+                $this->equalTo('GET'),
+                'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+                $this->equalTo([
+                    'headers' => [
+                        'X-Auth-Token' => null,
+                        'User-Agent' => 'CurrencyCloudSDK/2.0 PHP/'.CurrencyCloud::$SDK_VERSION,
+                    ],
+                    'http_errors' => false,
+                ]),
+            ],
             [
                 $this->equalTo('POST'),
                 'https://devapi.currencycloud.com/v2/payments/me/delete',
@@ -75,12 +85,10 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
                     'http_errors' => false,
                 ]),
             ]
-        )
-            ->will(
-                $this->onConsecutiveCalls(
-                    new Response(200, [], $transactionsData),
-                    new Response(200, [], $paymentsData)
-                )
+        ))
+            ->willReturnOnConsecutiveCalls(
+                new Response(200, [], $transactionsData),
+                new Response(200, [], $paymentsData)
             );
 
         // @var \GuzzleHttp\Client $mockedClient
@@ -100,9 +108,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $this->assertNull($session->getOnBehalfOf());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function onBehalfOfFailsWhenInOnBehalfOf(): void
     {
         $this->expectException(LogicException::class);
@@ -120,23 +126,17 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canOnBehalfOfFromMethod(): void
     {
         $mockedClient = $this->createMock(\GuzzleHttp\Client::class);
 
         $transactionsData = '{"id":"c5a990eb-d4d7-482f-bfb1-695261fb1e4d","balance_id":"c5f1f54e-d6d8-4140-8110-f5b99bbc80c3","account_id":"7b9757a8-eee9-4572-86e6-77f4d711eaa6","currency":"USD","amount":"1000.00","balance_amount":"2000.00","type":"credit","action":"conversion","related_entity_type":"conversion","related_entity_id":"ConversionUUID","related_entity_short_reference":"140416-GGJBNQ001","status":"completed","reason":"Reason for Transaction","settles_at":"2014-01-12T12:24:19+00:00","created_at":"2014-01-12T12:24:19+00:00","updated_at":"2014-01-12T12:24:19+00:00","completed_at":"2014-01-12T12:24:19+00:00"}';
 
-        $mockedClient->expects($this->once())->method('request')->withConsecutive(
+        $mockedClient->expects($this->once())->method('request')->with(...self::withConsecutive(
             [$this->equalTo('GET'), 'https://devapi.currencycloud.com/v2/transactions/hi?on_behalf_of=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']
-        )
-            ->will(
-                $this->onConsecutiveCalls(
-                    new Response(200, [], $transactionsData)
-                )
-            );
+        ))
+            ->willReturn(new Response(200, [], $transactionsData));
 
         // @var \GuzzleHttp\Client $mockedClient
 
@@ -148,9 +148,7 @@ class CurrencyCloudTest extends BaseCurrencyCloudTestCase
         $this->validateObjectStrictName($transaction, \json_decode($transactionsData, true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exceptionWhenEntityIsNotManagedByManager(): void
     {
         $mockedClient = $this->createMock(\GuzzleHttp\Client::class);

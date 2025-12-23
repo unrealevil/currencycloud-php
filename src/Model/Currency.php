@@ -2,8 +2,6 @@
 
 namespace CurrencyCloud\Model;
 
-use function strtoupper;
-
 class Currency
 {
     private string $code;

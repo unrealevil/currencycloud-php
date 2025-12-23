@@ -8,32 +8,39 @@ use CurrencyCloud\Model\Authorisations;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\Model\Payer;
 use CurrencyCloud\Model\Payment;
+use CurrencyCloud\Model\PaymentSubmissionInfo;
+use CurrencyCloud\Model\PaymentValidationResult;
 use CurrencyCloud\Model\PaymentConfirmation;
 use CurrencyCloud\Model\PaymentDeliveryDate;
 use CurrencyCloud\Model\Payments;
-use CurrencyCloud\Model\PaymentSubmission;
-use CurrencyCloud\Model\PaymentTrackingInfo;
 use CurrencyCloud\Model\QuotePaymentFee;
+use CurrencyCloud\Model\PaymentTrackingInfo;
 use DateTime;
 use DateTimeInterface;
 use stdClass;
 
-use function implode;
-use function sprintf;
-
 class PaymentsEntryPoint extends AbstractEntityEntryPoint
 {
-    public function create(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null): Payment
+    public function create(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null, ?string $scaId = null, ?string $scaToken = null): Payment
     {
         if (null === $payer) {
             $payer = new Payer();
+        }
+
+        $headers = [];
+        if ($scaId !== null) {
+            $headers['x-sca-id'] = $scaId;
+        }
+        if ($scaToken !== null) {
+            $headers['x-sca-token'] = $scaToken;
         }
 
         return $this->doCreate('payments/create', $payment, function($payment) use ($payer) {
             return $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer);
         }, function(stdClass $response) {
             return $this->createPaymentFromResponse($response);
-        }, $onBehalfOf);
+        }, $onBehalfOf,
+        $headers);
     }
 
     protected function convertPaymentToRequest(Payment $payment, bool $convertForFind = false): array
@@ -124,6 +131,38 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         $this->setIdProperty($payment, $response->id);
 
         return $payment;
+    }
+
+    public function validate(Payment $payment, ?Payer $payer = null, ?string $onBehalfOf = null, ?bool $scaToAuthenticatedUser = null): PaymentValidationResult
+    {
+        if (null === $payer) {
+            $payer = new Payer();
+        }
+
+        $queryParams = [];
+        if ($onBehalfOf !== null) {
+            $queryParams['on_behalf_of'] = $onBehalfOf;
+        }
+
+        // Include custom headers and return headers in response
+        $options = [];
+        $options['include_response_headers'] = true;
+        if ($scaToAuthenticatedUser !== null) {
+            $options['headers']['x-sca-to-authenticated-user'] = $scaToAuthenticatedUser ? 'true' : 'false';
+        }
+
+        $response = $this->request(
+            'POST',
+            'payments/validate',
+            $queryParams,
+            $this->convertPaymentToRequest($payment) + $this->convertPayerToRequest($payer),
+            $options
+        );
+
+        return new PaymentValidationResult(
+            $response['body']->validation_result,
+            $response['headers']
+        );
     }
 
     public function delete(Payment $payment, ?string $onBehalfOf = null): Payment
@@ -256,18 +295,19 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         return new Authorisations($authorisations);
     }
 
-    public function retrieveSubmission(string $id, ?string $onBehalfOf = null): PaymentSubmission
+    public function retrieveSubmissionInfo(string $id, ?string $onBehalfOf = null): PaymentSubmissionInfo
     {
-        $response = $this->request('GET', \sprintf('payments/%s/submission', $id), ['on_behalf_of' => $onBehalfOf]);
+        $response = $this->request('GET', \sprintf('payments/%s/submission_info', $id), ['on_behalf_of' => $onBehalfOf]);
 
-        return $this->createPaymentSubmissionFromResponse($response);
+        return $this->createSubmissionInfoFromResponse($response);
     }
 
-    protected function createPaymentSubmissionFromResponse(stdClass $response): PaymentSubmission
+    protected function createSubmissionInfoFromResponse(stdClass $response): PaymentSubmissionInfo
     {
-        return new PaymentSubmission(
+        return new PaymentSubmissionInfo(
             $response->status,
-            $response->mt103,
+            $response->message,
+            $response->format,
             $response->submission_ref
         );
     }
@@ -436,5 +476,16 @@ class PaymentsEntryPoint extends AbstractEntityEntryPoint
         );
 
         return $paymentEvent;
+    }
+
+    public function retryPaymentNotifications(string $id, string $notificationType): stdClass
+    {
+        return $this->request(
+            'POST',
+            \sprintf('payments/%s/notifications/retry', $id),
+            [
+                'notification_type' => $notificationType,
+            ]
+        );
     }
 }

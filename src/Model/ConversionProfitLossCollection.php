@@ -3,6 +3,7 @@
 namespace CurrencyCloud\Model;
 
 use ArrayIterator;
+use Traversable;
 
 class ConversionProfitLossCollection extends PaginatedData
 {
@@ -13,7 +14,6 @@ class ConversionProfitLossCollection extends PaginatedData
 
     /**
      * @param ConversionProfitLoss[] $conversionsProfitLoss
-     * @param Pagination $pagination
      */
     public function __construct(array $conversionsProfitLoss, Pagination $pagination)
     {
@@ -29,17 +29,11 @@ class ConversionProfitLossCollection extends PaginatedData
         return $this->conversionsProfitLoss;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->conversionsProfitLoss);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->conversionsProfitLoss);

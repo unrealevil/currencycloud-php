@@ -29,17 +29,11 @@ class Reports extends PaginatedData
         return $this->reports;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->reports);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function count(): int
     {
         return \count($this->reports);

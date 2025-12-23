@@ -7,12 +7,11 @@ use CurrencyCloud\EntryPoint\TransfersEntryPoint;
 use CurrencyCloud\Model\Pagination;
 use CurrencyCloud\SimpleEntityManager;
 use CurrencyCloud\Tests\BaseCurrencyCloudTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canGetTransfer(): void
     {
         $data = '{
@@ -59,9 +58,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['unique_request_id'], $transfer->getUniqueRequestId());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canFindTransfers(): void
     {
         $data = '{
@@ -180,9 +177,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCreateTransfer(): void
     {
         $data = '{
@@ -238,9 +233,7 @@ class TransfersEntryPointTest extends BaseCurrencyCloudTestCase
         $this->assertSame($dummy['reason'], $transfer->getReason());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canCancelTransfer(): void
     {
         $data = '{

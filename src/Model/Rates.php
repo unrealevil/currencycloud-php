@@ -18,7 +18,6 @@ class Rates
     public function __construct(array $rates, array $unavailable = [])
     {
         $this->rates = $rates;
-        //For faster search
         $this->unavailable = \array_combine($unavailable, $unavailable);
     }
 
@@ -45,6 +44,7 @@ class Rates
         if (!$this->isAvailable($pair)) {
             throw new OutOfBoundsException(\sprintf('Pair "%s" not found', $pair));
         }
+
         return $this->rates[$pair];
     }
 
